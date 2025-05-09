@@ -75,10 +75,21 @@ export function setupWebsocket(httpServer: HttpServer): void {
     const client = clients.get(userId);
     
     if (client && client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify({
-        type: 'notification',
-        ...notification
-      }));
+      try {
+        // Use a safer approach by explicitly constructing the notification object
+        const notificationData = {
+          type: 'notification',
+          id: notification.id || `notification-${Date.now()}`,
+          message: notification.message || '',
+          notificationType: notification.notificationType || 'system',
+          data: notification.data || null,
+          timestamp: notification.timestamp || new Date().toISOString()
+        };
+        
+        client.send(JSON.stringify(notificationData));
+      } catch (error) {
+        console.error('Error sending notification to client:', error);
+      }
     }
   }
   

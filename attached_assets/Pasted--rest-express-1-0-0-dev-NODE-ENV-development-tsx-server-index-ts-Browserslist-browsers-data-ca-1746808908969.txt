@@ -1,0 +1,972 @@
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+4:38:56 PM [express] GET /api/auth/me 401 in 2ms :: {"message":"Unauthorized"}
+4:39:01 PM [express] GET /api/auth/me 401 in 1ms :: {"message":"Unauthorized"}
+4:39:41 PM [express] POST /api/auth/login 200 in 5ms :: {"id":2,"username":"owner","email":"owner@ex…
+4:39:41 PM [express] GET /api/messages/conversations 404 in 2ms :: {"error":"Job not found"}
+4:39:41 PM [express] GET /api/jobs/mine 200 in 2ms :: [{"id":1,"ownerId":2,"propertyId":1,"title":"L…
+4:39:41 PM [express] GET /api/jobs/active 304 in 2ms :: []
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Unidentified WebSocket client disconnected
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2
+WebSocket client connected
+WebSocket client connected
+Client identified as user 2
+Client identified as user 2

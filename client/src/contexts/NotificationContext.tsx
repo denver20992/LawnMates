@@ -35,33 +35,38 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   
   // Process incoming websocket messages to create notifications
   const handleWebSocketMessage = (data: any) => {
-    if (data.type === 'notification') {
-      // Add a new notification
-      const newNotification: Notification = {
-        id: data.id || `notification-${Date.now()}`,
-        message: data.message,
-        type: data.notificationType || 'system',
-        read: false,
-        createdAt: new Date(),
-        data: data.data
-      };
-      
-      setNotifications(prev => [newNotification, ...prev]);
-      
-      // Show browser notification if permission granted
-      if (window.Notification && Notification.permission === 'granted') {
-        new Notification('LawnMates', {
-          body: data.message,
-          icon: '/favicon.ico'
+    try {
+      if (data.type === 'notification') {
+        // Add a new notification
+        const newNotification: Notification = {
+          id: data.id || `notification-${Date.now()}`,
+          message: data.message,
+          // Handle both type and notificationType fields for backwards compatibility
+          type: data.notificationType || data.type || 'system',
+          read: false,
+          createdAt: new Date(),
+          data: data.data
+        };
+        
+        setNotifications(prev => [newNotification, ...prev]);
+        
+        // Show browser notification if permission granted
+        if (window.Notification && Notification.permission === 'granted') {
+          new Notification('LawnMates', {
+            body: data.message,
+            icon: '/favicon.ico'
+          });
+        }
+        
+        // Also show a toast notification
+        toast({
+          title: 'New Notification',
+          description: data.message,
+          duration: 5000,
         });
       }
-      
-      // Also show a toast notification
-      toast({
-        title: 'New Notification',
-        description: data.message,
-        duration: 5000,
-      });
+    } catch (error) {
+      console.error('Error processing notification:', error);
     }
   };
   
