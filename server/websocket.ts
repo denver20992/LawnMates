@@ -21,14 +21,45 @@ export function setupWebsocket(httpServer: HttpServer): void {
     // Handle messages from clients
     ws.on('message', (message: string) => {
       try {
+        // Log the raw message for debugging
+        console.log('Received WebSocket message:', message.toString());
+        
         const data = JSON.parse(message.toString());
+        console.log('Parsed WebSocket message:', data);
         
         // Handle client identification
         if (data.type === 'identify' && data.userId) {
-          const userId = parseInt(data.userId);
+          // Parse userId and ensure it's a number
+          let userId: number;
+          
+          if (typeof data.userId === 'number') {
+            userId = data.userId;
+          } else if (typeof data.userId === 'string') {
+            userId = parseInt(data.userId);
+            if (isNaN(userId)) {
+              throw new Error(`Invalid userId format: ${data.userId}`);
+            }
+          } else {
+            throw new Error(`Unexpected userId type: ${typeof data.userId}`);
+          }
+          
           ws.userId = userId;
           clients.set(userId, ws);
           console.log(`Client identified as user ${userId}`);
+          
+          // Send a confirmation
+          try {
+            const confirmation = JSON.stringify({
+              type: 'confirmation',
+              message: 'Successfully identified',
+              status: 'success'
+            });
+            ws.send(confirmation);
+          } catch (err) {
+            console.error('Failed to send confirmation:', err);
+          }
+        } else {
+          console.warn('Received message without proper identification:', data);
         }
       } catch (error) {
         console.error('Error processing WebSocket message:', error);

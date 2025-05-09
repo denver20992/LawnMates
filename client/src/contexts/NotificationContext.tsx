@@ -36,32 +36,50 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   // Process incoming websocket messages to create notifications
   const handleWebSocketMessage = (data: any) => {
     try {
-      if (data.type === 'notification') {
-        // Add a new notification
+      // Log the raw message data to help diagnose issues
+      console.log('Received WebSocket message:', data);
+      
+      if (data && data.type === 'notification') {
+        // Ensure we have all required fields with fallbacks
+        const message = typeof data.message === 'string' ? data.message : 'New notification';
+        const id = data.id || `notification-${Date.now()}`;
+        
+        // Determine the notification type - use a robust fallback approach
+        let notificationType: 'message' | 'job' | 'payment' | 'system' = 'system';
+        if (data.notificationType && 
+            ['message', 'job', 'payment', 'system'].includes(data.notificationType)) {
+          notificationType = data.notificationType as any;
+        }
+        
+        // Create notification object with validated data
         const newNotification: Notification = {
-          id: data.id || `notification-${Date.now()}`,
-          message: data.message,
-          // Handle both type and notificationType fields for backwards compatibility
-          type: data.notificationType || data.type || 'system',
+          id,
+          message,
+          type: notificationType,
           read: false,
           createdAt: new Date(),
-          data: data.data
+          data: data.data || null
         };
         
+        // Add to state
         setNotifications(prev => [newNotification, ...prev]);
         
         // Show browser notification if permission granted
         if (window.Notification && Notification.permission === 'granted') {
-          new Notification('LawnMates', {
-            body: data.message,
-            icon: '/favicon.ico'
-          });
+          try {
+            new Notification('LawnMates', {
+              body: message,
+              icon: '/favicon.ico'
+            });
+          } catch (err) {
+            console.error('Failed to create browser notification:', err);
+          }
         }
         
         // Also show a toast notification
         toast({
           title: 'New Notification',
-          description: data.message,
+          description: message,
           duration: 5000,
         });
       }

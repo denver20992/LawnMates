@@ -76,17 +76,17 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({
           <div className="hidden sm:block overflow-x-auto">
             <div className="flex space-x-4 md:space-x-8">
               {tabs.map((tab) => (
-                <Link key={tab.id} href={tab.href}>
-                  <a
-                    className={`border-b-2 py-4 px-1 text-sm font-medium whitespace-nowrap ${
-                      activeTab === tab.id
-                        ? 'border-primary-500 text-primary-600'
-                        : 'border-transparent text-neutral-500 hover:border-neutral-300 hover:text-neutral-700'
-                    }`}
-                    aria-current={activeTab === tab.id ? 'page' : undefined}
-                  >
-                    {tab.label}
-                  </a>
+                <Link 
+                  key={tab.id} 
+                  href={tab.href}
+                  className={`border-b-2 py-4 px-1 text-sm font-medium whitespace-nowrap ${
+                    activeTab === tab.id
+                      ? 'border-primary-500 text-primary-600'
+                      : 'border-transparent text-neutral-500 hover:border-neutral-300 hover:text-neutral-700'
+                  }`}
+                  aria-current={activeTab === tab.id ? 'page' : undefined}
+                >
+                  {tab.label}
                 </Link>
               ))}
             </div>

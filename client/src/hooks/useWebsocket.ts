@@ -26,21 +26,31 @@ export const useWebsocket = (options: UseWebSocketOptions = {}) => {
     const wsUrl = `${protocol}//${window.location.host}/ws`;
     
     try {
+      console.log(`Connecting to WebSocket at ${wsUrl}`);
       const newSocket = new WebSocket(wsUrl);
       setSocket(newSocket);
       setStatus('connecting');
 
       newSocket.onopen = () => {
         setStatus('open');
+        console.log('WebSocket connection established successfully');
         
-        // Send identification message to the server
-        newSocket.send(JSON.stringify({
-          type: 'identify',
-          userId: user.id
-        }));
+        try {
+          // Send identification message to the server
+          const userId = typeof user.id === 'number' ? user.id : parseInt(user.id as string);
+          const identifyMessage = JSON.stringify({
+            type: 'identify',
+            userId
+          });
+          
+          console.log(`Sending identify message: ${identifyMessage}`);
+          newSocket.send(identifyMessage);
 
-        if (options.onOpen) {
-          options.onOpen();
+          if (options.onOpen) {
+            options.onOpen();
+          }
+        } catch (err) {
+          console.error('Error during WebSocket identification:', err);
         }
       };
 
