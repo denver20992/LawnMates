@@ -49,12 +49,13 @@ const AVAILABLE_SERVICES = [
 const jobFormSchema = z.object({
   title: z.string().min(5, {
     message: "Address must be at least 5 characters",
-  }),
+  }).optional(),
   selectedServices: z.array(z.string()).min(1, {
     message: "Please select at least one service"
   }),
   description: z.string().optional(),
   propertyId: z.coerce.number(),
+  propertySize: z.enum(['small', 'medium', 'large']).default('medium'),
   price: z.coerce.number(), // Store as dollars, we'll convert to cents when sending to API
   startDate: z.date({
     required_error: "Please select a date",
@@ -66,7 +67,19 @@ const jobFormSchema = z.object({
   requiresEquipment: z.boolean().default(false),
   latitude: z.number().optional(),
   longitude: z.number().optional(),
-});
+  useExistingProperty: z.boolean().default(true),
+}).refine(
+  (data) => {
+    // If using an existing property, require propertyId
+    // If not using existing property, require title (address)
+    return (data.useExistingProperty && data.propertyId > 0) || 
+           (!data.useExistingProperty && !!data.title);
+  },
+  {
+    message: "Please either select an existing property or enter a new address",
+    path: ["propertyId"],
+  }
+);
 
 type JobFormValues = z.infer<typeof jobFormSchema>;
 
@@ -106,16 +119,28 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
   });
   
   // Calculate price based on selected services and property size
-  const calculateEstimatedPrice = (services: string[], propertyId: number) => {
+  const calculateEstimatedPrice = (
+    services: string[], 
+    propertyId: number, 
+    useExistingProperty: boolean = true,
+    customPropertySize?: string
+  ) => {
     if (!services.length) return 0;
     
-    // Get property details
-    const selectedProperty = propertyId ? properties.find(p => p.id === propertyId) : null;
-    if (!selectedProperty) return 0;
+    let sizeMultiplier = 1.0;
     
-    // Get size multiplier from property
-    const propertySize = selectedProperty.size || 'medium';
-    const sizeMultiplier = propertySizeInfo[propertySize as keyof typeof propertySizeInfo].multiplier;
+    if (useExistingProperty) {
+      // Get property details
+      const selectedProperty = propertyId ? properties.find(p => p.id === propertyId) : null;
+      if (!selectedProperty) return 0;
+      
+      // Get size multiplier from property
+      const propertySize = selectedProperty.size || 'medium';
+      sizeMultiplier = propertySizeInfo[propertySize as keyof typeof propertySizeInfo].multiplier;
+    } else if (customPropertySize) {
+      // Use custom property size for new addresses
+      sizeMultiplier = propertySizeInfo[customPropertySize as keyof typeof propertySizeInfo].multiplier;
+    }
     
     // Calculate base price from selected services
     const basePrice = services.reduce((total, serviceId) => {
@@ -134,6 +159,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       selectedServices: [],
       description: '',
       propertyId: 0,
+      propertySize: 'medium',
       price: 0,
       startDate: new Date(),
       startTime: '09:00',
@@ -141,21 +167,36 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       isRecurring: false,
       recurrenceInterval: 'monthly',
       requiresEquipment: false,
+      useExistingProperty: true,
+      latitude: undefined,
+      longitude: undefined,
     },
   });
   
   const isRecurring = form.watch('isRecurring');
   const selectedPropertyId = form.watch('propertyId');
   const selectedServices = form.watch('selectedServices');
+  const useExistingProperty = form.watch('useExistingProperty');
+  const selectedPropertySize = form.watch('propertySize');
   
   // Update price when services or property changes
   useEffect(() => {
-    if (selectedServices?.length && selectedPropertyId) {
+    if (selectedServices?.length) {
       // Calculate and set estimated price
-      const estimatedPrice = calculateEstimatedPrice(selectedServices, selectedPropertyId);
+      let estimatedPrice = 0;
+      
+      if (useExistingProperty) {
+        if (selectedPropertyId) {
+          estimatedPrice = calculateEstimatedPrice(selectedServices, selectedPropertyId, true);
+        }
+      } else {
+        // For new properties, use the selected property size
+        estimatedPrice = calculateEstimatedPrice(selectedServices, 0, false, selectedPropertySize);
+      }
+      
       form.setValue('price', estimatedPrice);
     }
-  }, [selectedServices, selectedPropertyId, form]);
+  }, [selectedServices, selectedPropertyId, useExistingProperty, selectedPropertySize, form]);
   
   const onSubmit = async (values: JobFormValues) => {
     try {
@@ -239,20 +280,95 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                 <div className="space-y-4">
                   <FormField
                     control={form.control}
-                    name="title"
+                    name="useExistingProperty"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Job Address</FormLabel>
-                        <FormControl>
-                          <Input placeholder="e.g. 123 Main St, Toronto, ON M5V 1A1" {...field} />
-                        </FormControl>
-                        <FormDescription>
-                          Enter the address where the landscaping job will be performed.
-                        </FormDescription>
-                        <FormMessage />
+                      <FormItem className="mb-4">
+                        <div className="flex flex-row items-center justify-between rounded-lg border p-4">
+                          <div className="space-y-0.5">
+                            <FormLabel className="text-base">
+                              Property Selection
+                            </FormLabel>
+                            <FormDescription>
+                              Choose whether to use an existing property or add a new address.
+                            </FormDescription>
+                          </div>
+                          <FormControl>
+                            <Switch
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                        </div>
                       </FormItem>
                     )}
                   />
+                  
+                  {useExistingProperty ? (
+                    <FormField
+                      control={form.control}
+                      name="propertyId"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Select Existing Property</FormLabel>
+                          <Select 
+                            onValueChange={(value) => field.onChange(parseInt(value, 10))} 
+                            value={field.value ? field.value.toString() : undefined}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a property" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {properties.map((property) => (
+                                <SelectItem key={property.id} value={property.id.toString()}>
+                                  {property.address}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormDescription>
+                            Choose from your saved properties.
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ) : (
+                    <FormField
+                      control={form.control}
+                      name="title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Job Address</FormLabel>
+                          <FormControl>
+                            <AddressAutocomplete 
+                              placeholder="e.g. 123 Main St, Toronto, ON M5V 1A1" 
+                              defaultValue={field.value}
+                              onAddressSelect={(address, lat, lng) => {
+                                field.onChange(address);
+                                if (lat && lng) {
+                                  form.setValue('latitude', lat);
+                                  form.setValue('longitude', lng);
+                                }
+                              }}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Enter the address where the landscaping job will be performed.
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+                  
+                  {!useExistingProperty && (
+                    <PropertySizeSelector 
+                      control={form.control}
+                      name="propertySize"
+                    />
+                  )}
                   
                   <FormField
                     control={form.control}
@@ -335,36 +451,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                     )}
                   />
                   
-                  <FormField
-                    control={form.control}
-                    name="propertyId"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Select Property</FormLabel>
-                        <Select 
-                          onValueChange={(value) => field.onChange(parseInt(value, 10))} 
-                          value={field.value ? field.value.toString() : undefined}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select a property" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {properties.map((property) => (
-                              <SelectItem key={property.id} value={property.id.toString()}>
-                                {property.address}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormDescription>
-                          Choose the property for this job.
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+
                   
                   <FormField
                     control={form.control}
