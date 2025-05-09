@@ -1,0 +1,2125 @@
+
+> rest-express@1.0.0 dev
+WebSocket server listening at path: /ws.ts
+7:12:34 PM [express] serving on port 5000
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+7:12:38 PM [express] GET /api/auth/me 401 in 2ms :: {"message":"Unauthorized"}
+7:12:42 PM [express] GET /api/auth/me 401 in 0ms :: {"message":"Unauthorized"}
+7:12:43 PM [express] GET /api/auth/me 401 in 1ms :: {"message":"Unauthorized"}
+WebSocket status: 0 total connection(s)
+WebSocket status: 0 total connection(s)
+WebSocket status: 0 total connection(s)
+WebSocket status: 0 total connection(s)
+WebSocket status: 0 total connection(s)
+WebSocket status: 0 total connection(s)
+7:13:43 PM [express] POST /api/auth/login 200 in 3ms :: {"id":2,"username":"owner","email":"owner@ex…
+7:13:43 PM [express] GET /api/messages/conversations 404 in 3ms :: {"error":"Job not found"}
+7:13:44 PM [express] GET /api/jobs/active 304 in 2ms :: []
+7:13:44 PM [express] GET /api/jobs/mine 200 in 1ms :: [{"id":1,"ownerId":2,"propertyId":1,"title":"L…
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Unidentified WebSocket client disconnected. Code: 1005, Reason: 
+WebSocket status: 0 total connection(s)
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:48 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:47.582Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:47.582Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:49 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:47.920Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:47.920Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:49 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:48.245Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:48.245Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:49 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:50 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:48.584Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:48.584Z' }
+Client identified as user 2
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:48.944Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:48.944Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:50 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:49.231Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:49.231Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:50 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:49.536Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:49.536Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:51 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:49.856Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:49.856Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:51 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:50.130Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:50.130Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:51 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:50.434Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:50.434Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:52 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:50.766Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:50.766Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:52 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:51.094Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:51.094Z' }
+Client identified as user 2
+7:13:52 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:52 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:51.396Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:51.396Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:51.683Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:51.683Z' }
+Client identified as user 2
+7:13:53 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:51.920Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:51.920Z' }
+Client identified as user 2
+7:13:53 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:52.180Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:52.180Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:53 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:52.466Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:52.466Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:54 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:52.779Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:52.779Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:54 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:53.086Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:53.086Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:54 PM [websocket] Sent welcome message to client
+WebSocket status: 20 total connection(s)
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:53.408Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:53.408Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:55 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:53.733Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:53.733Z' }
+Client identified as user 2
+7:13:55 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:54.046Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:54.046Z' }
+Client identified as user 2
+7:13:55 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:55 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:54.422Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:54.422Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:56 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:56 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:54.786Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:54.786Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:56 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:57 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:55.553Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:55.553Z' }
+Client identified as user 2
+7:13:57 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:57 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:55.919Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:55.919Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:58 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:58 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:56.406Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:56.406Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:58 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:58 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:59 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:56.927Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:56.927Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:59 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:13:59 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:00 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:57.507Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:57.507Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:00 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:00 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:58.062Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:58.062Z' }
+Client identified as user 2
+7:14:00 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:01 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:01 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:01 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:58.558Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:58.558Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:02 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:02 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:02 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:03 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:59.286Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:59.286Z' }
+Client identified as user 2
+7:14:03 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:03 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:03 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:13:59.887Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:13:59.887Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:04 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:00.154Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:00.154Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:04 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:04 PM [websocket] Sent welcome message to client
+WebSocket status: 54 total connection(s)
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:05 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:05 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:05 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:01.425Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:01.425Z' }
+Client identified as user 2
+7:14:05 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:06 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:06 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:01.939Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:01.939Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:06 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:07 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:07 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:02.577Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:02.577Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:07 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:07 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:08 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:03.187Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:03.187Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:08 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:08 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:09 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:09 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:03.843Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:03.843Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:09 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:10 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:10 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:10 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:04.713Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:04.713Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:10 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:11 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:05.208Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:05.208Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:11 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:11 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:11 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:05.890Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:05.890Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:12 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:06.277Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:06.277Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:12 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:13 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:06.681Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:06.681Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:13 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:13 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:07.141Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:07.141Z' }
+Client identified as user 2
+7:14:14 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:14 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:14 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+WebSocket status: 88 total connection(s)
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:08.158Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:08.158Z' }
+Client identified as user 2
+7:14:14 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:08.344Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:08.344Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:15 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:15 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:15 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:16 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:09.029Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:09.029Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:16 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:09.517Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:09.517Z' }
+Client identified as user 2
+7:14:16 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:17 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:17 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:10.089Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:10.089Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:17 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:18 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:18 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:10.544Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:10.544Z' }
+Client identified as user 2
+7:14:18 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:19 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:10.996Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:10.996Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:19 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:19 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:20 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:11.524Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:11.524Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:20 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:20 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:12.060Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:12.060Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:20 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:21 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:12.519Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:12.519Z' }
+Client identified as user 2
+7:14:21 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:21 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:22 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:22 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:22 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:13.128Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:13.128Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:22 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:23 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:23 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:23 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:13.659Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:13.659Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:24 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:24 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+WebSocket status: 120 total connection(s)
+7:14:24 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:14.288Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:14.288Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:25 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:25 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:25 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:14.860Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:14.860Z' }
+Client identified as user 2
+7:14:25 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:26 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:26 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:15.305Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:15.305Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:26 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:27 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:27 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:27 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:27 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:16.014Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:16.014Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:28 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:28 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:28 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:16.527Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:16.527Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:29 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:29 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:29 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:30 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:30 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:17.429Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:17.429Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:30 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:30 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:31 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:31 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:17.849Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:17.849Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:31 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:32 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:32 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:32 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:18.448Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:18.448Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:32 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:33 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:33 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:33 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:34 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:19.116Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:19.116Z' }
+Client identified as user 2
+7:14:34 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:34 PM [websocket] Sent welcome message to client
+WebSocket status: 154 total connection(s)
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:34 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:35 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:35 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:35 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:36 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:19.674Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:19.674Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:36 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:36 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:36 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:37 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:37 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:20.198Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:20.198Z' }
+Client identified as user 2
+7:14:37 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:38 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:20.544Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:20.544Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:38 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:38 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:38 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:21.094Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:21.094Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:39 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:39 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:39 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:40 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:40 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:40 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:21.736Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:21.736Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:40 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:41 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:41 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:41 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:42 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:42 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:42 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:42 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:22.672Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:22.672Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:43 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:43 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:43 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:44 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:44 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:44 PM [websocket] Sent welcome message to client
+WebSocket status: 189 total connection(s)
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:45 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:45 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:23.271Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:23.271Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:45 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:45 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:46 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:46 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:46 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:47 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:47 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:47 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:47 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:48 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:48 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:48 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:49 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:49 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:49 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:49 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:50 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:50 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:50 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:51 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:51 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:51 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:52 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:52 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:52 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:52 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:53 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:53 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:53 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:54 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:54 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:54 PM [websocket] Sent welcome message to client
+WebSocket status: 223 total connection(s)
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:54 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:55 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:55 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:55 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:56 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:56 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:56 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:56 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:57 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:57 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:57 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:58 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:58 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:58 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:58 PM [websocket] Sent welcome message to client
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:24.125Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:24.125Z' }
+Client identified as user 2
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:59 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:59 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:14:59 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:00 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:00 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:00 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:00 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:01 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:01 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:01 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:02 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:02 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:02 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:03 PM [websocket] Sent welcome message to client
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+Unidentified WebSocket client disconnected. Code: 1006, Reason: 
+WebSocket status: 202 total connection(s)
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:05 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:06 PM [websocket] Sent welcome message to client
+WebSocket client connected from 172.31.128.22 with headers: {
+  origin: 'https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  host: '6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev',
+  upgrade: 'websocket',
+  path: '/ws'
+}
+7:15:07 PM [websocket] Sent welcome message to client
+WebSocket status: 205 total connection(s)
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:24.834Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:24.834Z' }
+Client identified as user 2
+WebSocket status: 205 total connection(s)
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:25.615Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:25.615Z' }
+Client identified as user 2
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:26.530Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:26.530Z' }
+Client identified as user 2
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:27.214Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:27.214Z' }
+Client identified as user 2
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:28.650Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:28.650Z' }
+Client identified as user 2
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:29.145Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:29.145Z' }
+Client identified as user 2
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:30.796Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:30.796Z' }
+Client identified as user 2
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:31.647Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:31.647Z' }
+Client identified as user 2
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:32.769Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:32.769Z' }
+Client identified as user 2
+Received WebSocket message: {"type":"identify","userId":2,"timestamp":"2025-05-09T19:14:33.746Z"}
+Parsed WebSocket message: { type: 'identify', userId: 2, timestamp: '2025-05-09T19:14:33.746Z' }
+Client identified as user 2
