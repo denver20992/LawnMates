@@ -10,6 +10,7 @@ import {
   insertJobSchema, 
   insertMessageSchema, 
   insertVerificationSchema,
+  insertReviewSchema,
   jobStatusEnum
 } from "@shared/schema";
 
@@ -574,6 +575,137 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error releasing payment:", error);
       res.status(500).json({ error: "Failed to release payment" });
+    }
+  });
+  
+  // ==== Review routes ====
+  
+  // Get reviews by job ID
+  app.get("/api/reviews/job/:jobId", isAuthenticated, async (req, res) => {
+    const jobId = parseInt(req.params.jobId);
+    
+    try {
+      const job = await storage.getJob(jobId);
+      
+      if (!job) {
+        return res.status(404).json({ error: "Job not found" });
+      }
+      
+      // Check if user is authorized to view reviews for this job
+      if (req.user!.role !== 'admin' && 
+          job.ownerId !== req.user!.id && 
+          job.landscaperId !== req.user!.id) {
+        return res.status(403).json({ error: "Not authorized to view reviews for this job" });
+      }
+      
+      const reviews = await storage.getReviewsByJobId(jobId);
+      res.json(reviews);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+      res.status(500).json({ error: "Failed to fetch reviews" });
+    }
+  });
+  
+  // Get reviews where user is the reviewee
+  app.get("/api/reviews/reviewee/:userId", isAuthenticated, async (req, res) => {
+    const userId = parseInt(req.params.userId);
+    
+    try {
+      // Anyone can view reviews for any user
+      const reviews = await storage.getReviewsByRevieweeId(userId);
+      res.json(reviews);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+      res.status(500).json({ error: "Failed to fetch reviews" });
+    }
+  });
+  
+  // Get reviews where user is the reviewer
+  app.get("/api/reviews/reviewer/:userId", isAuthenticated, async (req, res) => {
+    const userId = parseInt(req.params.userId);
+    
+    try {
+      // Only the reviewer or an admin can view reviews left by a specific user
+      if (req.user!.role !== 'admin' && userId !== req.user!.id) {
+        return res.status(403).json({ error: "Not authorized to view these reviews" });
+      }
+      
+      // We need to fetch all reviews and filter manually since we don't have a dedicated method
+      const allReviews = await storage.getAllReviews();
+      const userReviews = allReviews.filter(review => review.reviewerId === userId);
+      
+      res.json(userReviews);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+      res.status(500).json({ error: "Failed to fetch reviews" });
+    }
+  });
+  
+  // Create a new review
+  app.post("/api/reviews", isAuthenticated, async (req, res) => {
+    try {
+      const reviewData = insertReviewSchema.parse({
+        ...req.body,
+        reviewerId: req.user!.id
+      });
+      
+      // Check if the job exists
+      const job = await storage.getJob(reviewData.jobId);
+      
+      if (!job) {
+        return res.status(404).json({ error: "Job not found" });
+      }
+      
+      // Check if user is authorized to review this job
+      if (req.user!.id !== job.ownerId && req.user!.id !== job.landscaperId) {
+        return res.status(403).json({ error: "Not authorized to review this job" });
+      }
+      
+      // Check if user is reviewing the other party
+      if (req.user!.id === reviewData.revieweeId) {
+        return res.status(400).json({ error: "Cannot review yourself" });
+      }
+      
+      // Check if the reviewee is involved in the job
+      if (reviewData.revieweeId !== job.ownerId && reviewData.revieweeId !== job.landscaperId) {
+        return res.status(400).json({ error: "Reviewee must be involved in the job" });
+      }
+      
+      // Check if job is completed
+      if (job.status !== 'completed') {
+        return res.status(400).json({ error: "Can only review completed jobs" });
+      }
+      
+      // Check if user has already reviewed this job
+      const existingReviews = await storage.getReviewsByJobId(reviewData.jobId);
+      const hasReviewed = existingReviews.some(review => 
+        review.reviewerId === req.user!.id && review.revieweeId === reviewData.revieweeId
+      );
+      
+      if (hasReviewed) {
+        return res.status(400).json({ error: "You have already reviewed this user for this job" });
+      }
+      
+      // Create the review
+      const newReview = await storage.createReview(reviewData);
+      
+      // Update user's rating
+      const revieweeReviews = await storage.getReviewsByRevieweeId(reviewData.revieweeId);
+      const totalRating = revieweeReviews.reduce((sum, review) => sum + review.rating, 0);
+      const averageRating = totalRating / revieweeReviews.length;
+      
+      await storage.updateUser(reviewData.revieweeId, {
+        rating: averageRating,
+        reviewCount: revieweeReviews.length
+      });
+      
+      res.status(201).json(newReview);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: error.errors });
+      }
+      console.error("Error creating review:", error);
+      res.status(500).json({ error: "Failed to create review" });
     }
   });
   

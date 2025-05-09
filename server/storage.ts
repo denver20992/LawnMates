@@ -67,6 +67,7 @@ export interface IStorage {
   getReview(id: number): Promise<Review | undefined>;
   getReviewsByJobId(jobId: number): Promise<Review[]>;
   getReviewsByRevieweeId(revieweeId: number): Promise<Review[]>;
+  getAllReviews(): Promise<Review[]>;
   createReview(review: InsertReview): Promise<Review>;
   
   // Favorite methods
@@ -543,6 +544,10 @@ export class MemStorage implements IStorage {
     );
   }
   
+  async getAllReviews(): Promise<Review[]> {
+    return Array.from(this.reviewsStore.values());
+  }
+  
   async createReview(reviewData: InsertReview): Promise<Review> {
     const id = this.reviewIdCounter++;
     const now = new Date().toISOString();
@@ -940,6 +945,10 @@ export class DrizzleStorage implements IStorage {
   
   async getReviewsByRevieweeId(revieweeId: number): Promise<Review[]> {
     return await db.select().from(reviews).where(eq(reviews.revieweeId, revieweeId));
+  }
+  
+  async getAllReviews(): Promise<Review[]> {
+    return await db.select().from(reviews);
   }
   
   async createReview(reviewData: InsertReview): Promise<Review> {
