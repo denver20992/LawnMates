@@ -2,7 +2,6 @@ import React, { createContext, useState, useEffect, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { User } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
 
 type AuthContextType = {
   user: User | null;
@@ -29,7 +28,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const queryClient = useQueryClient();
-  const { toast } = useToast();
 
   const fetchCurrentUser = useCallback(async () => {
     try {
@@ -69,17 +67,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Invalidate any user-related queries
       queryClient.invalidateQueries({ queryKey: ["/api/jobs"] });
       
-      toast({
-        title: "Login successful",
-        description: `Welcome back, ${userData.username}!`,
-      });
+      console.log(`Login successful: Welcome back, ${userData.username}!`);
     } catch (err) {
       setError("Invalid username or password");
-      toast({
-        title: "Login failed",
-        description: "Invalid username or password",
-        variant: "destructive",
-      });
+      console.error("Login failed: Invalid username or password");
       throw err;
     } finally {
       setIsLoading(false);
@@ -101,17 +92,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const userData = await res.json();
       setUser(userData);
       
-      toast({
-        title: "Registration successful",
-        description: `Welcome to LawnMates, ${userData.username}!`,
-      });
+      console.log(`Registration successful: Welcome to LawnMates, ${userData.username}!`);
     } catch (err) {
       setError("Registration failed. Please try again.");
-      toast({
-        title: "Registration failed",
-        description: "Username or email may already be in use",
-        variant: "destructive",
-      });
+      console.error("Registration failed: Username or email may already be in use");
       throw err;
     } finally {
       setIsLoading(false);
