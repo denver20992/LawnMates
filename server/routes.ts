@@ -506,7 +506,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       await storage.deleteFavorite(favoriteId);
-      res.status(204).end();
+      res.status(204).send();
     } catch (error) {
       console.error("Error deleting favorite:", error);
       res.status(500).json({ error: "Failed to delete favorite" });
@@ -514,46 +514,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Create a job from a favorite
-  app.post("/api/jobs/from-favorite", isAuthenticated, async (req, res) => {
-    const { favoriteId } = req.body;
+  app.post("/api/favorites/:id/create-job", isAuthenticated, async (req, res) => {
+    const favoriteId = parseInt(req.params.id);
     
     try {
-      // Get the favorite
-      const favorite = await storage.getFavorite(parseInt(favoriteId));
+      const favorite = await storage.getFavorite(favoriteId);
       
       if (!favorite) {
         return res.status(404).json({ error: "Favorite not found" });
       }
       
-      // Check if user is authorized to use this favorite
+      // Check if user is authorized to create a job from this favorite
       if (favorite.userId !== req.user!.id) {
-        return res.status(403).json({ error: "Not authorized to use this favorite" });
+        return res.status(403).json({ error: "Not authorized to create a job from this favorite" });
       }
       
       // Get the property
-      const property = await storage.getProperty(favorite.propertyId!);
-      
+      const property = await storage.getProperty(favorite.propertyId);
       if (!property) {
         return res.status(404).json({ error: "Property not found" });
       }
       
       // Create a job from the favorite
-      const jobData = {
+      const job = await storage.createJob({
         ownerId: req.user!.id,
         propertyId: property.id,
-        title: `Lawn care for ${property.address}`,
-        description: favorite.notes || `Lawn care service for ${property.address}`,
+        title: `Service for ${property.address}`,
+        description: favorite.notes || `Lawn service at ${property.address}`,
         price: 5000, // Default price in cents ($50)
-        startDate: new Date().toISOString(),
-        isRecurring: favorite.isRecurring || false,
+        startDate: new Date(),
+        isRecurring: favorite.isRecurring,
         recurrenceInterval: favorite.recurrenceInterval,
-        requiresEquipment: true,
+        requiresEquipment: false,
+        status: 'posted',
         latitude: property.latitude,
         longitude: property.longitude
-      };
+      });
       
-      const newJob = await storage.createJob(jobData);
-      res.status(201).json(newJob);
+      res.status(201).json(job);
     } catch (error) {
       console.error("Error creating job from favorite:", error);
       res.status(500).json({ error: "Failed to create job from favorite" });
