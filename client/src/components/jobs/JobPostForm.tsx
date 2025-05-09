@@ -34,7 +34,7 @@ import { useAuth } from '@/hooks/useAuth';
 // Extend the job schema for the form
 const jobFormSchema = z.object({
   title: z.string().min(5, {
-    message: "Title must be at least 5 characters",
+    message: "Address must be at least 5 characters",
   }),
   description: z.string().min(20, {
     message: "Description must be at least 20 characters",
@@ -170,7 +170,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
         <CardHeader>
           <CardTitle>Post a New Lawn Care Job</CardTitle>
           <CardDescription>
-            Fill in the details below to find a landscaper for your property
+            Enter your address and select services to find a landscaper for your property
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -183,12 +183,12 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                     name="title"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Job Title</FormLabel>
+                        <FormLabel>Job Address</FormLabel>
                         <FormControl>
-                          <Input placeholder="e.g. Lawn Mowing and Edging" {...field} />
+                          <Input placeholder="e.g. 123 Main St, Toronto, ON M5V 1A1" {...field} />
                         </FormControl>
                         <FormDescription>
-                          A clear title helps landscapers understand your needs.
+                          Enter the address where the landscaping job will be performed.
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -200,17 +200,39 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Job Description</FormLabel>
+                        <FormLabel>Services Needed</FormLabel>
+                        <div className="mb-3 space-y-2">
+                          <div className="flex flex-wrap gap-2">
+                            {["Lawn Mowing", "Hedge Trimming", "Leaf Removal", "Garden Maintenance", "Weed Control", "Fertilization"].map((service) => (
+                              <Button
+                                key={service}
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                className="rounded-full"
+                                onClick={() => {
+                                  const currentText = field.value;
+                                  const newText = currentText ? 
+                                    currentText + (currentText.endsWith("\n") ? "" : "\n") + "- " + service : 
+                                    "- " + service;
+                                  field.onChange(newText);
+                                }}
+                              >
+                                + {service}
+                              </Button>
+                            ))}
+                          </div>
+                        </div>
                         <FormControl>
                           <Textarea 
-                            placeholder="Describe the job details, special instructions, and any requirements..." 
+                            placeholder="Select services above or type additional details, special instructions, and requirements..." 
                             className="resize-none" 
                             rows={4}
                             {...field} 
                           />
                         </FormControl>
                         <FormDescription>
-                          Be specific about what needs to be done and any special considerations.
+                          Select the services you need or add custom details.
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
