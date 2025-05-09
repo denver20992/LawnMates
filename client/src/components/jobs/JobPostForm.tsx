@@ -448,57 +448,67 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                     />
                   )}
                   
-                  {/* Quick Service Package Option */}
-                  {isQuickServiceEligible(selectedServices) && (
-                    <FormField
-                      control={form.control}
-                      name="isQuickService"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 border-green-200 bg-green-50">
-                          <div className="space-y-0.5">
-                            <FormLabel className="text-base text-green-700">
-                              Quick Service Package
-                            </FormLabel>
-                            <FormDescription className="text-green-700">
-                              Select our recommended service package with pre-selected optimal services.
-                            </FormDescription>
-                          </div>
-                          <FormControl>
-                            <Switch
-                              checked={field.value}
-                              onCheckedChange={(checked) => {
-                                field.onChange(checked);
-                                // Update price when quick service is toggled
-                                if (useExistingProperty) {
-                                  if (selectedPropertyId) {
-                                    const newPrice = calculateEstimatedPrice(
-                                      selectedServices, 
-                                      selectedPropertyId, 
-                                      true, 
-                                      undefined, 
-                                      form.getValues('yardType'), 
-                                      checked
-                                    );
-                                    form.setValue('price', newPrice);
-                                  }
-                                } else {
+                  {/* Quick Service Package Option - Always visible */}
+                  <FormField
+                    control={form.control}
+                    name="isQuickService"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 border-green-200 bg-green-50">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={(checked) => {
+                              const isChecked = checked === true;
+                              field.onChange(isChecked);
+                              
+                              // When checkbox is checked, automatically select the services
+                              if (isChecked) {
+                                // Select all quick service package services
+                                form.setValue('selectedServices', QUICK_SERVICE_PACKAGE.services);
+                              }
+                              
+                              // Update price calculation
+                              const newServices = isChecked ? QUICK_SERVICE_PACKAGE.services : form.getValues('selectedServices');
+                              if (useExistingProperty) {
+                                if (selectedPropertyId) {
                                   const newPrice = calculateEstimatedPrice(
-                                    selectedServices, 
-                                    0, 
-                                    false, 
-                                    selectedPropertySize, 
+                                    newServices, 
+                                    selectedPropertyId, 
+                                    true, 
+                                    undefined, 
                                     form.getValues('yardType'), 
-                                    checked
+                                    isChecked
                                   );
                                   form.setValue('price', newPrice);
                                 }
-                              }}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  )}
+                              } else {
+                                const newPrice = calculateEstimatedPrice(
+                                  newServices, 
+                                  0, 
+                                  false, 
+                                  selectedPropertySize, 
+                                  form.getValues('yardType'), 
+                                  isChecked
+                                );
+                                form.setValue('price', newPrice);
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel className="text-green-700 text-base font-medium">
+                            Quick Service Package
+                          </FormLabel>
+                          <FormDescription className="text-green-700">
+                            Select our essential yard maintenance package including: 
+                            <span className="font-medium"> {QUICK_SERVICE_PACKAGE.services.map(s => 
+                              AVAILABLE_SERVICES.find(as => as.id === s)?.label
+                            ).join(', ')}</span>
+                          </FormDescription>
+                        </div>
+                      </FormItem>
+                    )}
+                  />
                   
                   <FormField
                     control={form.control}
@@ -513,24 +523,6 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                           <div className="mt-2 p-3 bg-muted/50 rounded-md text-xs">
                             <p className="font-medium mb-1">Pricing Information</p>
                             <p>The estimated rates below are based on market data from landscapers in your area. Actual prices may vary based on property size, complexity, and special requirements. Final prices will be adjusted after property assessment.</p>
-                          </div>
-                          
-                          {/* Quick Service option information */}
-                          <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-md text-xs flex items-start">
-                            <div className="text-green-500 mr-2 mt-0.5">
-                              <CheckCircle className="h-4 w-4" />
-                            </div>
-                            <div>
-                              <p className="font-medium mb-1 text-green-700">Quick Service Package Available!</p>
-                              <p className="text-green-700">Select our recommended Quick Service package for essential yard maintenance:</p>
-                              <ul className="mt-1 list-disc list-inside">
-                                <li className="text-green-700">
-                                  <span className="font-medium">{QUICK_SERVICE_PACKAGE.label}:</span> {QUICK_SERVICE_PACKAGE.services.map(s => 
-                                    AVAILABLE_SERVICES.find(as => as.id === s)?.label
-                                  ).join(', ')}
-                                </li>
-                              </ul>
-                            </div>
                           </div>
                         </div>
                         <div className="grid grid-cols-2 gap-2">
@@ -549,7 +541,8 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                                       <Checkbox
                                         checked={field.value?.includes(service.id)}
                                         onCheckedChange={(checked) => {
-                                          const updatedServices = checked
+                                          const isChecked = checked === true;
+                                          const updatedServices = isChecked
                                             ? [...field.value, service.id]
                                             : field.value?.filter(
                                                 (value) => value !== service.id
@@ -636,15 +629,15 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                                     })}
                                   </ul>
                                   
-                                  {/* Show quick service package information */}
-                                  {isQuickServiceEligible(selectedServices) && (
+                                  {/* Show quick service package status when applied */}
+                                  {isQuickService && (
                                     <div className="mt-2 mb-2 p-1.5 bg-green-50 border border-green-200 rounded-md">
                                       <p className="text-green-700 font-medium">
                                         <CheckCircle className="inline-block h-3 w-3 mr-1" />
-                                        Quick Service Package Available!
+                                        Quick Service Package Applied
                                       </p>
                                       <p className="text-green-700 text-xs">
-                                        You've selected all the services needed for our "{QUICK_SERVICE_PACKAGE.label}"!
+                                        Your price reflects the Quick Service package pricing.
                                       </p>
                                     </div>
                                   )}
@@ -867,8 +860,8 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                             ) : null;
                           })}
                           
-                          {/* Show quick service package if applicable */}
-                          {isQuickServiceEligible(form.getValues('selectedServices')) && (
+                          {/* Show quick service package if applied */}
+                          {form.getValues('isQuickService') && (
                             <div className="bg-green-50 rounded-md p-2 my-2 border border-green-200 flex justify-between">
                               <span className="text-green-700 font-medium">Quick Service Package ({QUICK_SERVICE_PACKAGE.label}):</span>
                               <span className="text-green-700 font-medium">✓ Applied</span>
