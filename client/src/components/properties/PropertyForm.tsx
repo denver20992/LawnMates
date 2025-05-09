@@ -18,37 +18,25 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
-import { insertPropertySchema } from '@shared/schema';
 import { Card } from '@/components/ui/card';
 import { useFavorites } from '@/hooks/useFavorites';
 
-// Extend property schema for the form
-const propertyFormSchema = z.object({
-  address: z.string().min(5, {
-    message: "Address must be at least 5 characters",
-  }),
-  city: z.string().min(2, {
-    message: "City is required",
-  }),
-  state: z.string().min(2, {
-    message: "State is required",
-  }),
-  zipCode: z.string().min(5, {
-    message: "Zip code is required",
-  }),
-  propertyType: z.string({
-    required_error: "Please select a property type",
-  }),
-  size: z.string().transform(val => val ? parseInt(val, 10) : undefined).optional(),
+// Define the form schema
+const formSchema = z.object({
+  address: z.string().min(5, { message: "Address must be at least 5 characters" }),
+  city: z.string().min(2, { message: "City is required" }),
+  state: z.string().min(2, { message: "State is required" }),
+  zipCode: z.string().min(5, { message: "Zip code is required" }),
+  propertyType: z.string({ required_error: "Please select a property type" }),
+  size: z.coerce.number().optional(),
   notes: z.string().optional(),
-  // Additional fields for saving as favorite
   saveAsFavorite: z.boolean().default(false),
   isRecurring: z.boolean().default(false),
   recurrenceInterval: z.string().optional(),
   favoriteNotes: z.string().optional(),
 });
 
-type PropertyFormValues = z.infer<typeof propertyFormSchema>;
+type FormValues = z.infer<typeof formSchema>;
 
 interface PropertyFormProps {
   onSuccess?: () => void;
@@ -59,15 +47,15 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onSuccess }) => {
   const { toast } = useToast();
   const { saveFavorite } = useFavorites();
   
-  const form = useForm<PropertyFormValues>({
-    resolver: zodResolver(propertyFormSchema),
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       address: '',
       city: '',
       state: '',
       zipCode: '',
       propertyType: 'residential',
-      size: '',
+      size: undefined,
       notes: '',
       saveAsFavorite: false,
       isRecurring: false,
@@ -76,10 +64,10 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onSuccess }) => {
     },
   });
   
-  const saveAsFavorite = form.watch('saveAsFavorite');
-  const isRecurring = form.watch('isRecurring');
+  const saveAsFavoriteValue = form.watch('saveAsFavorite');
+  const isRecurringValue = form.watch('isRecurring');
   
-  const onSubmit = async (values: PropertyFormValues) => {
+  const handleSubmit = async (values: FormValues) => {
     try {
       setIsSubmitting(true);
       
@@ -143,7 +131,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onSuccess }) => {
   return (
     <Card className="max-w-3xl mx-auto p-6">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
           <div className="space-y-4">
             <h2 className="text-xl font-semibold">Property Information</h2>
             
@@ -238,7 +226,16 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onSuccess }) => {
                   <FormItem>
                     <FormLabel>Property Size (sq ft)</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="e.g. 5000" {...field} />
+                      <Input 
+                        type="number" 
+                        placeholder="e.g. 5000" 
+                        {...field}
+                        value={field.value || ''}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          field.onChange(value === '' ? undefined : parseInt(value, 10));
+                        }}
+                      />
                     </FormControl>
                     <FormDescription>
                       Approximate size of the yard/lawn area
@@ -294,7 +291,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onSuccess }) => {
               )}
             />
             
-            {saveAsFavorite && (
+            {saveAsFavoriteValue && (
               <div className="space-y-4 pl-4 border-l-2 border-primary-100">
                 <FormField
                   control={form.control}
@@ -317,7 +314,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onSuccess }) => {
                   )}
                 />
                 
-                {isRecurring && (
+                {isRecurringValue && (
                   <FormField
                     control={form.control}
                     name="recurrenceInterval"

@@ -1,68 +1,83 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useToast } from '@/hooks/use-toast';
 import { useLocation } from 'wouter';
-import { useAuth } from '@/hooks/useAuth';
-import AppHeader from '@/components/layout/AppHeader';
-import MobileMenu from '@/components/layout/MobileMenu';
-import SavedPropertiesList from '@/components/properties/SavedPropertiesList';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { Loader2, PlusCircle } from 'lucide-react';
+import SavedPropertiesList from '@/components/properties/SavedPropertiesList';
+import { PageHeader } from '@/components/ui/page-header';
 
 const SavedPropertiesPage: React.FC = () => {
-  const { user, isAuthenticated, isLoading } = useAuth();
-  const [location, setLocation] = useLocation();
-
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      setLocation('/login');
-      return;
-    }
-    
-    // Redirect non-property owners away 
-    if (!isLoading && isAuthenticated && user?.role !== 'property_owner') {
-      setLocation('/');
-    }
-  }, [isLoading, isAuthenticated, user, setLocation]);
-
+  const { toast } = useToast();
+  const [, navigate] = useLocation();
+  
+  const { data: favorites, isLoading, error, refetch } = useQuery({
+    queryKey: ['/api/favorites'],
+    queryFn: async () => {
+      const response = await fetch('/api/favorites');
+      if (!response.ok) {
+        throw new Error('Failed to fetch saved properties');
+      }
+      return response.json();
+    },
+  });
+  
   const handleCreateJob = () => {
-    setLocation('/jobs/post');
+    navigate('/jobs/create');
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin w-10 h-10 border-4 border-primary border-t-transparent rounded-full"></div>
-      </div>
-    );
+  
+  const handleAddProperty = () => {
+    navigate('/properties/add');
+  };
+  
+  if (error) {
+    toast({
+      title: 'Error fetching saved properties',
+      description: (error as Error).message,
+      variant: 'destructive',
+    });
   }
-
-  // Don't render if not authenticated or not a property owner
-  if (!isAuthenticated || user?.role !== 'property_owner') {
-    return null;
-  }
-
+  
   return (
-    <div className="pb-16 md:pb-0">
-      <AppHeader />
-      
-      <div className="mx-auto max-w-7xl py-6">
-        <div className="mx-4 sm:mx-6 lg:mx-8 mb-6 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-neutral-900">Saved Properties</h1>
-            <p className="text-neutral-600 mt-1">
-              Manage your saved properties and easily create recurring jobs
-            </p>
-          </div>
-          <Button onClick={() => setLocation('/properties/add')}>
+    <div className="container max-w-6xl mx-auto py-6 space-y-8">
+      <PageHeader
+        title="Saved Properties"
+        description="Manage your saved properties and quickly create recurring jobs"
+        actions={
+          <Button onClick={handleAddProperty}>
+            <PlusCircle className="h-4 w-4 mr-2" />
             Add Property
           </Button>
-        </div>
-        
-        <div className="mx-4 sm:mx-6 lg:mx-8">
-          <SavedPropertiesList onCreateJob={handleCreateJob} />
-        </div>
-      </div>
+        }
+      />
       
-      <MobileMenu />
+      <Separator />
+      
+      {isLoading ? (
+        <div className="flex justify-center items-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <span className="ml-2 text-lg">Loading saved properties...</span>
+        </div>
+      ) : favorites && favorites.length > 0 ? (
+        <SavedPropertiesList 
+          onCreateJob={handleCreateJob}
+        />
+      ) : (
+        <Card className="bg-muted/40">
+          <CardHeader>
+            <CardTitle className="text-center">No Saved Properties</CardTitle>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <p>You haven't saved any properties yet. Add a property to save it for future jobs.</p>
+            <Button onClick={handleAddProperty} variant="default">
+              <PlusCircle className="h-4 w-4 mr-2" />
+              Add Your First Property
+            </Button>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

@@ -19,6 +19,8 @@ import ProfilePage from "@/pages/profile";
 import ReviewsPage from "@/pages/reviews";
 import AdminPage from "@/pages/admin/index";
 import Checkout from "@/pages/checkout";
+import SavedPropertiesPage from "@/pages/properties/saved";
+import AddPropertyPage from "@/pages/properties/add";
 import NotFound from "@/pages/not-found";
 
 // Route component that redirects to login if not authenticated
@@ -72,6 +74,12 @@ function Router() {
       </Route>
       <Route path="/checkout">
         <PrivateRoute component={Checkout} />
+      </Route>
+      <Route path="/properties/saved">
+        <PrivateRoute component={SavedPropertiesPage} />
+      </Route>
+      <Route path="/properties/add">
+        <PrivateRoute component={AddPropertyPage} />
       </Route>
       
       <Route component={NotFound} />
