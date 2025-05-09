@@ -1,5 +1,6 @@
-import React, { createContext, useState, useEffect, useCallback } from 'react';
-import { useAuth } from '@/hooks/useAuth';
+import React, { createContext, useState, useEffect } from 'react';
+import { useWebsocket } from '@/hooks/useWebsocket';
+import { useToast } from '@/hooks/use-toast';
 
 type Notification = {
   id: string;
@@ -16,6 +17,7 @@ type NotificationContextType = {
   markAsRead: (id: string) => void;
   markAllAsRead: () => void;
   clearNotifications: () => void;
+  websocketStatus: 'connecting' | 'open' | 'closed' | 'error';
 };
 
 export const NotificationContext = createContext<NotificationContextType>({
@@ -24,103 +26,67 @@ export const NotificationContext = createContext<NotificationContextType>({
   markAsRead: () => {},
   markAllAsRead: () => {},
   clearNotifications: () => {},
+  websocketStatus: 'closed',
 });
 
 export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [socket, setSocket] = useState<WebSocket | null>(null);
-  const { user, isAuthenticated } = useAuth();
-
-  const connectWebSocket = useCallback(() => {
-    if (!isAuthenticated) return;
-
-    // Create WebSocket connection
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const wsUrl = `${protocol}//${window.location.host}/ws`;
-    const newSocket = new WebSocket(wsUrl);
-
-    newSocket.onopen = () => {
-      console.log('WebSocket Connected');
-      // Send user ID to identify this connection
-      if (user?.id) {
-        newSocket.send(JSON.stringify({ type: 'identify', userId: user.id }));
-      }
-    };
-
-    newSocket.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        if (data.type === 'notification') {
-          // Add a new notification
-          const newNotification: Notification = {
-            id: data.id || `notification-${Date.now()}`,
-            message: data.message,
-            type: data.notificationType || 'system',
-            read: false,
-            createdAt: new Date(),
-            data: data.data
-          };
-          
-          setNotifications(prev => [newNotification, ...prev]);
-          
-          // Show browser notification if permission granted
-          if (Notification.permission === 'granted') {
-            new Notification('LawnMates', {
-              body: data.message,
-              icon: '/favicon.ico'
-            });
-          }
-        }
-      } catch (error) {
-        console.error('Failed to parse WebSocket message:', error);
-      }
-    };
-
-    newSocket.onclose = () => {
-      console.log('WebSocket Disconnected');
-      // Try to reconnect after 5 seconds
-      setTimeout(connectWebSocket, 5000);
-    };
-
-    newSocket.onerror = (error) => {
-      console.error('WebSocket Error:', error);
-      newSocket.close();
-    };
-
-    setSocket(newSocket);
-
-    // Clean up function
-    return () => {
-      if (newSocket.readyState === WebSocket.OPEN) {
-        newSocket.close();
-      }
-    };
-  }, [isAuthenticated, user?.id]);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      // Request notification permission
-      if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-        Notification.requestPermission();
+  const { toast } = useToast();
+  
+  // Process incoming websocket messages to create notifications
+  const handleWebSocketMessage = (data: any) => {
+    if (data.type === 'notification') {
+      // Add a new notification
+      const newNotification: Notification = {
+        id: data.id || `notification-${Date.now()}`,
+        message: data.message,
+        type: data.notificationType || 'system',
+        read: false,
+        createdAt: new Date(),
+        data: data.data
+      };
+      
+      setNotifications(prev => [newNotification, ...prev]);
+      
+      // Show browser notification if permission granted
+      if (window.Notification && Notification.permission === 'granted') {
+        new Notification('LawnMates', {
+          body: data.message,
+          icon: '/favicon.ico'
+        });
       }
       
-      // Connect to WebSocket
-      connectWebSocket();
-    } else {
-      // Close WebSocket if user logs out
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.close();
-        setSocket(null);
-      }
+      // Also show a toast notification
+      toast({
+        title: 'New Notification',
+        description: data.message,
+        duration: 5000,
+      });
     }
-    
-    // Clean up function
-    return () => {
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.close();
-      }
-    };
-  }, [isAuthenticated, connectWebSocket, socket]);
+  };
+  
+  // Setup WebSocket connection using our hook
+  const { status: websocketStatus } = useWebsocket({
+    onMessage: handleWebSocketMessage,
+    onOpen: () => {
+      console.log('WebSocket Connected');
+    },
+    onClose: () => {
+      console.log('WebSocket Disconnected');
+    },
+    onError: (error) => {
+      console.error('WebSocket Error:', error);
+    },
+    autoReconnect: true,
+    reconnectDelay: 5000
+  });
+
+  // Request browser notification permission on component mount
+  useEffect(() => {
+    if (window.Notification && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+      Notification.requestPermission();
+    }
+  }, []);
 
   const markAsRead = (id: string) => {
     setNotifications(prevNotifications =>
@@ -150,6 +116,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
         markAsRead,
         markAllAsRead,
         clearNotifications,
+        websocketStatus,
       }}
     >
       {children}
