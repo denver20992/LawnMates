@@ -130,7 +130,11 @@ export const reviews = pgTable("reviews", {
 export const favorites = pgTable("favorites", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id).notNull(),
-  favoriteId: integer("favorite_id").references(() => users.id).notNull(),
+  favoriteId: integer("favorite_id").references(() => users.id),
+  propertyId: integer("property_id").references(() => properties.id),
+  isRecurring: boolean("is_recurring").default(false),
+  recurrenceInterval: text("recurrence_interval"),
+  notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

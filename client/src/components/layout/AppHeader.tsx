@@ -54,7 +54,10 @@ const AppHeader: React.FC = () => {
                     onError={(e) => {
                       // Fallback if image fails to load
                       e.currentTarget.style.display = 'none';
-                      e.currentTarget.nextElementSibling.style.display = 'flex';
+                      const sibling = e.currentTarget.nextElementSibling;
+                      if (sibling && sibling instanceof HTMLElement) {
+                        sibling.style.display = 'flex';
+                      }
                     }} 
                   />
                   <div className="flex items-center ml-1" style={{display: 'none'}}>
