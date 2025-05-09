@@ -32,6 +32,12 @@ export const useWebsocket = (options: UseWebSocketOptions = {}) => {
     const wsUrl = `${protocol}//${window.location.host}/ws`;
     console.log(`Connecting to WebSocket at ${wsUrl}`);
     
+    // Don't reconnect if we're already connecting or connected
+    if (socket && (socket.readyState === WebSocket.CONNECTING || socket.readyState === WebSocket.OPEN)) {
+      console.log('Already connected or connecting - not creating a new connection');
+      return;
+    }
+    
     try {
       // Create new WebSocket connection with explicit error handling
       console.log('Creating new WebSocket instance...');
@@ -49,11 +55,19 @@ export const useWebsocket = (options: UseWebSocketOptions = {}) => {
           const userId = typeof user.id === 'number' ? user.id : parseInt(user.id as string);
           const identifyMessage = JSON.stringify({
             type: 'identify',
-            userId
+            userId,
+            timestamp: new Date().toISOString()
           });
           
           console.log(`Sending identify message: ${identifyMessage}`);
-          newSocket.send(identifyMessage);
+          // Give a slight delay to ensure the socket is fully ready
+          setTimeout(() => {
+            if (newSocket.readyState === WebSocket.OPEN) {
+              newSocket.send(identifyMessage);
+            } else {
+              console.warn('Socket not open when trying to send identify message');
+            }
+          }, 100);
 
           if (options.onOpen) {
             options.onOpen();
@@ -65,17 +79,30 @@ export const useWebsocket = (options: UseWebSocketOptions = {}) => {
 
       newSocket.onmessage = (event) => {
         try {
+          console.log('WebSocket message received:', event.data);
           const data = JSON.parse(event.data);
           
+          // Handle various message types
+          if (data.type === 'welcome') {
+            console.log('Received welcome message from server:', data.message);
+          } else if (data.type === 'confirmation') {
+            console.log('Identification confirmed:', data.message);
+          } else if (data.type === 'error') {
+            console.warn('WebSocket error from server:', data.message);
+          }
+          
+          // Pass all messages to the callback
           if (options.onMessage) {
             options.onMessage(data);
           }
-        } catch (error) {
-          console.error('Failed to parse WebSocket message:', error);
+        } catch (e) {
+          const error = e as Error;
+          console.error('Failed to parse WebSocket message:', error.message);
         }
       };
 
-      newSocket.onclose = () => {
+      newSocket.onclose = (event) => {
+        console.log(`WebSocket closed with code: ${event.code}, reason: ${event.reason || 'No reason provided'}`);
         setStatus('closed');
         setSocket(null);
         
@@ -83,11 +110,18 @@ export const useWebsocket = (options: UseWebSocketOptions = {}) => {
           options.onClose();
         }
 
-        // Reconnect if enabled
-        if (options.autoReconnect !== false) {
+        // Don't reconnect if closed with specific codes
+        const dontReconnectCodes = [1000]; // 1000 = normal closure
+        
+        // Reconnect if enabled and not a normal closure
+        if (options.autoReconnect !== false && !dontReconnectCodes.includes(event.code)) {
+          // Use exponential backoff for reconnection
+          const delay = options.reconnectDelay || 5000;
+          console.log(`Will attempt to reconnect in ${delay/1000} seconds`);
+          
           setTimeout(() => {
             connect();
-          }, options.reconnectDelay || 5000);
+          }, delay);
         }
       };
 
@@ -145,6 +179,30 @@ export const useWebsocket = (options: UseWebSocketOptions = {}) => {
       return true;
     }
     return false;
+  }, [socket, status]);
+
+  // Setup heartbeat to maintain connection
+  useEffect(() => {
+    if (!socket || status !== 'open') return;
+    
+    // Send a ping every 30 seconds to keep the connection alive
+    const heartbeatInterval = setInterval(() => {
+      try {
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send(JSON.stringify({
+            type: 'ping',
+            timestamp: new Date().toISOString()
+          }));
+          console.log('Heartbeat ping sent');
+        }
+      } catch (err) {
+        console.error('Failed to send heartbeat:', err);
+      }
+    }, 30000);
+    
+    return () => {
+      clearInterval(heartbeatInterval);
+    };
   }, [socket, status]);
 
   // Connect on mount if authenticated
