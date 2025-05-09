@@ -111,17 +111,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Clear any cached data
       queryClient.clear();
       
-      toast({
-        title: "Logged out",
-        description: "You have been successfully logged out",
-      });
+      console.log("Logged out successfully");
     } catch (err) {
       setError("Logout failed");
-      toast({
-        title: "Logout failed",
-        description: "Please try again",
-        variant: "destructive",
-      });
+      console.error("Logout failed: Please try again");
     } finally {
       setIsLoading(false);
     }
