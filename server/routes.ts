@@ -11,6 +11,8 @@ import {
   insertMessageSchema, 
   insertVerificationSchema,
   insertReviewSchema,
+  insertPropertySchema,
+  insertFavoriteSchema,
   jobStatusEnum
 } from "@shared/schema";
 
@@ -362,6 +364,202 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ==== Property routes ====
+  
+  // Get user's properties
+  app.get("/api/properties", isAuthenticated, async (req, res) => {
+    try {
+      const properties = await storage.getPropertiesByOwnerId(req.user!.id);
+      res.json(properties);
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+      res.status(500).json({ error: "Failed to fetch properties" });
+    }
+  });
+  
+  // Get a specific property
+  app.get("/api/properties/:id", isAuthenticated, async (req, res) => {
+    const propertyId = parseInt(req.params.id);
+    
+    try {
+      const property = await storage.getProperty(propertyId);
+      
+      if (!property) {
+        return res.status(404).json({ error: "Property not found" });
+      }
+      
+      // Check if user is authorized to view this property
+      if (req.user!.role !== 'admin' && property.ownerId !== req.user!.id) {
+        return res.status(403).json({ error: "Not authorized to view this property" });
+      }
+      
+      res.json(property);
+    } catch (error) {
+      console.error("Error fetching property:", error);
+      res.status(500).json({ error: "Failed to fetch property" });
+    }
+  });
+  
+  // Create a new property
+  app.post("/api/properties", isAuthenticated, async (req, res) => {
+    try {
+      // Validate property data
+      const propertyData = insertPropertySchema.parse({
+        ...req.body,
+        ownerId: req.user!.id
+      });
+      
+      const newProperty = await storage.createProperty(propertyData);
+      res.status(201).json(newProperty);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: error.errors });
+      }
+      console.error("Error creating property:", error);
+      res.status(500).json({ error: "Failed to create property" });
+    }
+  });
+  
+  // ==== Favorites routes ====
+  
+  // Get user's favorites
+  app.get("/api/favorites", isAuthenticated, async (req, res) => {
+    try {
+      const favorites = await storage.getFavoritesByUserId(req.user!.id);
+      
+      // For each favorite, get the associated property
+      const favoritesWithProperties = await Promise.all(
+        favorites.map(async (favorite) => {
+          if (favorite.propertyId) {
+            const property = await storage.getProperty(favorite.propertyId);
+            return { ...favorite, property };
+          }
+          return favorite;
+        })
+      );
+      
+      res.json(favoritesWithProperties);
+    } catch (error) {
+      console.error("Error fetching favorites:", error);
+      res.status(500).json({ error: "Failed to fetch favorites" });
+    }
+  });
+  
+  // Create a new favorite
+  app.post("/api/favorites", isAuthenticated, async (req, res) => {
+    try {
+      // Validate favorite data
+      const favoriteData = insertFavoriteSchema.parse({
+        ...req.body,
+        userId: req.user!.id
+      });
+      
+      const newFavorite = await storage.createFavorite(favoriteData);
+      res.status(201).json(newFavorite);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: error.errors });
+      }
+      console.error("Error creating favorite:", error);
+      res.status(500).json({ error: "Failed to create favorite" });
+    }
+  });
+  
+  // Update a favorite
+  app.patch("/api/favorites/:id", isAuthenticated, async (req, res) => {
+    const favoriteId = parseInt(req.params.id);
+    
+    try {
+      const favorite = await storage.getFavorite(favoriteId);
+      
+      if (!favorite) {
+        return res.status(404).json({ error: "Favorite not found" });
+      }
+      
+      // Check if user is authorized to update this favorite
+      if (favorite.userId !== req.user!.id) {
+        return res.status(403).json({ error: "Not authorized to update this favorite" });
+      }
+      
+      const updatedFavorite = await storage.updateFavorite(favoriteId, req.body);
+      res.json(updatedFavorite);
+    } catch (error) {
+      console.error("Error updating favorite:", error);
+      res.status(500).json({ error: "Failed to update favorite" });
+    }
+  });
+  
+  // Delete a favorite
+  app.delete("/api/favorites/:id", isAuthenticated, async (req, res) => {
+    const favoriteId = parseInt(req.params.id);
+    
+    try {
+      const favorite = await storage.getFavorite(favoriteId);
+      
+      if (!favorite) {
+        return res.status(404).json({ error: "Favorite not found" });
+      }
+      
+      // Check if user is authorized to delete this favorite
+      if (favorite.userId !== req.user!.id) {
+        return res.status(403).json({ error: "Not authorized to delete this favorite" });
+      }
+      
+      await storage.deleteFavorite(favoriteId);
+      res.status(204).end();
+    } catch (error) {
+      console.error("Error deleting favorite:", error);
+      res.status(500).json({ error: "Failed to delete favorite" });
+    }
+  });
+  
+  // Create a job from a favorite
+  app.post("/api/jobs/from-favorite", isAuthenticated, async (req, res) => {
+    const { favoriteId } = req.body;
+    
+    try {
+      // Get the favorite
+      const favorite = await storage.getFavorite(parseInt(favoriteId));
+      
+      if (!favorite) {
+        return res.status(404).json({ error: "Favorite not found" });
+      }
+      
+      // Check if user is authorized to use this favorite
+      if (favorite.userId !== req.user!.id) {
+        return res.status(403).json({ error: "Not authorized to use this favorite" });
+      }
+      
+      // Get the property
+      const property = await storage.getProperty(favorite.propertyId!);
+      
+      if (!property) {
+        return res.status(404).json({ error: "Property not found" });
+      }
+      
+      // Create a job from the favorite
+      const jobData = {
+        ownerId: req.user!.id,
+        propertyId: property.id,
+        title: `Lawn care for ${property.address}`,
+        description: favorite.notes || `Lawn care service for ${property.address}`,
+        price: 5000, // Default price in cents ($50)
+        startDate: new Date().toISOString(),
+        isRecurring: favorite.isRecurring || false,
+        recurrenceInterval: favorite.recurrenceInterval,
+        requiresEquipment: true,
+        latitude: property.latitude,
+        longitude: property.longitude
+      };
+      
+      const newJob = await storage.createJob(jobData);
+      res.status(201).json(newJob);
+    } catch (error) {
+      console.error("Error creating job from favorite:", error);
+      res.status(500).json({ error: "Failed to create job from favorite" });
+    }
+  });
+  
   // ==== Verification routes ====
   
   // Submit job verification

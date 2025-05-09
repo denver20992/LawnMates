@@ -74,6 +74,7 @@ export interface IStorage {
   getFavorite(id: number): Promise<Favorite | undefined>;
   getFavoritesByUserId(userId: number): Promise<Favorite[]>;
   createFavorite(favorite: InsertFavorite): Promise<Favorite>;
+  updateFavorite(id: number, favoriteData: Partial<Favorite>): Promise<Favorite>;
   deleteFavorite(id: number): Promise<void>;
   
   // Referral methods
