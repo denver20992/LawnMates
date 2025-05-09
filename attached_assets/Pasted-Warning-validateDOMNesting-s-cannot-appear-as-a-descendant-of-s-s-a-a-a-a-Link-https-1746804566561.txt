@@ -1,0 +1,24 @@
+Warning: validateDOMNesting(...): %s cannot appear as a descendant of <%s>.%s <a> a 
+a
+a
+Link<@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=62a82c67:337:18
+div
+div
+div
+div
+header
+AppHeader@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/src/components/layout/AppHeader.tsx:33:45
+div
+Dashboard@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/src/pages/dashboard.tsx:33:48
+PrivateRoute@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/src/App.tsx?v=ZNq620xOfFeTTs5mWFYa:39:22
+Route@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=62a82c67:323:13
+Switch@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=62a82c67:379:14
+Router
+Provider@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-UBQ2LXDH.js?v=62a82c67:22:47
+TooltipProvider@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=62a82c67:69:7
+NotificationProvider@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/src/contexts/NotificationContext.tsx:32:37
+AuthProvider@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/src/contexts/AuthContext.tsx:34:29
+V@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/next-themes.js?v=62a82c67:44:9
+J@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/next-themes.js?v=62a82c67:42:18
+QueryClientProvider@https://6a9b1da5-fed1-4dd2-9a43-b0e7495c2d44-00-9rygr4konxie.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=62a82c67:2804:27
+App
