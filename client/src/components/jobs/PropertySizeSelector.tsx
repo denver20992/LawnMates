@@ -16,22 +16,22 @@ export interface PropertySize {
 export const propertySizes: Record<string, PropertySize> = {
   small: {
     id: 'small',
-    label: 'Small Property',
-    description: 'City lot with minimal landscaping (up to 2,000 sq ft)',
+    label: 'Small Yard',
+    description: 'Up to 500 sq ft of yard area to maintain',
     multiplier: 0.75,
     icon: <Home className="h-6 w-6" />
   },
   medium: {
     id: 'medium',
-    label: 'Medium Property',
-    description: 'Standard suburban lot (2,000 to 5,000 sq ft)',
+    label: 'Medium Yard',
+    description: '500 to 1,000 sq ft of yard area to maintain',
     multiplier: 1.0,
     icon: <Building className="h-6 w-6" />
   },
   large: {
     id: 'large',
-    label: 'Large Property',
-    description: 'Large lot with extensive landscaping (5,000+ sq ft)',
+    label: 'Large Yard',
+    description: 'Over 1,000 sq ft of yard area to maintain',
     multiplier: 1.5,
     icon: <Castle className="h-6 w-6" />
   }
@@ -43,54 +43,125 @@ export const propertySizeInfo = {
   large: { multiplier: 1.5 }
 };
 
+export const yardTypes: Record<string, {id: string, label: string, description: string, multiplier: number}> = {
+  frontyard: {
+    id: 'frontyard',
+    label: 'Front Yard Only',
+    description: 'Service only the front yard area',
+    multiplier: 0.8
+  },
+  backyard: {
+    id: 'backyard',
+    label: 'Back Yard Only',
+    description: 'Service only the back yard area',
+    multiplier: 0.8
+  },
+  both: {
+    id: 'both',
+    label: 'Both Front & Back Yards',
+    description: 'Service both front and back yard areas',
+    multiplier: 1.5
+  }
+};
+
 interface PropertySizeSelectorProps {
   control: Control<any>;
   name: string;
+  yardTypeControlName?: string;
 }
 
-const PropertySizeSelector: React.FC<PropertySizeSelectorProps> = ({ control, name }) => {
+const PropertySizeSelector: React.FC<PropertySizeSelectorProps> = ({ 
+  control, 
+  name,
+  yardTypeControlName 
+}) => {
   return (
-    <FormField
-      control={control}
-      name={name}
-      render={({ field }) => (
-        <FormItem className="space-y-1">
-          <FormLabel>Property Size</FormLabel>
-          <FormDescription>
-            Select the size of your property to help determine service pricing.
-          </FormDescription>
-          <FormControl>
-            <RadioGroup
-              onValueChange={field.onChange}
-              defaultValue={field.value}
-              className="grid grid-cols-3 gap-4 pt-2"
-            >
-              {Object.values(propertySizes).map((size) => (
-                <FormItem key={size.id}>
-                  <FormLabel className="cursor-pointer [&:has([data-state=checked])>div]:border-primary">
-                    <FormControl>
-                      <RadioGroupItem
-                        value={size.id}
-                        className="sr-only"
-                        checked={field.value === size.id}
-                      />
-                    </FormControl>
-                    <div className="border-2 rounded-lg p-4 flex flex-col items-center gap-2 hover:border-muted-foreground transition-colors">
-                      {size.icon}
-                      <div className="font-medium text-center">{size.label}</div>
-                      <div className="text-xs text-center text-muted-foreground">
-                        {size.description}
+    <div className="space-y-6">
+      <FormField
+        control={control}
+        name={name}
+        render={({ field }) => (
+          <FormItem className="space-y-1">
+            <FormLabel>Yard Size</FormLabel>
+            <FormDescription>
+              Select the size of your yard area to help determine service pricing.
+            </FormDescription>
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-3 gap-4 pt-2"
+              >
+                {Object.values(propertySizes).map((size) => (
+                  <FormItem key={size.id}>
+                    <FormLabel className="cursor-pointer [&:has([data-state=checked])>div]:border-primary">
+                      <FormControl>
+                        <RadioGroupItem
+                          value={size.id}
+                          className="sr-only"
+                          checked={field.value === size.id}
+                        />
+                      </FormControl>
+                      <div className="border-2 rounded-lg p-4 flex flex-col items-center gap-2 hover:border-muted-foreground transition-colors">
+                        {size.icon}
+                        <div className="font-medium text-center">{size.label}</div>
+                        <div className="text-xs text-center text-muted-foreground">
+                          {size.description}
+                        </div>
                       </div>
-                    </div>
-                  </FormLabel>
-                </FormItem>
-              ))}
-            </RadioGroup>
-          </FormControl>
-          <FormMessage />
-        </FormItem>
+                    </FormLabel>
+                  </FormItem>
+                ))}
+              </RadioGroup>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      {yardTypeControlName && (
+        <FormField
+          control={control}
+          name={yardTypeControlName}
+          render={({ field }) => (
+            <FormItem className="space-y-1">
+              <FormLabel>Yard Location</FormLabel>
+              <FormDescription>
+                Specify which yard areas need service.
+              </FormDescription>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="grid grid-cols-3 gap-4 pt-2"
+                >
+                  {Object.values(yardTypes).map((type) => (
+                    <FormItem key={type.id}>
+                      <FormLabel className="cursor-pointer [&:has([data-state=checked])>div]:border-primary">
+                        <FormControl>
+                          <RadioGroupItem
+                            value={type.id}
+                            className="sr-only"
+                            checked={field.value === type.id}
+                          />
+                        </FormControl>
+                        <div className="border-2 rounded-lg p-4 flex flex-col items-center gap-2 hover:border-muted-foreground transition-colors">
+                          <div className="font-medium text-center">{type.label}</div>
+                          <div className="text-xs text-center text-muted-foreground">
+                            {type.description}
+                          </div>
+                        </div>
+                      </FormLabel>
+                    </FormItem>
+                  ))}
+                </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       )}
-    />
+    </div>
   );
 };
 

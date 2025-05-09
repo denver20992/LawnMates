@@ -43,7 +43,7 @@ const AppHeader: React.FC = () => {
   };
 
   return (
-    <header className="bg-[#FAF6F1] shadow-sm">
+    <header className="bg-[#FFFDF7] shadow-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 justify-between">
           <div className="flex">

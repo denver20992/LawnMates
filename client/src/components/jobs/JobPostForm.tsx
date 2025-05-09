@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Calendar as CalendarIcon, Clock, DollarSign, MapPin, AlertCircle, CheckCircle, Home, Building, Castle } from 'lucide-react';
 import AddressAutocomplete from '@/components/map/AddressAutocomplete';
-import PropertySizeSelector, { propertySizes } from './PropertySizeSelector';
+import PropertySizeSelector, { propertySizes, yardTypes } from './PropertySizeSelector';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -56,6 +56,8 @@ const jobFormSchema = z.object({
   description: z.string().optional(),
   propertyId: z.coerce.number(),
   propertySize: z.enum(['small', 'medium', 'large']).default('medium'),
+  yardType: z.enum(['frontyard', 'backyard', 'both']).default('both'),
+  isQuickService: z.boolean().default(false),
   price: z.coerce.number(), // Store as dollars, we'll convert to cents when sending to API
   startDate: z.date({
     required_error: "Please select a date",
@@ -118,36 +120,27 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
     };
   });
   
-  // Define Quick Service Bundles with discounts
-  const SERVICE_BUNDLES = [
-    {
-      name: "Lawn Care Bundle",
-      services: ['lawn-mowing', 'hedge-trimming', 'leaf-removal'],
-      discount: 0.15 // 15% off
-    },
-    {
-      name: "Garden Care Bundle",
-      services: ['garden-maintenance', 'weed-control', 'fertilization'],
-      discount: 0.15 // 15% off
-    },
-    {
-      name: "Complete Care Bundle",
-      services: ['lawn-mowing', 'hedge-trimming', 'leaf-removal', 'weed-control'],
-      discount: 0.15 // 15% off
-    }
-  ];
+  // Define Quick Service package
+  const QUICK_SERVICE_PACKAGE = {
+    services: ['lawn-mowing', 'hedge-trimming', 'leaf-removal'],
+    label: 'Quick Service Package'
+  };
 
   // Calculate price based on selected services and property size
   const calculateEstimatedPrice = (
     services: string[], 
     propertyId: number, 
     useExistingProperty: boolean = true,
-    customPropertySize?: string
+    customPropertySize?: string,
+    yardType?: string,
+    isQuickService?: boolean
   ) => {
     if (!services.length) return 0;
     
     let sizeMultiplier = 1.0;
+    let yardTypeMultiplier = 1.0;
     
+    // Determine size multiplier
     if (useExistingProperty) {
       // Get property details
       const selectedProperty = propertyId ? properties.find(p => p.id === propertyId) : null;
@@ -161,33 +154,24 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       sizeMultiplier = propertySizeInfo[customPropertySize as keyof typeof propertySizeInfo].multiplier;
     }
     
+    // Apply yard type multiplier if available
+    if (yardType && yardTypes[yardType as keyof typeof yardTypes]) {
+      yardTypeMultiplier = yardTypes[yardType as keyof typeof yardTypes].multiplier;
+    }
+    
+    // If quick service is selected, use the package services
+    const servicesForPricing = isQuickService 
+      ? QUICK_SERVICE_PACKAGE.services
+      : services;
+    
     // Calculate base price from selected services
-    const basePrice = services.reduce((total, serviceId) => {
+    const basePrice = servicesForPricing.reduce((total, serviceId) => {
       const service = AVAILABLE_SERVICES.find(s => s.id === serviceId);
       return total + (service?.basePrice || 0);
     }, 0);
     
-    // Check if selected services qualify for any bundle discount
-    let discount = 0;
-    for (const bundle of SERVICE_BUNDLES) {
-      // Check if all services in a bundle are selected
-      const qualifiesForBundle = bundle.services.every(bundleService => 
-        services.includes(bundleService)
-      );
-      
-      if (qualifiesForBundle) {
-        discount = bundle.discount;
-        break; // Apply the first qualifying bundle discount
-      }
-    }
-    
-    // Apply size multiplier and any bundle discount
-    let finalPrice = basePrice * sizeMultiplier;
-    
-    // Apply bundle discount if applicable
-    if (discount > 0) {
-      finalPrice = finalPrice * (1 - discount);
-    }
+    // Apply both multipliers to the base price
+    const finalPrice = basePrice * sizeMultiplier * yardTypeMultiplier;
     
     // Round to nearest 5
     return Math.ceil(finalPrice / 5) * 5;
