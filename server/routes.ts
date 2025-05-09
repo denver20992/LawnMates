@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { setupAuth, isAuthenticated, isAdmin, isSelfOrAdmin } from "./auth";
 import { setupWebsocket } from "./websocket";
 import * as z from "zod";
+import Stripe from "stripe";
 import { 
   insertUserSchema, 
   insertJobSchema, 
@@ -11,6 +12,11 @@ import {
   insertVerificationSchema,
   jobStatusEnum
 } from "@shared/schema";
+
+// Initialize Stripe with the secret key
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2023-10-16",
+});
 
 export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
@@ -446,6 +452,131 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ==== Payment routes ====
+  
+  // Create a payment intent for a job
+  app.post("/api/create-payment-intent", isAuthenticated, async (req, res) => {
+    try {
+      const { jobId } = req.body;
+      
+      // Verify the job exists and the user is the property owner
+      const job = await storage.getJob(parseInt(jobId));
+      
+      if (!job) {
+        return res.status(404).json({ error: "Job not found" });
+      }
+      
+      if (job.ownerId !== req.user!.id) {
+        return res.status(403).json({ error: "Only the property owner can make a payment for this job" });
+      }
+      
+      // Ensure customer has a Stripe customer ID
+      let user = await storage.getUser(req.user!.id);
+      
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      
+      // Create a Stripe customer if the user doesn't have one
+      if (!user.stripeCustomerId) {
+        const customer = await stripe.customers.create({
+          email: user.email,
+          name: user.fullName || user.username,
+        });
+        
+        user = await storage.updateStripeCustomerId(user.id, customer.id);
+      }
+      
+      // Create a payment intent
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: job.price, // already in cents
+        currency: "cad",
+        customer: user.stripeCustomerId,
+        metadata: {
+          jobId: job.id.toString(),
+          propertyOwnerId: job.ownerId.toString(),
+          landscaperId: job.landscaperId?.toString() || '',
+        },
+      });
+      
+      // Record the payment intent
+      await storage.createPayment({
+        jobId: job.id,
+        amount: job.price,
+        status: 'pending',
+        stripePaymentIntentId: paymentIntent.id
+      });
+      
+      // Return the client secret to the client
+      res.json({
+        clientSecret: paymentIntent.client_secret,
+      });
+    } catch (error) {
+      console.error("Error creating payment intent:", error);
+      res.status(500).json({ error: "Failed to create payment intent" });
+    }
+  });
+  
+  // Release payment to landscaper after job is verified
+  app.post("/api/release-payment", isAuthenticated, async (req, res) => {
+    try {
+      const { jobId } = req.body;
+      
+      // Verify the job exists and is completed
+      const job = await storage.getJob(parseInt(jobId));
+      
+      if (!job) {
+        return res.status(404).json({ error: "Job not found" });
+      }
+      
+      if (job.status !== 'completed') {
+        return res.status(400).json({ error: "Job must be completed before releasing payment" });
+      }
+      
+      if (!job.landscaperId) {
+        return res.status(400).json({ error: "Job has no assigned landscaper" });
+      }
+      
+      // Get the payment for this job
+      const payments = await storage.getPaymentsByJobId(job.id);
+      const payment = payments.find(p => p.status === 'escrow');
+      
+      if (!payment) {
+        return res.status(404).json({ error: "No payment in escrow found for this job" });
+      }
+      
+      // Get the landscaper's Stripe Connect account
+      const landscaper = await storage.getUser(job.landscaperId);
+      
+      if (!landscaper || !landscaper.stripeConnectId) {
+        return res.status(400).json({ error: "Landscaper does not have a Stripe Connect account" });
+      }
+      
+      // Create a transfer to the landscaper's account
+      const transfer = await stripe.transfers.create({
+        amount: payment.amount,
+        currency: "cad",
+        destination: landscaper.stripeConnectId,
+        source_transaction: payment.stripePaymentIntentId,
+        metadata: {
+          jobId: job.id.toString(),
+          landscaperId: job.landscaperId.toString(),
+        },
+      });
+      
+      // Update the payment status
+      await storage.updatePayment(payment.id, {
+        status: 'released',
+        stripeTransferId: transfer.id
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error releasing payment:", error);
+      res.status(500).json({ error: "Failed to release payment" });
+    }
+  });
+  
   // ==== Admin routes ====
   
   // Get all users (admin only)

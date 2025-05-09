@@ -9,6 +9,13 @@ import {
   favorites, type Favorite, type InsertFavorite,
   referrals, type Referral, type InsertReferral
 } from "@shared/schema";
+import { drizzle } from 'drizzle-orm/neon-serverless';
+import { neon } from '@neondatabase/serverless';
+import { eq, and, or, sql } from 'drizzle-orm';
+
+// Database connection setup
+const sqlClient = neon(process.env.DATABASE_URL!);
+const db = drizzle(sqlClient);
 
 // Modify the interface with any CRUD methods
 // you might need
@@ -647,4 +654,351 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Database storage implementation
+export class DrizzleStorage implements IStorage {
+  // ===== User methods =====
+  
+  async getUser(id: number): Promise<User | undefined> {
+    const results = await db.select().from(users).where(eq(users.id, id));
+    return results[0];
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const results = await db.select().from(users).where(eq(users.username, username));
+    return results[0];
+  }
+  
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const results = await db.select().from(users).where(eq(users.email, email));
+    return results[0];
+  }
+
+  async createUser(userData: InsertUser): Promise<User> {
+    const results = await db.insert(users).values({
+      ...userData,
+      rating: 0,
+      reviewCount: 0,
+      isVerified: false,
+      loyaltyPoints: 0,
+    }).returning();
+    
+    return results[0];
+  }
+  
+  async updateUser(id: number, userData: Partial<User>): Promise<User> {
+    const results = await db.update(users)
+      .set({ ...userData, updatedAt: new Date() })
+      .where(eq(users.id, id))
+      .returning();
+    
+    if (results.length === 0) {
+      throw new Error(`User with ID ${id} not found`);
+    }
+    
+    return results[0];
+  }
+  
+  async getAllUsers(): Promise<User[]> {
+    return await db.select().from(users);
+  }
+  
+  // ===== Property methods =====
+  
+  async getProperty(id: number): Promise<Property | undefined> {
+    const results = await db.select().from(properties).where(eq(properties.id, id));
+    return results[0];
+  }
+  
+  async getPropertiesByOwnerId(ownerId: number): Promise<Property[]> {
+    return await db.select().from(properties).where(eq(properties.ownerId, ownerId));
+  }
+  
+  async createProperty(propertyData: InsertProperty): Promise<Property> {
+    const results = await db.insert(properties).values(propertyData).returning();
+    return results[0];
+  }
+  
+  // ===== Job methods =====
+  
+  async getJob(id: number): Promise<Job | undefined> {
+    const results = await db.select().from(jobs).where(eq(jobs.id, id));
+    return results[0];
+  }
+  
+  async getJobsByOwnerId(ownerId: number): Promise<Job[]> {
+    return await db.select().from(jobs).where(eq(jobs.ownerId, ownerId));
+  }
+  
+  async getJobsByLandscaperId(landscaperId: number): Promise<Job[]> {
+    return await db.select().from(jobs).where(eq(jobs.landscaperId, landscaperId));
+  }
+  
+  async getActiveJobsByOwnerId(ownerId: number): Promise<Job[]> {
+    return await db.select().from(jobs)
+      .where(and(
+        eq(jobs.ownerId, ownerId),
+        // Using SQL 'in' operator for status check
+        sql`${jobs.status} IN ('accepted', 'in_progress', 'verification_pending')`
+      ));
+  }
+  
+  async getActiveJobsByLandscaperId(landscaperId: number): Promise<Job[]> {
+    return await db.select().from(jobs)
+      .where(and(
+        eq(jobs.landscaperId, landscaperId),
+        // Using SQL 'in' operator for status check
+        sql`${jobs.status} IN ('accepted', 'in_progress', 'verification_pending')`
+      ));
+  }
+  
+  async getAvailableJobs(): Promise<Job[]> {
+    return await db.select().from(jobs).where(eq(jobs.status, 'posted'));
+  }
+  
+  async getAllJobs(): Promise<Job[]> {
+    return await db.select().from(jobs);
+  }
+  
+  async createJob(jobData: InsertJob): Promise<Job> {
+    const results = await db.insert(jobs).values({
+      ...jobData,
+      status: 'posted',
+    }).returning();
+    
+    return results[0];
+  }
+  
+  async updateJob(id: number, jobData: Partial<Job>): Promise<Job> {
+    const results = await db.update(jobs)
+      .set({ ...jobData, updatedAt: new Date() })
+      .where(eq(jobs.id, id))
+      .returning();
+    
+    if (results.length === 0) {
+      throw new Error(`Job with ID ${id} not found`);
+    }
+    
+    return results[0];
+  }
+  
+  // ===== Message methods =====
+  
+  async getMessage(id: number): Promise<Message | undefined> {
+    const results = await db.select().from(messages).where(eq(messages.id, id));
+    return results[0];
+  }
+  
+  async getMessagesByJobId(jobId: number): Promise<Message[]> {
+    return await db.select().from(messages)
+      .where(eq(messages.jobId, jobId))
+      .orderBy(messages.createdAt);
+  }
+  
+  async getConversations(userId: number): Promise<any[]> {
+    // This is a more complex query that requires joins
+    // First, get all messages where the user is sender or receiver
+    const userMessages = await db.select().from(messages)
+      .where(
+        or(
+          eq(messages.senderId, userId),
+          eq(messages.receiverId, userId)
+        )
+      );
+    
+    // Group messages by job ID
+    const jobIds = [...new Set(userMessages.map(msg => msg.jobId))];
+    
+    const conversations: any[] = [];
+    
+    for (const jobId of jobIds) {
+      const job = await this.getJob(jobId);
+      
+      if (!job) continue;
+      
+      // Get the counterparty ID (the other user in the conversation)
+      const counterpartyId = job.ownerId === userId ? job.landscaperId! : job.ownerId;
+      const counterparty = await this.getUser(counterpartyId);
+      
+      if (!counterparty) continue;
+      
+      // Get the latest message for this job
+      const jobMessages = userMessages.filter(msg => msg.jobId === jobId);
+      if (jobMessages.length === 0) continue;
+      
+      // Sort messages by timestamp (descending)
+      jobMessages.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      const latestMessage = jobMessages[0];
+      
+      // Count unread messages
+      const unreadCount = jobMessages.filter(
+        msg => msg.receiverId === userId && msg.status === 'sent'
+      ).length;
+      
+      conversations.push({
+        jobId,
+        jobTitle: job.title,
+        counterparty: {
+          id: counterparty.id,
+          username: counterparty.username,
+          fullName: counterparty.fullName,
+          avatar: counterparty.avatar,
+        },
+        lastMessage: latestMessage.content,
+        lastMessageTime: latestMessage.createdAt,
+        unreadCount,
+      });
+    }
+    
+    return conversations;
+  }
+  
+  async createMessage(messageData: InsertMessage): Promise<Message> {
+    const results = await db.insert(messages).values({
+      ...messageData,
+      status: 'sent',
+    }).returning();
+    
+    return results[0];
+  }
+  
+  // ===== Payment methods =====
+  
+  async getPayment(id: number): Promise<Payment | undefined> {
+    const results = await db.select().from(payments).where(eq(payments.id, id));
+    return results[0];
+  }
+  
+  async getPaymentsByJobId(jobId: number): Promise<Payment[]> {
+    return await db.select().from(payments).where(eq(payments.jobId, jobId));
+  }
+  
+  async createPayment(paymentData: InsertPayment): Promise<Payment> {
+    const results = await db.insert(payments).values(paymentData).returning();
+    return results[0];
+  }
+  
+  async updatePayment(id: number, paymentData: Partial<Payment>): Promise<Payment> {
+    const results = await db.update(payments)
+      .set({ ...paymentData, updatedAt: new Date() })
+      .where(eq(payments.id, id))
+      .returning();
+    
+    if (results.length === 0) {
+      throw new Error(`Payment with ID ${id} not found`);
+    }
+    
+    return results[0];
+  }
+  
+  // ===== Verification methods =====
+  
+  async getVerification(id: number): Promise<Verification | undefined> {
+    const results = await db.select().from(verifications).where(eq(verifications.id, id));
+    return results[0];
+  }
+  
+  async getVerificationsByJobId(jobId: number): Promise<Verification[]> {
+    return await db.select().from(verifications).where(eq(verifications.jobId, jobId));
+  }
+  
+  async getPendingVerifications(): Promise<Verification[]> {
+    return await db.select().from(verifications).where(eq(verifications.status, 'pending'));
+  }
+  
+  async createVerification(verificationData: InsertVerification): Promise<Verification> {
+    const results = await db.insert(verifications).values({
+      ...verificationData,
+      status: 'pending',
+    }).returning();
+    
+    return results[0];
+  }
+  
+  async updateVerification(id: number, verificationData: Partial<Verification>): Promise<Verification> {
+    const results = await db.update(verifications)
+      .set({ ...verificationData, updatedAt: new Date() })
+      .where(eq(verifications.id, id))
+      .returning();
+    
+    if (results.length === 0) {
+      throw new Error(`Verification with ID ${id} not found`);
+    }
+    
+    return results[0];
+  }
+  
+  // ===== Review methods =====
+  
+  async getReview(id: number): Promise<Review | undefined> {
+    const results = await db.select().from(reviews).where(eq(reviews.id, id));
+    return results[0];
+  }
+  
+  async getReviewsByJobId(jobId: number): Promise<Review[]> {
+    return await db.select().from(reviews).where(eq(reviews.jobId, jobId));
+  }
+  
+  async getReviewsByRevieweeId(revieweeId: number): Promise<Review[]> {
+    return await db.select().from(reviews).where(eq(reviews.revieweeId, revieweeId));
+  }
+  
+  async createReview(reviewData: InsertReview): Promise<Review> {
+    const results = await db.insert(reviews).values(reviewData).returning();
+    return results[0];
+  }
+  
+  // ===== Favorite methods =====
+  
+  async getFavorite(id: number): Promise<Favorite | undefined> {
+    const results = await db.select().from(favorites).where(eq(favorites.id, id));
+    return results[0];
+  }
+  
+  async getFavoritesByUserId(userId: number): Promise<Favorite[]> {
+    return await db.select().from(favorites).where(eq(favorites.userId, userId));
+  }
+  
+  async createFavorite(favoriteData: InsertFavorite): Promise<Favorite> {
+    const results = await db.insert(favorites).values(favoriteData).returning();
+    return results[0];
+  }
+  
+  async deleteFavorite(id: number): Promise<void> {
+    await db.delete(favorites).where(eq(favorites.id, id));
+  }
+  
+  // ===== Referral methods =====
+  
+  async getReferral(id: number): Promise<Referral | undefined> {
+    const results = await db.select().from(referrals).where(eq(referrals.id, id));
+    return results[0];
+  }
+  
+  async getReferralsByInviterId(inviterId: number): Promise<Referral[]> {
+    return await db.select().from(referrals).where(eq(referrals.inviterId, inviterId));
+  }
+  
+  async createReferral(referralData: InsertReferral): Promise<Referral> {
+    const results = await db.insert(referrals).values(referralData).returning();
+    return results[0];
+  }
+  
+  // ===== Stripe methods =====
+  
+  async updateStripeCustomerId(userId: number, stripeCustomerId: string): Promise<User> {
+    return this.updateUser(userId, { stripeCustomerId });
+  }
+  
+  async updateUserStripeInfo(userId: number, stripeInfo: { stripeCustomerId: string, stripeSubscriptionId: string }): Promise<User> {
+    return this.updateUser(userId, { 
+      stripeCustomerId: stripeInfo.stripeCustomerId,
+      stripeConnectId: stripeInfo.stripeSubscriptionId
+    });
+  }
+}
+
+// Choose storage implementation
+// For development, check if DATABASE_URL is defined - if not, use MemStorage
+// For production, always use DrizzleStorage
+const useMemStorage = process.env.NODE_ENV === 'development' && !process.env.DATABASE_URL;
+export const storage = useMemStorage ? new MemStorage() : new DrizzleStorage();
