@@ -86,13 +86,8 @@ export default function LandingPage() {
                 </Button>
               </div>
               
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <div className="flex -space-x-2">
-                  <div className="w-8 h-8 rounded-full bg-green-200 flex items-center justify-center text-xs font-bold">JD</div>
-                  <div className="w-8 h-8 rounded-full bg-blue-200 flex items-center justify-center text-xs font-bold">SK</div>
-                  <div className="w-8 h-8 rounded-full bg-yellow-200 flex items-center justify-center text-xs font-bold">RL</div>
-                </div>
-                <span>Join <strong>5,000+</strong> Canadians using LawnMates</span>
+              <div className="inline-block px-3 py-2 mt-2 rounded-lg bg-green-100 text-green-800 text-sm">
+                <span>Trusted by thousands of Canadians</span>
               </div>
             </div>
             
