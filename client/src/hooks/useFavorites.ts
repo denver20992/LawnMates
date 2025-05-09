@@ -1,33 +1,48 @@
-import { useState, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
-import { Favorite, Property } from '@shared/schema';
 
-export const useFavorites = () => {
+interface FavoriteCreateParams {
+  propertyId: number;
+  isRecurring?: boolean;
+  recurrenceInterval?: string | null;
+  notes?: string;
+}
+
+// Define the Favorite type to match what we expect from the API
+interface Favorite {
+  id: number;
+  userId: number;
+  propertyId: number;
+  isRecurring: boolean;
+  recurrenceInterval: string | null;
+  notes: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+  property?: {
+    id: number;
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    propertyType: string;
+    size?: number | null;
+  };
+}
+
+export function useFavorites() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const [loading, setLoading] = useState(false);
 
-  // Fetch user's favorite properties
-  const { data: favorites = [], isLoading: loadingFavorites } = useQuery({
+  // Get all favorites for the current user
+  const { data: favorites = [], isLoading: loadingFavorites, error } = useQuery<Favorite[]>({
     queryKey: ['/api/favorites'],
-    queryFn: async () => {
-      const response = await apiRequest('GET', '/api/favorites');
-      const data = await response.json();
-      return data as (Favorite & { property?: Property })[];
-    },
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 30000, // 30 seconds
   });
 
-  // Create favorite mutation
+  // Create a new favorite
   const createFavoriteMutation = useMutation({
-    mutationFn: async (favoriteData: {
-      propertyId: number;
-      isRecurring?: boolean;
-      recurrenceInterval?: string;
-      notes?: string;
-    }) => {
+    mutationFn: async (favoriteData: FavoriteCreateParams) => {
       const response = await apiRequest('POST', '/api/favorites', favoriteData);
       return response.json();
     },
@@ -35,118 +50,90 @@ export const useFavorites = () => {
       queryClient.invalidateQueries({ queryKey: ['/api/favorites'] });
       toast({
         title: "Property saved",
-        description: "The property has been added to your favorites.",
+        description: "Property has been added to your favorites",
       });
     },
     onError: (error) => {
-      console.error('Error creating favorite:', error);
+      console.error('Error saving favorite:', error);
       toast({
-        title: "Failed to save property",
-        description: "There was an error saving this property. Please try again.",
+        title: "Error",
+        description: "Failed to save the property to favorites",
         variant: "destructive",
       });
-    },
+    }
   });
 
-  // Update favorite mutation
+  // Remove a favorite
+  const removeFavoriteMutation = useMutation({
+    mutationFn: async (favoriteId: number) => {
+      await apiRequest('DELETE', `/api/favorites/${favoriteId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/favorites'] });
+      toast({
+        title: "Property removed",
+        description: "Property has been removed from your favorites",
+      });
+    },
+    onError: (error) => {
+      console.error('Error removing favorite:', error);
+      toast({
+        title: "Error",
+        description: "Failed to remove the property from favorites",
+        variant: "destructive",
+      });
+    }
+  });
+
+  // Create a job from favorite
+  const createJobFromFavoriteMutation = useMutation({
+    mutationFn: async (favoriteId: number) => {
+      const response = await apiRequest('POST', `/api/favorites/${favoriteId}/create-job`);
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/jobs'] });
+    },
+    onError: (error) => {
+      console.error('Error creating job from favorite:', error);
+      throw error;
+    }
+  });
+
+  // Update favorite properties (recurring status, etc.)
   const updateFavoriteMutation = useMutation({
-    mutationFn: async ({ id, ...favoriteData }: {
-      id: number;
-      isRecurring?: boolean;
-      recurrenceInterval?: string;
-      notes?: string;
-    }) => {
-      const response = await apiRequest('PATCH', `/api/favorites/${id}`, favoriteData);
+    mutationFn: async ({ id, data }: { id: number, data: Partial<Favorite> }) => {
+      const response = await apiRequest('PATCH', `/api/favorites/${id}`, data);
       return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/favorites'] });
       toast({
         title: "Favorite updated",
-        description: "Your saved property has been updated.",
+        description: "Property preferences have been updated",
       });
     },
     onError: (error) => {
       console.error('Error updating favorite:', error);
       toast({
-        title: "Failed to update",
-        description: "There was an error updating this saved property. Please try again.",
+        title: "Error",
+        description: "Failed to update property preferences",
         variant: "destructive",
       });
-    },
-  });
-
-  // Delete favorite mutation
-  const deleteFavoriteMutation = useMutation({
-    mutationFn: async (id: number) => {
-      const response = await apiRequest('DELETE', `/api/favorites/${id}`);
-      return response.ok;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/favorites'] });
-      toast({
-        title: "Property removed",
-        description: "The property has been removed from your favorites.",
-      });
-    },
-    onError: (error) => {
-      console.error('Error deleting favorite:', error);
-      toast({
-        title: "Failed to remove property",
-        description: "There was an error removing this property. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  // Helper function to create a new job from a saved property
-  const createJobFromFavorite = useCallback(async (favoriteId: number) => {
-    try {
-      setLoading(true);
-      
-      // Get the favorite details
-      const favorite = favorites.find(f => f.id === favoriteId);
-      if (!favorite || !favorite.property) {
-        throw new Error('Favorite property not found');
-      }
-      
-      // This would call the API to create a job based on the favorite
-      // In a real implementation, you would send more data
-      const response = await apiRequest('POST', '/api/jobs/from-favorite', { favoriteId });
-      
-      if (!response.ok) {
-        throw new Error('Failed to create job');
-      }
-      
-      // Success toast
-      toast({
-        title: "Job created",
-        description: "A new job has been created from your saved property.",
-      });
-      
-      // Return the created job ID for potential redirection
-      const data = await response.json();
-      return data.id;
-    } catch (error) {
-      console.error('Error creating job from favorite:', error);
-      toast({
-        title: "Failed to create job",
-        description: "There was an error creating a job from this saved property. Please try again.",
-        variant: "destructive",
-      });
-      return null;
-    } finally {
-      setLoading(false);
     }
-  }, [favorites, toast]);
+  });
 
   return {
     favorites,
     loadingFavorites,
-    loading,
-    saveFavorite: createFavoriteMutation.mutate,
-    updateFavorite: updateFavoriteMutation.mutate,
-    removeFavorite: deleteFavoriteMutation.mutate,
-    createJobFromFavorite,
+    error,
+    saveFavorite: createFavoriteMutation.mutateAsync,
+    removeFavorite: removeFavoriteMutation.mutateAsync,
+    updateFavorite: updateFavoriteMutation.mutateAsync,
+    createJobFromFavorite: createJobFromFavoriteMutation.mutateAsync,
+    isSaving: createFavoriteMutation.isPending,
+    isRemoving: removeFavoriteMutation.isPending,
+    isUpdating: updateFavoriteMutation.isPending,
+    isCreatingJob: createJobFromFavoriteMutation.isPending,
   };
-};
+}

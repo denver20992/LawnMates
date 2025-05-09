@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 interface PageHeaderProps {
   title: string;
@@ -6,22 +6,16 @@ interface PageHeaderProps {
   actions?: ReactNode;
 }
 
-export const PageHeader: React.FC<PageHeaderProps> = ({ 
-  title, 
-  description, 
-  actions 
-}) => {
+export function PageHeader({ title, description, actions }: PageHeaderProps) {
   return (
-    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-      <div className="space-y-1">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">{title}</h1>
+    <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
         {description && (
-          <p className="text-muted-foreground max-w-3xl">{description}</p>
+          <p className="text-muted-foreground mt-1">{description}</p>
         )}
       </div>
-      {actions && (
-        <div className="flex-shrink-0 flex">{actions}</div>
-      )}
+      {actions && <div className="mt-2 sm:mt-0">{actions}</div>}
     </div>
   );
-};
+}

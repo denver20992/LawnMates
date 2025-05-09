@@ -633,6 +633,23 @@ export class MemStorage implements IStorage {
     return favorite;
   }
   
+  async updateFavorite(id: number, favoriteData: Partial<Favorite>): Promise<Favorite> {
+    const favorite = await this.getFavorite(id);
+    
+    if (!favorite) {
+      throw new Error(`Favorite with ID ${id} not found`);
+    }
+    
+    const updatedFavorite: Favorite = {
+      ...favorite,
+      ...favoriteData,
+      createdAt: favorite.createdAt,
+    };
+    
+    this.favoritesStore.set(id, updatedFavorite);
+    return updatedFavorite;
+  }
+  
   async deleteFavorite(id: number): Promise<void> {
     this.favoritesStore.delete(id);
   }
@@ -999,6 +1016,19 @@ export class DrizzleStorage implements IStorage {
   
   async createFavorite(favoriteData: InsertFavorite): Promise<Favorite> {
     const results = await db.insert(favorites).values(favoriteData).returning();
+    return results[0];
+  }
+  
+  async updateFavorite(id: number, favoriteData: Partial<Favorite>): Promise<Favorite> {
+    const results = await db.update(favorites)
+      .set(favoriteData)
+      .where(eq(favorites.id, id))
+      .returning();
+    
+    if (results.length === 0) {
+      throw new Error(`Favorite with ID ${id} not found`);
+    }
+    
     return results[0];
   }
   

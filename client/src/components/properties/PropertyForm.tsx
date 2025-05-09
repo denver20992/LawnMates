@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useMutation } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
+import { useToast } from '@/hooks/use-toast';
+import { insertPropertySchema } from '@shared/schema';
+
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
@@ -14,39 +20,41 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Switch } from '@/components/ui/switch';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useToast } from '@/hooks/use-toast';
-import { apiRequest } from '@/lib/queryClient';
-import { Card } from '@/components/ui/card';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useFavorites } from '@/hooks/useFavorites';
 
-// Define the form schema
-const formSchema = z.object({
-  address: z.string().min(5, { message: "Address must be at least 5 characters" }),
+// Extend the insert schema with additional validations
+const formSchema = insertPropertySchema.extend({
+  address: z.string().min(3, { message: "Address must be at least 3 characters" }),
   city: z.string().min(2, { message: "City is required" }),
-  state: z.string().min(2, { message: "State is required" }),
-  zipCode: z.string().min(5, { message: "Zip code is required" }),
-  propertyType: z.string({ required_error: "Please select a property type" }),
-  size: z.coerce.number().optional(),
-  notes: z.string().optional(),
+  state: z.string().min(2, { message: "State/Province is required" }),
+  zipCode: z.string().min(3, { message: "Postal/Zip code is required" }),
+  propertyType: z.string().min(1, { message: "Property type is required" }),
+  size: z.string().optional().transform(val => val ? parseInt(val) : undefined),
   saveAsFavorite: z.boolean().default(false),
   isRecurring: z.boolean().default(false),
-  recurrenceInterval: z.string().optional(),
-  favoriteNotes: z.string().optional(),
+  recurrenceInterval: z.string().nullable().optional(),
+  notes: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 interface PropertyFormProps {
   onSuccess?: () => void;
+  onSubmit?: () => void;
 }
 
-const PropertyForm: React.FC<PropertyFormProps> = ({ onSuccess }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+export default function PropertyForm({ onSuccess, onSubmit }: PropertyFormProps) {
   const { toast } = useToast();
   const { saveFavorite } = useFavorites();
-  
+  const [isSavingFavorite, setIsSavingFavorite] = useState(false);
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,93 +62,80 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onSuccess }) => {
       city: '',
       state: '',
       zipCode: '',
-      propertyType: 'residential',
-      size: undefined,
+      propertyType: '',
       notes: '',
       saveAsFavorite: false,
       isRecurring: false,
-      recurrenceInterval: 'weekly',
-      favoriteNotes: '',
+      recurrenceInterval: null,
     },
   });
-  
-  const saveAsFavoriteValue = form.watch('saveAsFavorite');
-  const isRecurringValue = form.watch('isRecurring');
-  
-  const handleSubmit = async (values: FormValues) => {
-    try {
-      setIsSubmitting(true);
-      
-      // Create property
-      const propertyData = {
-        address: values.address,
-        city: values.city,
-        state: values.state,
-        zipCode: values.zipCode,
-        propertyType: values.propertyType,
-        size: values.size,
-        notes: values.notes,
-        // We'd normally get these from a map component in a real implementation
-        latitude: 43.651070,
-        longitude: -79.347015,
-      };
-      
+
+  const propertyMutation = useMutation({
+    mutationFn: async (values: FormValues) => {
+      const { saveAsFavorite, isRecurring, recurrenceInterval, ...propertyData } = values;
       const response = await apiRequest('POST', '/api/properties', propertyData);
-      if (!response.ok) {
-        throw new Error('Failed to create property');
+      return response.json();
+    },
+    onSuccess: async (data) => {
+      // Check if we should save as favorite
+      if (form.getValues('saveAsFavorite')) {
+        setIsSavingFavorite(true);
+        try {
+          // Create a favorite from this property
+          await saveFavorite({
+            propertyId: data.id,
+            isRecurring: form.getValues('isRecurring'),
+            recurrenceInterval: form.getValues('recurrenceInterval'),
+            notes: form.getValues('notes'),
+          });
+        } catch (error) {
+          toast({
+            title: "Error saving favorite",
+            description: "Property was created but couldn't be saved as a favorite",
+            variant: "destructive",
+          });
+        } finally {
+          setIsSavingFavorite(false);
+        }
       }
-      
-      const property = await response.json();
-      
-      // If save as favorite is checked, create a favorite
-      if (values.saveAsFavorite) {
-        const favoriteData = {
-          propertyId: property.id,
-          isRecurring: values.isRecurring,
-          recurrenceInterval: values.isRecurring ? values.recurrenceInterval : undefined,
-          notes: values.favoriteNotes,
-        };
-        
-        await saveFavorite(favoriteData);
-      }
-      
+
       toast({
-        title: "Property Added",
-        description: `${values.address} has been added successfully${values.saveAsFavorite ? ' and saved to your favorites' : ''}`,
+        title: "Property created",
+        description: "Your property has been created successfully",
       });
-      
-      // Reset form
-      form.reset();
-      
-      // Call success callback if provided
+
       if (onSuccess) {
         onSuccess();
       }
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error('Error creating property:', error);
       toast({
-        title: "Failed to Add Property",
-        description: "There was an error adding your property. Please try again.",
+        title: "Error",
+        description: "There was an error creating the property. Please try again.",
         variant: "destructive",
       });
-    } finally {
-      setIsSubmitting(false);
     }
+  });
+
+  const handleSubmit = async (values: FormValues) => {
+    if (onSubmit) {
+      onSubmit();
+    }
+    propertyMutation.mutate(values);
   };
-  
+
   return (
-    <Card className="max-w-3xl mx-auto p-6">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold">Property Information</h2>
-            
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-6 md:col-span-2">
             <FormField
               control={form.control}
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Street Address</FormLabel>
+                  <FormLabel>Address</FormLabel>
                   <FormControl>
                     <Input placeholder="123 Main St" {...field} />
                   </FormControl>
@@ -148,8 +143,8 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onSuccess }) => {
                 </FormItem>
               )}
             />
-            
-            <div className="grid grid-cols-2 gap-4">
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <FormField
                 control={form.control}
                 name="city"
@@ -157,234 +152,192 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onSuccess }) => {
                   <FormItem>
                     <FormLabel>City</FormLabel>
                     <FormControl>
-                      <Input placeholder="Toronto" {...field} />
+                      <Input placeholder="City" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="state"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Province/State</FormLabel>
-                      <FormControl>
-                        <Input placeholder="ON" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="zipCode"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Postal/Zip Code</FormLabel>
-                      <FormControl>
-                        <Input placeholder="M5V 2H1" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
+
               <FormField
                 control={form.control}
-                name="propertyType"
+                name="state"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Property Type</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select property type" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="residential">Residential</SelectItem>
-                        <SelectItem value="commercial">Commercial</SelectItem>
-                        <SelectItem value="multi_family">Multi-Family</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              
-              <FormField
-                control={form.control}
-                name="size"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Property Size (sq ft)</FormLabel>
+                    <FormLabel>Province/State</FormLabel>
                     <FormControl>
-                      <Input 
-                        type="number" 
-                        placeholder="e.g. 5000" 
-                        {...field}
-                        value={field.value || ''}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          field.onChange(value === '' ? undefined : parseInt(value, 10));
-                        }}
-                      />
+                      <Input placeholder="Province/State" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      Approximate size of the yard/lawn area
-                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="zipCode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Postal/Zip Code</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Postal/Zip Code" {...field} />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-            
-            <FormField
-              control={form.control}
-              name="notes"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Property Notes</FormLabel>
-                  <FormControl>
-                    <Textarea 
-                      placeholder="Any special considerations about this property..."
-                      className="resize-none"
-                      rows={3}
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    Special instructions or information about this property
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </div>
-          
-          <div className="space-y-4 pt-4 border-t">
+
+          <FormField
+            control={form.control}
+            name="propertyType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Property Type</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select property type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="Residential">Residential</SelectItem>
+                    <SelectItem value="Commercial">Commercial</SelectItem>
+                    <SelectItem value="Multi-family">Multi-family</SelectItem>
+                    <SelectItem value="Vacant Land">Vacant Land</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="size"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Size (sq ft)</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="number" 
+                    placeholder="e.g. 2500" 
+                    {...field} 
+                    value={field.value || ''}
+                    onChange={e => field.onChange(e.target.value)}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Approximate size of the property
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="notes"
+            render={({ field }) => (
+              <FormItem className="md:col-span-2">
+                <FormLabel>Notes</FormLabel>
+                <FormControl>
+                  <Textarea 
+                    placeholder="Add any additional details about the property"
+                    className="resize-none min-h-[120px]"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="md:col-span-2 border rounded-lg p-4 bg-muted/30 space-y-4">
             <FormField
               control={form.control}
               name="saveAsFavorite"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel className="text-base">Save as Favorite</FormLabel>
-                    <FormDescription>
-                      Add this property to your favorites for easy access later
-                    </FormDescription>
-                  </div>
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 py-1">
                   <FormControl>
-                    <Switch
+                    <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Save as favorite property</FormLabel>
+                    <FormDescription>
+                      This will save the property for quick access and recurring jobs
+                    </FormDescription>
+                  </div>
                 </FormItem>
               )}
             />
-            
-            {saveAsFavoriteValue && (
-              <div className="space-y-4 pl-4 border-l-2 border-primary-100">
+
+            {form.watch('saveAsFavorite') && (
+              <>
                 <FormField
                   control={form.control}
                   name="isRecurring"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                      <div className="space-y-0.5">
-                        <FormLabel className="text-base">Recurring Service</FormLabel>
-                        <FormDescription>
-                          Flag this property for recurring lawn care service
-                        </FormDescription>
-                      </div>
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 py-1 ml-6">
                       <FormControl>
-                        <Switch
+                        <Checkbox
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Set as recurring service</FormLabel>
+                        <FormDescription>
+                          Plan for regular maintenance at this property
+                        </FormDescription>
+                      </div>
                     </FormItem>
                   )}
                 />
-                
-                {isRecurringValue && (
+
+                {form.watch('isRecurring') && (
                   <FormField
                     control={form.control}
                     name="recurrenceInterval"
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="ml-6">
                         <FormLabel>Recurrence Interval</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} defaultValue={field.value || undefined}>
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder="Select frequency" />
+                              <SelectValue placeholder="How often?" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
                             <SelectItem value="weekly">Weekly</SelectItem>
-                            <SelectItem value="biweekly">Bi-weekly</SelectItem>
+                            <SelectItem value="biweekly">Every 2 weeks</SelectItem>
                             <SelectItem value="monthly">Monthly</SelectItem>
-                            <SelectItem value="custom">Custom</SelectItem>
+                            <SelectItem value="seasonal">Seasonal</SelectItem>
                           </SelectContent>
                         </Select>
-                        <FormDescription>
-                          How often you want the service to repeat
-                        </FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 )}
-                
-                <FormField
-                  control={form.control}
-                  name="favoriteNotes"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Favorite Notes</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="Add notes for this saved property..."
-                          className="resize-none"
-                          rows={2}
-                          {...field} 
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Special notes for when this property is used for jobs
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+              </>
             )}
           </div>
-          
-          <div className="flex justify-end space-x-4">
-            <Button type="button" variant="outline">
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <>
-                  <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
-                  Saving...
-                </>
-              ) : 'Add Property'}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </Card>
-  );
-};
+        </div>
 
-export default PropertyForm;
+        <div className="flex justify-end space-x-4">
+          <Button 
+            type="submit" 
+            disabled={propertyMutation.isPending || isSavingFavorite}
+          >
+            Create Property
+          </Button>
+        </div>
+      </form>
+    </Form>
+  );
+}
