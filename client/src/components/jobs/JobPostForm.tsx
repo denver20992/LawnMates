@@ -36,13 +36,13 @@ import { useAuth } from '@/hooks/useAuth';
 
 // Define available services with market rates in the area
 const AVAILABLE_SERVICES = [
-  { id: 'lawn-mowing', label: 'Lawn Mowing', basePrice: 40 },
-  { id: 'hedge-trimming', label: 'Hedge Trimming', basePrice: 50 },
-  { id: 'leaf-removal', label: 'Leaf Removal', basePrice: 45 },
-  { id: 'garden-maintenance', label: 'Garden Maintenance', basePrice: 60 },
-  { id: 'weed-control', label: 'Weed Control', basePrice: 55 },
-  { id: 'fertilization', label: 'Fertilization', basePrice: 65 },
-  { id: 'dethatching', label: 'Dethatching', basePrice: 75 }
+  { id: 'lawn-mowing', label: 'Lawn Mowing', basePrice: 50 },
+  { id: 'hedge-trimming', label: 'Hedge Trimming', basePrice: 60 },
+  { id: 'leaf-removal', label: 'Leaf Removal', basePrice: 55 },
+  { id: 'garden-maintenance', label: 'Garden Maintenance', basePrice: 70 },
+  { id: 'weed-control', label: 'Weed Control', basePrice: 65 },
+  { id: 'fertilization', label: 'Fertilization', basePrice: 75 },
+  { id: 'dethatching', label: 'Dethatching', basePrice: 85 }
 ];
 
 // Extend the job schema for the form
@@ -118,6 +118,25 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
     };
   });
   
+  // Define Quick Service Bundles with discounts
+  const SERVICE_BUNDLES = [
+    {
+      name: "Lawn Care Bundle",
+      services: ['lawn-mowing', 'hedge-trimming', 'leaf-removal'],
+      discount: 0.15 // 15% off
+    },
+    {
+      name: "Garden Care Bundle",
+      services: ['garden-maintenance', 'weed-control', 'fertilization'],
+      discount: 0.15 // 15% off
+    },
+    {
+      name: "Complete Care Bundle",
+      services: ['lawn-mowing', 'hedge-trimming', 'leaf-removal', 'weed-control'],
+      discount: 0.15 // 15% off
+    }
+  ];
+
   // Calculate price based on selected services and property size
   const calculateEstimatedPrice = (
     services: string[], 
@@ -148,8 +167,30 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       return total + (service?.basePrice || 0);
     }, 0);
     
-    // Apply size multiplier and round to nearest 5
-    return Math.ceil((basePrice * sizeMultiplier) / 5) * 5;
+    // Check if selected services qualify for any bundle discount
+    let discount = 0;
+    for (const bundle of SERVICE_BUNDLES) {
+      // Check if all services in a bundle are selected
+      const qualifiesForBundle = bundle.services.every(bundleService => 
+        services.includes(bundleService)
+      );
+      
+      if (qualifiesForBundle) {
+        discount = bundle.discount;
+        break; // Apply the first qualifying bundle discount
+      }
+    }
+    
+    // Apply size multiplier and any bundle discount
+    let finalPrice = basePrice * sizeMultiplier;
+    
+    // Apply bundle discount if applicable
+    if (discount > 0) {
+      finalPrice = finalPrice * (1 - discount);
+    }
+    
+    // Round to nearest 5
+    return Math.ceil(finalPrice / 5) * 5;
   };
   
   // Initialize form with defaults
