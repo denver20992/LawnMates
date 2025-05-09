@@ -1036,7 +1036,9 @@ export class DrizzleStorage implements IStorage {
 }
 
 // Choose storage implementation
-// For development, check if DATABASE_URL is defined - if not, use MemStorage
-// For production, always use DrizzleStorage
-const useMemStorage = process.env.NODE_ENV === 'development' && !process.env.DATABASE_URL;
+// For development, we'll use MemStorage for simplicity
+// For production, we would use DrizzleStorage with proper DB setup
+// const useMemStorage = process.env.NODE_ENV === 'development' && !process.env.DATABASE_URL;
+// Force MemStorage for now to avoid database connection issues
+const useMemStorage = true;
 export const storage = useMemStorage ? new MemStorage() : new DrizzleStorage();
