@@ -203,7 +203,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       price: 0,
       startDate: new Date(),
       startTime: '09:00',
-      endTime: '12:00',
+      endTime: 'flexible',
       isRecurring: false,
       recurrenceInterval: 'monthly',
       requiresEquipment: false,
@@ -390,36 +390,68 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                   )}
                   
                   {useExistingProperty ? (
-                    <FormField
-                      control={form.control}
-                      name="propertyId"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Select Existing Property</FormLabel>
-                          <Select 
-                            onValueChange={(value) => field.onChange(parseInt(value, 10))} 
-                            value={field.value ? field.value.toString() : undefined}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select a property" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {properties.map((property) => (
-                                <SelectItem key={property.id} value={property.id.toString()}>
-                                  {property.address}
-                                </SelectItem>
+                    <div className="space-y-4">
+                      <FormField
+                        control={form.control}
+                        name="propertyId"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Select Existing Property</FormLabel>
+                            <Select 
+                              onValueChange={(value) => field.onChange(parseInt(value, 10))} 
+                              value={field.value ? field.value.toString() : undefined}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select a property" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {properties.map((property) => (
+                                  <SelectItem key={property.id} value={property.id.toString()}>
+                                    {property.address}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              Choose from your saved properties.
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      {/* Add yard type selection for existing properties */}
+                      <FormField
+                        control={form.control}
+                        name="yardType"
+                        render={({ field }) => (
+                          <FormItem className="space-y-1">
+                            <FormLabel>Yard Area</FormLabel>
+                            <FormDescription>
+                              Select which part of your yard needs service
+                            </FormDescription>
+                            <div className="flex flex-wrap gap-2 pt-2">
+                              {Object.entries(yardTypes).map(([key, { label, description }]) => (
+                                <div key={key} 
+                                  className={`flex flex-col items-center border rounded-lg p-3 cursor-pointer transition-all
+                                  ${field.value === key 
+                                    ? 'border-primary bg-primary/5 shadow-sm' 
+                                    : 'border-border hover:border-primary/50 hover:bg-muted/50'
+                                  }`}
+                                  onClick={() => field.onChange(key)}
+                                >
+                                  <div className="text-sm font-medium">{label}</div>
+                                  <div className="text-xs text-muted-foreground">{description}</div>
+                                </div>
                               ))}
-                            </SelectContent>
-                          </Select>
-                          <FormDescription>
-                            Choose from your saved properties.
-                          </FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
                   ) : (
                     <FormField
                       control={form.control}
@@ -754,7 +786,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="">Flexible</SelectItem>
+                              <SelectItem value="flexible">Flexible</SelectItem>
                               {timeOptions.map((time) => (
                                 <SelectItem key={time.value} value={time.value}>
                                   {time.label}
