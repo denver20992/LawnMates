@@ -67,7 +67,7 @@ const jobFormSchema = z.object({
   requiresEquipment: z.boolean().default(false),
   latitude: z.number().optional(),
   longitude: z.number().optional(),
-  useExistingProperty: z.boolean().default(true),
+  useExistingProperty: z.boolean(),
 }).refine(
   (data) => {
     // If using an existing property, require propertyId
@@ -103,8 +103,8 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
   
   // Property size descriptions
   const propertySizeInfo = {
-    small: { label: 'Small Property', description: 'Up to 5,000 sq ft', multiplier: 1.0 },
-    medium: { label: 'Medium Property', description: '5,000-10,000 sq ft', multiplier: 1.2 },
+    small: { label: 'Small Property', description: 'Up to 5,000 sq ft', multiplier: 0.75 },
+    medium: { label: 'Medium Property', description: '5,000-10,000 sq ft', multiplier: 1.0 },
     large: { label: 'Large Property', description: 'Over 10,000 sq ft', multiplier: 1.5 }
   };
   
@@ -152,13 +152,17 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
     return Math.ceil((basePrice * sizeMultiplier) / 5) * 5;
   };
   
+  // Initialize form with defaults
+  // Default to existing property if properties exist, otherwise default to new property
+  const hasExistingProperties = properties.length > 0;
+  
   const form = useForm<JobFormValues>({
     resolver: zodResolver(jobFormSchema),
     defaultValues: {
       title: '',
       selectedServices: [],
       description: '',
-      propertyId: 0,
+      propertyId: hasExistingProperties ? properties[0].id : 0,
       propertySize: 'medium',
       price: 0,
       startDate: new Date(),
@@ -167,7 +171,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       isRecurring: false,
       recurrenceInterval: 'monthly',
       requiresEquipment: false,
-      useExistingProperty: true,
+      useExistingProperty: hasExistingProperties,
       latitude: undefined,
       longitude: undefined,
     },
@@ -283,30 +287,33 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               {step === 1 && (
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="useExistingProperty"
-                    render={({ field }) => (
-                      <FormItem className="mb-4">
-                        <div className="flex flex-row items-center justify-between rounded-lg border p-4">
-                          <div className="space-y-0.5">
-                            <FormLabel className="text-base">
-                              Property Selection
-                            </FormLabel>
-                            <FormDescription>
-                              Choose whether to use an existing property or add a new address.
-                            </FormDescription>
+                  {/* Only show the property selector switch if user has properties */}
+                  {hasExistingProperties && (
+                    <FormField
+                      control={form.control}
+                      name="useExistingProperty"
+                      render={({ field }) => (
+                        <FormItem className="mb-4">
+                          <div className="flex flex-row items-center justify-between rounded-lg border p-4">
+                            <div className="space-y-0.5">
+                              <FormLabel className="text-base">
+                                Property Selection
+                              </FormLabel>
+                              <FormDescription>
+                                Choose whether to use an existing property or add a new address.
+                              </FormDescription>
+                            </div>
+                            <FormControl>
+                              <Switch
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
                           </div>
-                          <FormControl>
-                            <Switch
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
+                        </FormItem>
+                      )}
+                    />
+                  )}
                   
                   {useExistingProperty ? (
                     <FormField
