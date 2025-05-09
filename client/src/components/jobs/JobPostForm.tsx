@@ -224,6 +224,24 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
   const useExistingProperty = form.watch('useExistingProperty');
   const selectedPropertySize = form.watch('propertySize');
   
+  // Helper function to check if services qualify for a bundle
+  const getQualifyingBundle = (services: string[]) => {
+    if (!services.length) return null;
+    
+    for (const bundle of SERVICE_BUNDLES) {
+      // Check if all services in the bundle are selected
+      const qualifiesForBundle = bundle.services.every(bundleService => 
+        services.includes(bundleService)
+      );
+      
+      if (qualifiesForBundle) {
+        return bundle;
+      }
+    }
+    
+    return null;
+  };
+
   // Update price when services or property changes
   useEffect(() => {
     // Always update the price, even if no services are selected (price will be 0)
@@ -437,6 +455,26 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                             <p className="font-medium mb-1">Pricing Information</p>
                             <p>The estimated rates below are based on market data from landscapers in your area. Actual prices may vary based on property size, complexity, and special requirements. Final prices will be adjusted after property assessment.</p>
                           </div>
+                          
+                          {/* Bundle discount information */}
+                          <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-md text-xs flex items-start">
+                            <div className="text-green-500 mr-2 mt-0.5">
+                              <CheckCircle className="h-4 w-4" />
+                            </div>
+                            <div>
+                              <p className="font-medium mb-1 text-green-700">Bundle Discount Available!</p>
+                              <p className="text-green-700">Save 15% when you combine specific services together. Available bundles:</p>
+                              <ul className="mt-1 list-disc list-inside">
+                                {SERVICE_BUNDLES.map((bundle, index) => (
+                                  <li key={index} className="text-green-700">
+                                    <span className="font-medium">{bundle.name}:</span> {bundle.services.map(s => 
+                                      AVAILABLE_SERVICES.find(as => as.id === s)?.label
+                                    ).join(', ')}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
                         </div>
                         <div className="grid grid-cols-2 gap-2">
                           {AVAILABLE_SERVICES.map((service) => (
@@ -540,6 +578,20 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                                       ) : null;
                                     })}
                                   </ul>
+                                  
+                                  {/* Show qualifying bundle information */}
+                                  {getQualifyingBundle(selectedServices) && (
+                                    <div className="mt-2 mb-2 p-1.5 bg-green-50 border border-green-200 rounded-md">
+                                      <p className="text-green-700 font-medium">
+                                        <CheckCircle className="inline-block h-3 w-3 mr-1" />
+                                        Bundle Discount Applied: 15% off
+                                      </p>
+                                      <p className="text-green-700 text-xs">
+                                        You qualified for the "{getQualifyingBundle(selectedServices)?.name}" discount!
+                                      </p>
+                                    </div>
+                                  )}
+                                  
                                   <p className="mt-1">Adjusted based on property size and complexity.</p>
                                 </div>
                               )}
@@ -757,6 +809,15 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                               </div>
                             ) : null;
                           })}
+                          
+                          {/* Show bundle discount if applicable */}
+                          {getQualifyingBundle(form.getValues('selectedServices')) && (
+                            <div className="bg-green-50 rounded-md p-2 my-2 border border-green-200 flex justify-between">
+                              <span className="text-green-700 font-medium">Bundle Discount ({getQualifyingBundle(form.getValues('selectedServices'))?.name}):</span>
+                              <span className="text-green-700 font-medium">-15%</span>
+                            </div>
+                          )}
+                          
                           <div className="border-t mt-2 pt-1 flex justify-between">
                             <span className="font-medium">Total (adjusted for property):</span>
                             <span className="font-medium">${form.getValues('price')} CAD</span>
