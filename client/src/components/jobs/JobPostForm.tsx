@@ -473,7 +473,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                     
                     <div className="space-y-3">
                       <div className="flex justify-between">
-                        <span className="text-neutral-500">Job Title:</span>
+                        <span className="text-neutral-500">Job Address:</span>
                         <span className="font-medium">{form.getValues('title')}</span>
                       </div>
                       
@@ -518,7 +518,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                     </div>
                     
                     <div className="mt-4 pt-4 border-t">
-                      <h4 className="font-medium mb-2">Description:</h4>
+                      <h4 className="font-medium mb-2">Services Requested:</h4>
                       <p className="text-neutral-700">{form.getValues('description')}</p>
                     </div>
                   </div>
@@ -602,7 +602,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
             </div>
           </div>
           <div className="text-sm text-neutral-500">
-            Step {step} of 3: {step === 1 ? 'Job Details' : step === 2 ? 'Scheduling' : 'Review & Submit'}
+            Step {step} of 3: {step === 1 ? 'Address & Services' : step === 2 ? 'Scheduling' : 'Review & Submit'}
           </div>
         </CardFooter>
       </Card>
