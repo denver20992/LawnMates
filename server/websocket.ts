@@ -142,7 +142,8 @@ export function setupWebsocket(httpServer: HttpServer): void {
             timestamp: new Date().toISOString()
           }));
         }
-      } catch (error) {
+      } catch (e) {
+        const error = e as Error;
         console.error('Error processing WebSocket message:', error);
         try {
           ws.send(JSON.stringify({
