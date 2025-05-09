@@ -51,8 +51,8 @@ const jobFormSchema = z.object({
     message: "Please select at least one service"
   }),
   description: z.string().optional(),
-  propertyId: z.string().transform(val => parseInt(val, 10)),
-  price: z.string().transform(val => parseInt(val, 10) * 100), // Convert to cents
+  propertyId: z.coerce.number(),
+  price: z.coerce.number(), // Store as dollars, we'll convert to cents when sending to API
   startDate: z.date({
     required_error: "Please select a date",
   }),
@@ -95,11 +95,11 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
   });
   
   // Calculate price based on selected services and property size
-  const calculateEstimatedPrice = (services: string[], propertyId: string) => {
-    if (!services.length) return '';
+  const calculateEstimatedPrice = (services: string[], propertyId: number) => {
+    if (!services.length) return 0;
     
     // Get property details - in a real app this would use actual property size data
-    const selectedProperty = propertyId ? properties.find(p => p.id === parseInt(propertyId)) : null;
+    const selectedProperty = propertyId ? properties.find(p => p.id === propertyId) : null;
     // Using property address to estimate size (mock data for demonstration)
     const propertySize = selectedProperty?.id === 1 ? 'medium' : selectedProperty?.id === 2 ? 'large' : 'small';
     
@@ -122,8 +122,8 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       title: '',
       selectedServices: [],
       description: '',
-      propertyId: '',
-      price: '',
+      propertyId: 0,
+      price: 0,
       startDate: new Date(),
       startTime: '09:00',
       endTime: '12:00',
@@ -142,7 +142,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
     if (selectedServices?.length && selectedPropertyId) {
       // Calculate and set estimated price
       const estimatedPrice = calculateEstimatedPrice(selectedServices, selectedPropertyId);
-      form.setValue('price', estimatedPrice.toString());
+      form.setValue('price', estimatedPrice);
     }
   }, [selectedServices, selectedPropertyId, form]);
   
@@ -151,7 +151,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       setIsSubmitting(true);
       
       // Convert form data to job data
-      const selectedProperty = properties.find(p => p.id === Number(values.propertyId));
+      const selectedProperty = properties.find(p => p.id === values.propertyId);
       
       // Calculate start and end dates from the date and time fields
       const startDateTime = new Date(values.startDate);
@@ -165,14 +165,17 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
         endDateTime.setHours(endHour, endMinute);
       }
       
+      // Convert price to cents for API
+      const priceInCents = Math.round(values.price * 100);
+      
       // Create job payload
       const jobData = {
         title: values.title,
         description: values.description,
-        price: values.price,
+        price: priceInCents,
         propertyId: values.propertyId,
-        startDate: startDateTime.toISOString(),
-        endDate: endDateTime?.toISOString(),
+        startDate: startDateTime,
+        endDate: endDateTime,
         isRecurring: values.isRecurring,
         recurrenceInterval: values.isRecurring ? values.recurrenceInterval : undefined,
         requiresEquipment: values.requiresEquipment,
@@ -323,7 +326,10 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Select Property</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select 
+                          onValueChange={(value) => field.onChange(parseInt(value, 10))} 
+                          value={field.value ? field.value.toString() : undefined}
+                        >
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Select a property" />
@@ -650,16 +656,16 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                 {step < 3 ? (
                   <Button
                     type="button"
-                    onClick={() => {
+                    onClick={async () => {
                       // Validate current step fields before proceeding
                       if (step === 1) {
-                        const isValid = form.trigger(['title', 'description', 'propertyId', 'price']);
-                        if (isValid) {
+                        const result = await form.trigger(['title', 'selectedServices', 'propertyId', 'price']);
+                        if (result) {
                           setStep(step + 1);
                         }
                       } else if (step === 2) {
-                        const isValid = form.trigger(['startDate', 'startTime']);
-                        if (isValid) {
+                        const result = await form.trigger(['startDate', 'startTime']);
+                        if (result) {
                           setStep(step + 1);
                         }
                       }
