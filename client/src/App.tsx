@@ -22,6 +22,7 @@ import Checkout from "@/pages/checkout";
 import SavedPropertiesPage from "@/pages/properties/saved";
 import AddPropertyPage from "@/pages/properties/add";
 import WebSocketTestPage from "@/pages/websocket-test";
+import WebSocketSimpleTestPage from "@/pages/websocket-simple-test";
 import NotFound from "@/pages/not-found";
 
 // Route component that redirects to login if not authenticated
@@ -84,6 +85,9 @@ function Router() {
       </Route>
       <Route path="/websocket-test">
         <PrivateRoute component={WebSocketTestPage} />
+      </Route>
+      <Route path="/websocket-simple">
+        <PrivateRoute component={WebSocketSimpleTestPage} />
       </Route>
       
       <Route component={NotFound} />

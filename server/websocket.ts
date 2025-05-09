@@ -7,25 +7,91 @@ interface WebSocketClient extends WebSocket {
 }
 
 export function setupWebsocket(httpServer: HttpServer): void {
-  const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
+  // Configure WebSocket server explicitly with all available options
+  const wss = new WebSocketServer({ 
+    server: httpServer, 
+    path: '/ws',
+    clientTracking: true,
+    perMessageDeflate: false // Disable compression for simplicity during debugging
+  });
+  
+  // Log when WebSocket server is ready
+  wss.on('listening', () => {
+    console.log('WebSocket server listening at path: /ws');
+  });
   
   // Store connected clients by user ID
   const clients = new Map<number, WebSocketClient>();
   
-  wss.on('connection', (ws: WebSocketClient) => {
-    console.log('WebSocket client connected');
+  // Log total connections
+  setInterval(() => {
+    console.log(`WebSocket status: ${wss.clients.size} total connection(s)`);
+  }, 10000);
+  
+  wss.on('connection', (ws: WebSocketClient, req) => {
+    // Log connection details
+    console.log(`WebSocket client connected from ${req.socket.remoteAddress} with headers:`, {
+      origin: req.headers.origin,
+      host: req.headers.host,
+      upgrade: req.headers.upgrade,
+      path: req.url
+    });
     
     // Set isAlive flag for heartbeat
     ws.isAlive = true;
     
+    // Send immediate welcome message to confirm connection
+    try {
+      ws.send(JSON.stringify({
+        type: 'welcome',
+        message: 'Connection established',
+        timestamp: new Date().toISOString()
+      }));
+    } catch (err) {
+      console.error('Failed to send welcome message:', err);
+    }
+    
     // Handle messages from clients
-    ws.on('message', (message: string) => {
+    ws.on('message', (message: any) => {
       try {
         // Log the raw message for debugging
-        console.log('Received WebSocket message:', message.toString());
+        const messageStr = message.toString();
+        console.log('Received WebSocket message:', messageStr);
         
-        const data = JSON.parse(message.toString());
+        // Handle ping messages with simple text
+        if (messageStr === 'ping' || messageStr === '"ping"') {
+          ws.send(JSON.stringify({
+            type: 'pong',
+            timestamp: new Date().toISOString()
+          }));
+          return;
+        }
+        
+        // Try to parse as JSON
+        let data: any;
+        try {
+          data = JSON.parse(messageStr);
+        } catch (parseError) {
+          console.warn('Received non-JSON message:', messageStr);
+          ws.send(JSON.stringify({
+            type: 'error',
+            message: 'Invalid JSON format',
+            error: parseError.message
+          }));
+          return;
+        }
+        
         console.log('Parsed WebSocket message:', data);
+        
+        // Handle direct ping message
+        if (data.type === 'ping') {
+          ws.send(JSON.stringify({
+            type: 'pong',
+            timestamp: new Date().toISOString(),
+            echo: data
+          }));
+          return;
+        }
         
         // Handle client identification
         if (data.type === 'identify' && data.userId) {
@@ -52,27 +118,51 @@ export function setupWebsocket(httpServer: HttpServer): void {
             const confirmation = JSON.stringify({
               type: 'confirmation',
               message: 'Successfully identified',
-              status: 'success'
+              status: 'success',
+              userId: userId,
+              timestamp: new Date().toISOString()
             });
             ws.send(confirmation);
           } catch (err) {
             console.error('Failed to send confirmation:', err);
           }
-        } else {
+        } else if (data.type !== 'ping') {
           console.warn('Received message without proper identification:', data);
+          ws.send(JSON.stringify({
+            type: 'error',
+            message: 'Please identify first with a userId',
+            timestamp: new Date().toISOString()
+          }));
         }
       } catch (error) {
         console.error('Error processing WebSocket message:', error);
+        try {
+          ws.send(JSON.stringify({
+            type: 'error',
+            message: `Error processing message: ${error.message}`,
+            timestamp: new Date().toISOString()
+          }));
+        } catch (sendError) {
+          console.error('Failed to send error response:', sendError);
+        }
       }
     });
     
     // Handle client disconnections
-    ws.on('close', () => {
+    ws.on('close', (code, reason) => {
       if (ws.userId) {
         clients.delete(ws.userId);
-        console.log(`WebSocket client ${ws.userId} disconnected`);
+        console.log(`WebSocket client ${ws.userId} disconnected. Code: ${code}, Reason: ${reason || 'No reason provided'}`);
       } else {
-        console.log('Unidentified WebSocket client disconnected');
+        console.log(`Unidentified WebSocket client disconnected. Code: ${code}, Reason: ${reason || 'No reason provided'}`);
+      }
+    });
+    
+    // Handle connection errors
+    ws.on('error', (err) => {
+      console.error('WebSocket connection error:', err);
+      if (ws.userId) {
+        clients.delete(ws.userId);
       }
     });
     
