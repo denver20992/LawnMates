@@ -81,9 +81,17 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
   
   // Mock properties for the select dropdown
   const [properties, setProperties] = useState([
-    { id: 1, address: '123 Main St, Chicago, IL', latitude: 41.8781, longitude: -87.6298 },
-    { id: 2, address: '456 Oak Ave, Chicago, IL', latitude: 41.8996, longitude: -87.6240 }
+    { id: 1, address: '123 Main St, Toronto, ON', latitude: 43.6532, longitude: -79.3832, size: 'medium' },
+    { id: 2, address: '456 Oak Ave, Toronto, ON', latitude: 43.6711, longitude: -79.3458, size: 'large' },
+    { id: 3, address: '789 Maple Rd, Toronto, ON', latitude: 43.6426, longitude: -79.4065, size: 'small' }
   ]);
+  
+  // Property size descriptions
+  const propertySizeInfo = {
+    small: { label: 'Small Property', description: 'Up to 5,000 sq ft', multiplier: 1.0 },
+    medium: { label: 'Medium Property', description: '5,000-10,000 sq ft', multiplier: 1.2 },
+    large: { label: 'Large Property', description: 'Over 10,000 sq ft', multiplier: 1.5 }
+  };
   
   // For time selection
   const timeOptions = Array.from({ length: 24 * 4 }, (_, i) => {
@@ -99,13 +107,13 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
   const calculateEstimatedPrice = (services: string[], propertyId: number) => {
     if (!services.length) return 0;
     
-    // Get property details - in a real app this would use actual property size data
+    // Get property details
     const selectedProperty = propertyId ? properties.find(p => p.id === propertyId) : null;
-    // Using property address to estimate size (mock data for demonstration)
-    const propertySize = selectedProperty?.id === 1 ? 'medium' : selectedProperty?.id === 2 ? 'large' : 'small';
+    if (!selectedProperty) return 0;
     
-    // Size multiplier
-    const sizeMultiplier = propertySize === 'large' ? 1.5 : propertySize === 'medium' ? 1.2 : 1;
+    // Get size multiplier from property
+    const propertySize = selectedProperty.size || 'medium';
+    const sizeMultiplier = propertySizeInfo[propertySize as keyof typeof propertySizeInfo].multiplier;
     
     // Calculate base price from selected services
     const basePrice = services.reduce((total, serviceId) => {
