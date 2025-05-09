@@ -86,7 +86,7 @@ export default function ReviewsPage() {
         
         <div className="flex items-center gap-4 mb-6">
           <Avatar className="h-16 w-16">
-            <AvatarImage src={displayUser.avatar} alt={displayUser.username} />
+            <AvatarImage src={displayUser.avatar || undefined} alt={displayUser.username} />
             <AvatarFallback className="bg-primary/10 text-primary text-xl">
               {displayUser.username?.substring(0, 2)?.toUpperCase() || 'U'}
             </AvatarFallback>

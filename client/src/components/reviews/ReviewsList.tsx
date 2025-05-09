@@ -119,7 +119,7 @@ function ReviewCard({ review, isUserReviewee }: ReviewCardProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Avatar>
-              <AvatarImage src={user.avatar} alt={user.username} />
+              <AvatarImage src={user.avatar || undefined} alt={user.username} />
               <AvatarFallback>
                 {user.username?.substring(0, 2).toUpperCase() || 'U'}
               </AvatarFallback>
