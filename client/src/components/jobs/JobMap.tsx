@@ -3,6 +3,7 @@ import JobCard from './JobCard';
 import { MapPin, Filter, Clock, DollarSign, Plus, Minus } from 'lucide-react';
 import { Job } from '@shared/schema';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 interface JobMapProps {
   jobs: Job[];
@@ -19,15 +20,29 @@ const JobMap: React.FC<JobMapProps> = ({
 }) => {
   const [filteredJobs, setFilteredJobs] = useState<Job[]>(jobs);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const { toast } = useToast();
   
   // In a real implementation, we would use a proper map library (Mapbox, Google Maps, etc.)
-  // This is a simplified mock implementation
+  // For now we use a static Mapbox map
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapboxToken = import.meta.env.VITE_MAPBOX_TOKEN;
   
   useEffect(() => {
     // Set initial filtered jobs
     setFilteredJobs(jobs);
-  }, [jobs]);
+    
+    // Check if Mapbox token is available
+    if (!mapboxToken) {
+      toast({
+        title: "Map Display Error",
+        description: "Mapbox token is missing. Please contact support.",
+        variant: "destructive"
+      });
+    } else {
+      setMapLoaded(true);
+    }
+  }, [jobs, mapboxToken, toast]);
   
   const handleFilterClick = (filter: string) => {
     // Toggle filter
@@ -74,9 +89,19 @@ const JobMap: React.FC<JobMapProps> = ({
         <div className="rounded-md overflow-hidden mb-4 relative">
           {/* Map container */}
           <div ref={mapContainerRef} className="h-80 bg-secondary-100 w-full relative">
-            {/* Map simulation with jobs plotted */}
-            <div className="absolute inset-0 w-full h-full bg-cover bg-center opacity-50" 
-                 style={{ backgroundImage: "url('https://maps.googleapis.com/maps/api/staticmap?center=41.8781,-87.6298&zoom=12&size=800x600&maptype=roadmap&key=YOUR_API_KEY')" }} />
+            {/* Map using Mapbox */}
+            {mapLoaded ? (
+              <div 
+                className="absolute inset-0 w-full h-full bg-cover bg-center" 
+                style={{ 
+                  backgroundImage: `url('https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-l+1e88e5(-83.7430,42.2808),pin-l+1e88e5(-83.7530,42.2908),pin-l+1e88e5(-83.7330,42.2708)/auto/800x600?access_token=${mapboxToken}')` 
+                }} 
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center">
+                <div className="text-neutral-500">Loading map...</div>
+              </div>
+            )}
             
             {/* Map job markers */}
             {filteredJobs.map((job, index) => (

@@ -77,14 +77,6 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
           iconColor: 'text-primary-600',
         },
         {
-          id: 'total-spent',
-          label: 'Total Spent',
-          value: '$850',
-          icon: <DollarSign className="h-6 w-6 text-secondary-600" />,
-          bgColor: 'bg-secondary-100',
-          iconColor: 'text-secondary-600',
-        },
-        {
           id: 'completed-jobs',
           label: 'Completed Jobs',
           value: 8,
