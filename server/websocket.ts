@@ -1,5 +1,6 @@
 import { Server as HttpServer } from "http";
 import { WebSocketServer, WebSocket } from "ws";
+import { log } from "./vite";
 
 interface WebSocketClient extends WebSocket {
   userId?: number;
@@ -42,11 +43,17 @@ export function setupWebsocket(httpServer: HttpServer): void {
     
     // Send immediate welcome message to confirm connection
     try {
-      ws.send(JSON.stringify({
-        type: 'welcome',
-        message: 'Connection established',
-        timestamp: new Date().toISOString()
-      }));
+      // Give the connection a moment to stabilize before sending messages
+      setTimeout(() => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({
+            type: 'welcome',
+            message: 'Connection established successfully',
+            timestamp: new Date().toISOString()
+          }));
+          log('Sent welcome message to client', 'websocket');
+        }
+      }, 100);
     } catch (err) {
       console.error('Failed to send welcome message:', err);
     }
@@ -71,7 +78,8 @@ export function setupWebsocket(httpServer: HttpServer): void {
         let data: any;
         try {
           data = JSON.parse(messageStr);
-        } catch (parseError) {
+        } catch (e) {
+          const parseError = e as Error;
           console.warn('Received non-JSON message:', messageStr);
           ws.send(JSON.stringify({
             type: 'error',
