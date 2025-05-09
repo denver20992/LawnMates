@@ -103,9 +103,9 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
   
   // Property size descriptions
   const propertySizeInfo = {
-    small: { label: 'Small Property', description: 'Up to 5,000 sq ft', multiplier: 0.75 },
-    medium: { label: 'Medium Property', description: '5,000-10,000 sq ft', multiplier: 1.0 },
-    large: { label: 'Large Property', description: 'Over 10,000 sq ft', multiplier: 1.5 }
+    small: { label: 'Small Property', description: 'Up to 2,000 sq ft', multiplier: 0.75 },
+    medium: { label: 'Medium Property', description: '2,000-5,000 sq ft', multiplier: 1.0 },
+    large: { label: 'Large Property', description: 'Over 5,000 sq ft', multiplier: 1.5 }
   };
   
   // For time selection
@@ -185,10 +185,10 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
   
   // Update price when services or property changes
   useEffect(() => {
+    // Always update the price, even if no services are selected (price will be 0)
+    let estimatedPrice = 0;
+    
     if (selectedServices?.length) {
-      // Calculate and set estimated price
-      let estimatedPrice = 0;
-      
       if (useExistingProperty) {
         if (selectedPropertyId) {
           estimatedPrice = calculateEstimatedPrice(selectedServices, selectedPropertyId, true);
@@ -197,9 +197,9 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
         // For new properties, use the selected property size
         estimatedPrice = calculateEstimatedPrice(selectedServices, 0, false, selectedPropertySize);
       }
-      
-      form.setValue('price', estimatedPrice);
     }
+    
+    form.setValue('price', estimatedPrice);
   }, [selectedServices, selectedPropertyId, useExistingProperty, selectedPropertySize, form]);
   
   const onSubmit = async (values: JobFormValues) => {

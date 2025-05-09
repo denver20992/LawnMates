@@ -13,6 +13,9 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useNotifications } from '@/hooks/useNotifications';
 
+// Import the logo
+import lawnmatesLogo from '@assets/lawnmates-logo-horizontal.png.png';
+
 const AppHeader: React.FC = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const { unreadCount, markAllAsRead, notifications } = useNotifications();
@@ -47,7 +50,7 @@ const AppHeader: React.FC = () => {
             <div className="flex flex-shrink-0 items-center">
               <Link href="/" className="flex items-center">
                 <img 
-                  src="/lawnmates-logo-horizontal.png.png" 
+                  src={lawnmatesLogo} 
                   alt="LawnMates Logo" 
                   className="h-10 w-auto"
                   onError={(e) => {

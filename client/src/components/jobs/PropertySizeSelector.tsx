@@ -17,21 +17,21 @@ export const propertySizes: Record<string, PropertySize> = {
   small: {
     id: 'small',
     label: 'Small Property',
-    description: 'Standard city lot with minimal landscaping (up to 5,000 sq ft)',
+    description: 'City lot with minimal landscaping (up to 2,000 sq ft)',
     multiplier: 0.75,
     icon: <Home className="h-6 w-6" />
   },
   medium: {
     id: 'medium',
     label: 'Medium Property',
-    description: 'Suburban property with typical landscaping (5,000 to 10,000 sq ft)',
+    description: 'Standard suburban lot (2,000 to 5,000 sq ft)',
     multiplier: 1.0,
     icon: <Building className="h-6 w-6" />
   },
   large: {
     id: 'large',
     label: 'Large Property',
-    description: 'Estate or large lot with extensive landscaping (10,000+ sq ft)',
+    description: 'Large lot with extensive landscaping (5,000+ sq ft)',
     multiplier: 1.5,
     icon: <Castle className="h-6 w-6" />
   }
