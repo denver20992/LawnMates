@@ -45,27 +45,25 @@ const AppHeader: React.FC = () => {
         <div className="flex h-16 justify-between">
           <div className="flex">
             <div className="flex flex-shrink-0 items-center">
-              <Link href="/">
-                <div className="flex items-center">
-                  <img 
-                    src="/lawnmates-logo-horizontal.png.png" 
-                    alt="LawnMates Logo" 
-                    className="h-10 w-auto"
-                    onError={(e) => {
-                      // Fallback if image fails to load
-                      e.currentTarget.style.display = 'none';
-                      const sibling = e.currentTarget.nextElementSibling;
-                      if (sibling && sibling instanceof HTMLElement) {
-                        sibling.style.display = 'flex';
-                      }
-                    }} 
-                  />
-                  <div className="flex items-center ml-1" style={{display: 'none'}}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="ml-1 text-xl font-bold text-neutral-800">LawnMates</span>
-                  </div>
+              <Link href="/" className="flex items-center">
+                <img 
+                  src="/lawnmates-logo-horizontal.png.png" 
+                  alt="LawnMates Logo" 
+                  className="h-10 w-auto"
+                  onError={(e) => {
+                    // Fallback if image fails to load
+                    e.currentTarget.style.display = 'none';
+                    const sibling = e.currentTarget.nextElementSibling;
+                    if (sibling && sibling instanceof HTMLElement) {
+                      sibling.style.display = 'flex';
+                    }
+                  }} 
+                />
+                <div className="flex items-center ml-1" style={{display: 'none'}}>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="ml-1 text-xl font-bold text-neutral-800">LawnMates</span>
                 </div>
               </Link>
             </div>
