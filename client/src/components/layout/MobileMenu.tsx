@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'wouter';
-import { Home, Briefcase, MessageCircle, User, Plus } from 'lucide-react';
+import { Home, Briefcase, MessageCircle, User, Plus, Star } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 const MobileMenu: React.FC = () => {
@@ -11,7 +11,7 @@ const MobileMenu: React.FC = () => {
 
   return (
     <div className="fixed bottom-0 inset-x-0 z-50 bg-white shadow-md border-t border-neutral-200 md:hidden">
-      <nav className="grid grid-cols-5 py-2">
+      <nav className="grid grid-cols-6 py-2">
         <Link href="/">
           <a className={`text-center flex flex-col items-center justify-center text-xs font-medium ${
             location === '/' ? 'text-primary-600' : 'text-neutral-500'
@@ -42,6 +42,14 @@ const MobileMenu: React.FC = () => {
           }`}>
             <MessageCircle className="h-6 w-6 mb-0.5" />
             Messages
+          </a>
+        </Link>
+        <Link href="/reviews">
+          <a className={`text-center flex flex-col items-center justify-center text-xs font-medium ${
+            location.startsWith('/reviews') ? 'text-primary-600' : 'text-neutral-500'
+          }`}>
+            <Star className="h-6 w-6 mb-0.5" />
+            Reviews
           </a>
         </Link>
         <Link href="/profile">

@@ -16,6 +16,7 @@ import JobsPage from "@/pages/jobs/index";
 import JobPostPage from "@/pages/jobs/post";
 import MessagesPage from "@/pages/messages/index";
 import ProfilePage from "@/pages/profile";
+import ReviewsPage from "@/pages/reviews";
 import AdminPage from "@/pages/admin/index";
 import Checkout from "@/pages/checkout";
 import NotFound from "@/pages/not-found";
@@ -62,6 +63,9 @@ function Router() {
       </Route>
       <Route path="/profile">
         <PrivateRoute component={ProfilePage} />
+      </Route>
+      <Route path="/reviews">
+        <PrivateRoute component={ReviewsPage} />
       </Route>
       <Route path="/admin">
         <PrivateRoute component={AdminPage} adminOnly={true} />

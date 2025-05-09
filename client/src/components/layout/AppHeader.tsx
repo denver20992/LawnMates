@@ -84,6 +84,13 @@ const AppHeader: React.FC = () => {
                     Profile
                   </a>
                 </Link>
+                <Link href="/reviews">
+                  <a className={`inline-flex items-center border-b-2 ${
+                    location.startsWith('/reviews') ? 'border-primary-500 text-neutral-900' : 'border-transparent text-neutral-500 hover:border-neutral-300 hover:text-neutral-700'
+                  } px-1 pt-1 text-sm font-medium`}>
+                    Reviews
+                  </a>
+                </Link>
                 {user?.role === 'admin' && (
                   <Link href="/admin">
                     <a className={`inline-flex items-center border-b-2 ${
