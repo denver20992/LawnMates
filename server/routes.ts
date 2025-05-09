@@ -26,6 +26,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Setup WebSocket server
   setupWebsocket(httpServer);
+
+  // Add a diagnostic WebSocket test route
+  app.get('/api/websocket-test', (req, res) => {
+    res.json({
+      message: 'WebSocket diagnostics',
+      wsPath: '/ws',
+      serverTime: new Date().toISOString()
+    });
+  });
   
   // Setup authentication routes and middleware
   setupAuth(app);
