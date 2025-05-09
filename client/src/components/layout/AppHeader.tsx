@@ -186,10 +186,8 @@ const AppHeader: React.FC = () => {
                       <>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem className="p-2 text-center">
-                          <Link href="/notifications">
-                            <a className="text-sm text-primary-600 hover:text-primary-800">
-                              View all notifications
-                            </a>
+                          <Link href="/notifications" className="text-sm text-primary-600 hover:text-primary-800">
+                            View all notifications
                           </Link>
                         </DropdownMenuItem>
                       </>
