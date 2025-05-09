@@ -33,9 +33,9 @@ export const useWebsocket = (options: UseWebSocketOptions = {}) => {
       newSocket.onopen = () => {
         setStatus('open');
         
-        // Send authentication message
+        // Send identification message to the server
         newSocket.send(JSON.stringify({
-          type: 'auth',
+          type: 'identify',
           userId: user.id
         }));
 
