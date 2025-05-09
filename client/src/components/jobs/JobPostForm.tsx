@@ -203,7 +203,9 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       setIsSubmitting(true);
       
       // Convert form data to job data
-      const selectedProperty = properties.find(p => p.id === values.propertyId);
+      const selectedProperty = values.useExistingProperty 
+        ? properties.find(p => p.id === values.propertyId)
+        : null;
       
       // Calculate start and end dates from the date and time fields
       const startDateTime = new Date(values.startDate);
@@ -222,17 +224,20 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       
       // Create job payload
       const jobData = {
-        title: values.title,
+        title: values.useExistingProperty ? selectedProperty?.address : values.title,
         description: values.description,
         price: priceInCents,
-        propertyId: values.propertyId,
+        propertyId: values.useExistingProperty ? values.propertyId : undefined,
         startDate: startDateTime,
         endDate: endDateTime,
         isRecurring: values.isRecurring,
         recurrenceInterval: values.isRecurring ? values.recurrenceInterval : undefined,
         requiresEquipment: values.requiresEquipment,
-        latitude: selectedProperty?.latitude,
-        longitude: selectedProperty?.longitude,
+        // Use selected property coordinates or new coordinates from address autocomplete
+        latitude: values.useExistingProperty ? selectedProperty?.latitude : values.latitude,
+        longitude: values.useExistingProperty ? selectedProperty?.longitude : values.longitude,
+        // For new properties, include property size 
+        propertySize: !values.useExistingProperty ? values.propertySize : undefined,
         ownerId: user?.id || 0, // This should be set on the server
       };
       

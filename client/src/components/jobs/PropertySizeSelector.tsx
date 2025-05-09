@@ -1,9 +1,8 @@
 import React from 'react';
+import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
-import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Control } from 'react-hook-form';
-import { Home, Building, Castle } from 'lucide-react';
+import { Home, Castle, Building } from 'lucide-react';
 
 export interface PropertySize {
   id: string;
@@ -13,28 +12,35 @@ export interface PropertySize {
   icon: React.ReactNode;
 }
 
+// Property size information with price multipliers
 export const propertySizes: Record<string, PropertySize> = {
   small: {
     id: 'small',
     label: 'Small Property',
-    description: 'Up to 5,000 sq ft',
-    multiplier: 1.0,
-    icon: <Home className="h-8 w-8 text-primary-500" />,
+    description: 'Standard city lot with minimal landscaping (up to 0.1 acre)',
+    multiplier: 0.75,
+    icon: <Home className="h-6 w-6" />
   },
   medium: {
     id: 'medium',
     label: 'Medium Property',
-    description: '5,000-10,000 sq ft',
-    multiplier: 1.2,
-    icon: <Building className="h-8 w-8 text-primary-500" />
+    description: 'Suburban property with typical landscaping (0.1 to 0.3 acres)',
+    multiplier: 1.0,
+    icon: <Building className="h-6 w-6" />
   },
   large: {
     id: 'large',
     label: 'Large Property',
-    description: 'Over 10,000 sq ft',
+    description: 'Estate or large lot with extensive landscaping (0.3+ acres)',
     multiplier: 1.5,
-    icon: <Castle className="h-8 w-8 text-primary-500" />
+    icon: <Castle className="h-6 w-6" />
   }
+};
+
+export const propertySizeInfo = {
+  small: { multiplier: 0.75 },
+  medium: { multiplier: 1.0 },
+  large: { multiplier: 1.5 }
 };
 
 interface PropertySizeSelectorProps {
@@ -48,37 +54,40 @@ const PropertySizeSelector: React.FC<PropertySizeSelectorProps> = ({ control, na
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="space-y-3">
+        <FormItem className="space-y-1">
           <FormLabel>Property Size</FormLabel>
+          <FormDescription>
+            Select the size of your property to help determine service pricing.
+          </FormDescription>
           <FormControl>
             <RadioGroup
               onValueChange={field.onChange}
               defaultValue={field.value}
-              className="grid grid-cols-3 gap-4"
+              className="grid grid-cols-3 gap-4 pt-2"
             >
               {Object.values(propertySizes).map((size) => (
                 <FormItem key={size.id}>
-                  <FormControl>
-                    <RadioGroupItem
-                      value={size.id}
-                      id={size.id}
-                      className="peer sr-only"
-                    />
-                  </FormControl>
-                  <Label
-                    htmlFor={size.id}
-                    className="flex flex-col items-center justify-center h-full rounded-md border-2 border-muted bg-popover p-4 hover:bg-muted hover:border-primary peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary-50"
-                  >
-                    {size.icon}
-                    <span className="mt-2 font-medium text-center">{size.label}</span>
-                    <span className="text-xs text-center text-muted-foreground">
-                      {size.description}
-                    </span>
-                  </Label>
+                  <FormLabel className="cursor-pointer [&:has([data-state=checked])>div]:border-primary">
+                    <FormControl>
+                      <RadioGroupItem
+                        value={size.id}
+                        className="sr-only"
+                        checked={field.value === size.id}
+                      />
+                    </FormControl>
+                    <div className="border-2 rounded-lg p-4 flex flex-col items-center gap-2 hover:border-muted-foreground transition-colors">
+                      {size.icon}
+                      <div className="font-medium text-center">{size.label}</div>
+                      <div className="text-xs text-center text-muted-foreground">
+                        {size.description}
+                      </div>
+                    </div>
+                  </FormLabel>
                 </FormItem>
               ))}
             </RadioGroup>
           </FormControl>
+          <FormMessage />
         </FormItem>
       )}
     />
