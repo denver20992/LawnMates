@@ -982,23 +982,25 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                 </div>
               )}
               
-              <div className="flex justify-between pt-4 border-t">
+              <div className="flex flex-col sm:flex-row justify-between gap-3 pt-4 border-t">
                 {step > 1 ? (
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setStep(step - 1)}
                     disabled={isSubmitting}
+                    className="w-full sm:w-auto order-2 sm:order-1"
                   >
                     Back
                   </Button>
                 ) : (
-                  <div></div>
+                  <div className="hidden sm:block"></div>
                 )}
                 
                 {step < 3 ? (
                   <Button
                     type="button"
+                    className="w-full sm:w-auto order-1 sm:order-2"
                     onClick={async () => {
                       // For step 1, we'll do manual validation without using trigger
                       if (step === 1) {
@@ -1060,7 +1062,11 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                     Next
                   </Button>
                 ) : (
-                  <Button type="submit" disabled={isSubmitting}>
+                  <Button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="w-full sm:w-auto order-1 sm:order-2"
+                  >
                     {isSubmitting ? "Posting..." : "Post Job"}
                   </Button>
                 )}
