@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -22,6 +22,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
@@ -31,14 +32,25 @@ import { useToast } from '@/hooks/use-toast';
 import { useJobs } from '@/hooks/useJobs';
 import { useAuth } from '@/hooks/useAuth';
 
+// Define available services
+const AVAILABLE_SERVICES = [
+  { id: 'lawn-mowing', label: 'Lawn Mowing', basePrice: 40 },
+  { id: 'hedge-trimming', label: 'Hedge Trimming', basePrice: 50 },
+  { id: 'leaf-removal', label: 'Leaf Removal', basePrice: 45 },
+  { id: 'garden-maintenance', label: 'Garden Maintenance', basePrice: 60 },
+  { id: 'weed-control', label: 'Weed Control', basePrice: 55 },
+  { id: 'fertilization', label: 'Fertilization', basePrice: 65 }
+];
+
 // Extend the job schema for the form
 const jobFormSchema = z.object({
   title: z.string().min(5, {
     message: "Address must be at least 5 characters",
   }),
-  description: z.string().min(20, {
-    message: "Description must be at least 20 characters",
+  selectedServices: z.array(z.string()).min(1, {
+    message: "Please select at least one service"
   }),
+  description: z.string().optional(),
   propertyId: z.string().transform(val => parseInt(val, 10)),
   price: z.string().transform(val => parseInt(val, 10) * 100), // Convert to cents
   startDate: z.date({
@@ -82,10 +94,33 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
     };
   });
   
+  // Calculate price based on selected services and property size
+  const calculateEstimatedPrice = (services: string[], propertyId: string) => {
+    if (!services.length) return '';
+    
+    // Get property details - in a real app this would use actual property size data
+    const selectedProperty = propertyId ? properties.find(p => p.id === parseInt(propertyId)) : null;
+    // Using property address to estimate size (mock data for demonstration)
+    const propertySize = selectedProperty?.id === 1 ? 'medium' : selectedProperty?.id === 2 ? 'large' : 'small';
+    
+    // Size multiplier
+    const sizeMultiplier = propertySize === 'large' ? 1.5 : propertySize === 'medium' ? 1.2 : 1;
+    
+    // Calculate base price from selected services
+    const basePrice = services.reduce((total, serviceId) => {
+      const service = AVAILABLE_SERVICES.find(s => s.id === serviceId);
+      return total + (service?.basePrice || 0);
+    }, 0);
+    
+    // Apply size multiplier and round to nearest 5
+    return Math.ceil((basePrice * sizeMultiplier) / 5) * 5;
+  };
+  
   const form = useForm<JobFormValues>({
     resolver: zodResolver(jobFormSchema),
     defaultValues: {
       title: '',
+      selectedServices: [],
       description: '',
       propertyId: '',
       price: '',
@@ -100,6 +135,16 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
   
   const isRecurring = form.watch('isRecurring');
   const selectedPropertyId = form.watch('propertyId');
+  const selectedServices = form.watch('selectedServices');
+  
+  // Update price when services or property changes
+  useEffect(() => {
+    if (selectedServices?.length && selectedPropertyId) {
+      // Calculate and set estimated price
+      const estimatedPrice = calculateEstimatedPrice(selectedServices, selectedPropertyId);
+      form.setValue('price', estimatedPrice.toString());
+    }
+  }, [selectedServices, selectedPropertyId, form]);
   
   const onSubmit = async (values: JobFormValues) => {
     try {
@@ -197,42 +242,75 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                   
                   <FormField
                     control={form.control}
+                    name="selectedServices"
+                    render={() => (
+                      <FormItem>
+                        <div className="mb-4">
+                          <FormLabel>Services Needed</FormLabel>
+                          <FormDescription>
+                            Select the services you need for this job
+                          </FormDescription>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          {AVAILABLE_SERVICES.map((service) => (
+                            <FormField
+                              key={service.id}
+                              control={form.control}
+                              name="selectedServices"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={service.id}
+                                    className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-3"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(service.id)}
+                                        onCheckedChange={(checked) => {
+                                          const updatedServices = checked
+                                            ? [...field.value, service.id]
+                                            : field.value?.filter(
+                                                (value) => value !== service.id
+                                              );
+                                          field.onChange(updatedServices);
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <div className="space-y-1 leading-none">
+                                      <FormLabel className="text-sm font-medium">
+                                        {service.label}
+                                      </FormLabel>
+                                      <FormDescription className="text-xs">
+                                        Base rate: ${service.basePrice} CAD
+                                      </FormDescription>
+                                    </div>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Services Needed</FormLabel>
-                        <div className="mb-3 space-y-2">
-                          <div className="flex flex-wrap gap-2">
-                            {["Lawn Mowing", "Hedge Trimming", "Leaf Removal", "Garden Maintenance", "Weed Control", "Fertilization"].map((service) => (
-                              <Button
-                                key={service}
-                                type="button"
-                                variant="outline"
-                                size="sm"
-                                className="rounded-full"
-                                onClick={() => {
-                                  const currentText = field.value;
-                                  const newText = currentText ? 
-                                    currentText + (currentText.endsWith("\n") ? "" : "\n") + "- " + service : 
-                                    "- " + service;
-                                  field.onChange(newText);
-                                }}
-                              >
-                                + {service}
-                              </Button>
-                            ))}
-                          </div>
-                        </div>
+                        <FormLabel>Additional Notes</FormLabel>
                         <FormControl>
                           <Textarea 
-                            placeholder="Select services above or type additional details, special instructions, and requirements..." 
+                            placeholder="Add any special instructions, specific requirements, or additional details about the job..." 
                             className="resize-none" 
                             rows={4}
                             {...field} 
                           />
                         </FormControl>
                         <FormDescription>
-                          Select the services you need or add custom details.
+                          Include any details that will help landscapers understand your needs
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -272,20 +350,28 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                     name="price"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Budget</FormLabel>
+                        <FormLabel>Offer</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <DollarSign className="absolute left-2 top-2.5 h-4 w-4 text-neutral-500" />
                             <Input 
                               type="number" 
-                              placeholder="Amount in dollars" 
+                              placeholder="Estimated amount" 
                               className="pl-8" 
                               {...field} 
                             />
                           </div>
                         </FormControl>
                         <FormDescription>
-                          Enter the amount you're willing to pay for this job (in USD).
+                          {field.value ? (
+                            <span className="text-sm text-primary-600 font-medium">
+                              Estimated amount: ${field.value} CAD
+                            </span>
+                          ) : (
+                            <span>
+                              Amount you're willing to pay for this job (in CAD)
+                            </span>
+                          )}
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -478,8 +564,17 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                       </div>
                       
                       <div className="flex justify-between">
-                        <span className="text-neutral-500">Budget:</span>
-                        <span className="font-medium">${form.getValues('price')}</span>
+                        <span className="text-neutral-500">Service Offer:</span>
+                        <span className="font-medium">${form.getValues('price')} CAD</span>
+                      </div>
+                      
+                      <div className="flex justify-between">
+                        <span className="text-neutral-500">Selected Services:</span>
+                        <span className="font-medium text-right">
+                          {form.getValues('selectedServices').map(serviceId => 
+                            AVAILABLE_SERVICES.find(s => s.id === serviceId)?.label
+                          ).join(', ')}
+                        </span>
                       </div>
                       
                       <div className="flex justify-between">
