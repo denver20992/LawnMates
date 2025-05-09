@@ -951,12 +951,22 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                     onClick={async () => {
                       // Validate current step fields before proceeding
                       if (step === 1) {
-                        const result = await form.trigger(['title', 'selectedServices', 'propertyId', 'price']);
+                        // Different validation based on whether we're using an existing property
+                        const fieldsToValidate = useExistingProperty 
+                          ? ['selectedServices', 'propertyId', 'price'] 
+                          : ['title', 'selectedServices', 'propertySize', 'price'];
+                        
+                        console.log("Validating fields:", fieldsToValidate, "Form values:", form.getValues());
+                        const result = await form.trigger(fieldsToValidate);
+                        console.log("Validation result:", result, "Form errors:", form.formState.errors);
+                        
                         if (result) {
                           setStep(step + 1);
                         }
                       } else if (step === 2) {
                         const result = await form.trigger(['startDate', 'startTime']);
+                        console.log("Validation result:", result, "Form errors:", form.formState.errors);
+                        
                         if (result) {
                           setStep(step + 1);
                         }
