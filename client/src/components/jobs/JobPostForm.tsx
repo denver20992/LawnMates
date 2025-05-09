@@ -45,6 +45,28 @@ const AVAILABLE_SERVICES = [
   { id: 'dethatching', label: 'Dethatching', basePrice: 85 }
 ];
 
+// Define the Quick Service Package
+const QUICK_SERVICE_PACKAGE = {
+  label: 'Essential Yard Maintenance',
+  services: ['lawn-mowing', 'hedge-trimming', 'leaf-removal'],
+  discountPercentage: 10 // 10% discount on the combined services
+};
+
+// Define time options for scheduling
+const timeOptions = [
+  { value: '08:00', label: '8:00 AM' },
+  { value: '09:00', label: '9:00 AM' },
+  { value: '10:00', label: '10:00 AM' },
+  { value: '11:00', label: '11:00 AM' },
+  { value: '12:00', label: '12:00 PM' },
+  { value: '13:00', label: '1:00 PM' },
+  { value: '14:00', label: '2:00 PM' },
+  { value: '15:00', label: '3:00 PM' },
+  { value: '16:00', label: '4:00 PM' },
+  { value: '17:00', label: '5:00 PM' },
+  { value: '18:00', label: '6:00 PM' },
+];
+
 // Extend the job schema for the form
 const jobFormSchema = z.object({
   title: z.string().min(5, {
@@ -119,21 +141,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
     large: { label: 'Large Property', description: 'Over 5,000 sq ft', multiplier: 1.5 }
   };
   
-  // For time selection
-  const timeOptions = Array.from({ length: 24 * 4 }, (_, i) => {
-    const hour = Math.floor(i / 4);
-    const minute = (i % 4) * 15;
-    return {
-      value: `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`,
-      label: format(new Date().setHours(hour, minute), 'h:mm a')
-    };
-  });
-  
-  // Define Quick Service package
-  const QUICK_SERVICE_PACKAGE = {
-    services: ['lawn-mowing', 'hedge-trimming', 'leaf-removal'],
-    label: 'Quick Service Package'
-  };
+  // No need for more definitions, already defined at the top
 
   // Calculate price based on selected services and property size
   const calculateEstimatedPrice = (
@@ -291,7 +299,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       startDateTime.setHours(startHour, startMinute);
       
       let endDateTime;
-      if (values.endTime) {
+      if (values.endTime && values.endTime !== 'flexible') {
         endDateTime = new Date(values.startDate);
         const [endHour, endMinute] = values.endTime.split(':').map(Number);
         endDateTime.setHours(endHour, endMinute);
@@ -928,7 +936,9 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                         <span className="font-medium">
                           {format(form.getValues('startDate'), 'MMM d, yyyy')} at {' '}
                           {timeOptions.find(t => t.value === form.getValues('startTime'))?.label}
-                          {form.getValues('endTime') ? ` - ${timeOptions.find(t => t.value === form.getValues('endTime'))?.label}` : ' (Flexible end time)'}
+                          {form.getValues('endTime') && form.getValues('endTime') !== 'flexible' 
+                            ? ` - ${timeOptions.find(t => t.value === form.getValues('endTime'))?.label}` 
+                            : ' (Flexible end time)'}
                         </span>
                       </div>
                       
