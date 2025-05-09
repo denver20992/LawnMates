@@ -54,11 +54,13 @@ const jobFormSchema = z.object({
     message: "Please select at least one service"
   }),
   description: z.string().optional(),
-  propertyId: z.coerce.number(),
+  propertyId: z.coerce.number().optional(),
   propertySize: z.enum(['small', 'medium', 'large']).default('medium'),
   yardType: z.enum(['frontyard', 'backyard', 'both']).default('both'),
   isQuickService: z.boolean().default(false),
-  price: z.coerce.number(), // Store as dollars, we'll convert to cents when sending to API
+  price: z.coerce.number().min(1, { 
+    message: "Please provide a price for the job" 
+  }),
   startDate: z.date({
     required_error: "Please select a date",
   }),
@@ -70,18 +72,25 @@ const jobFormSchema = z.object({
   latitude: z.number().optional(),
   longitude: z.number().optional(),
   useExistingProperty: z.boolean(),
-}).refine(
-  (data) => {
-    // If using an existing property, require propertyId
-    // If not using existing property, require title (address)
-    return (data.useExistingProperty && data.propertyId > 0) || 
-           (!data.useExistingProperty && !!data.title);
-  },
-  {
-    message: "Please either select an existing property or enter a new address",
-    path: ["propertyId"],
+}).superRefine((data, ctx) => {
+  // If using an existing property, require propertyId
+  if (data.useExistingProperty && (!data.propertyId || data.propertyId <= 0)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Please select a property",
+      path: ['propertyId'],
+    });
   }
-);
+  
+  // If not using existing property, require title (address)
+  if (!data.useExistingProperty && (!data.title || data.title.trim().length < 5)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Please enter a valid address",
+      path: ['title'],
+    });
+  }
+});
 
 type JobFormValues = z.infer<typeof jobFormSchema>;
 
@@ -949,24 +958,57 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                   <Button
                     type="button"
                     onClick={async () => {
-                      // Validate current step fields before proceeding
+                      // For step 1, we'll do manual validation without using trigger
                       if (step === 1) {
-                        // Different validation based on whether we're using an existing property
-                        const fieldsToValidate = useExistingProperty 
-                          ? ['selectedServices', 'propertyId', 'price'] 
-                          : ['title', 'selectedServices', 'propertySize', 'price'];
+                        let isValid = true;
+                        let errorFields = [];
                         
-                        console.log("Validating fields:", fieldsToValidate, "Form values:", form.getValues());
-                        const result = await form.trigger(fieldsToValidate);
-                        console.log("Validation result:", result, "Form errors:", form.formState.errors);
+                        // Check if services are selected
+                        if (!selectedServices || selectedServices.length === 0) {
+                          isValid = false;
+                          errorFields.push("You must select at least one service");
+                        }
                         
-                        if (result) {
+                        // Check property information
+                        if (useExistingProperty) {
+                          if (!selectedPropertyId || selectedPropertyId <= 0) {
+                            isValid = false;
+                            errorFields.push("You must select a property");
+                          }
+                        } else {
+                          const title = form.getValues("title");
+                          if (!title || title.trim().length < 5) {
+                            isValid = false;
+                            errorFields.push("You must enter a valid address");
+                          }
+                        }
+                        
+                        // Check price
+                        const price = form.getValues("price");
+                        if (!price || price <= 0) {
+                          isValid = false;
+                          errorFields.push("A valid price is required");
+                        }
+                        
+                        if (isValid) {
                           setStep(step + 1);
+                        } else {
+                          // Show errors
+                          toast({
+                            title: "Please fix the following issues:",
+                            description: (
+                              <ul className="list-disc pl-5">
+                                {errorFields.map((err, idx) => (
+                                  <li key={idx}>{err}</li>
+                                ))}
+                              </ul>
+                            ),
+                            variant: "destructive",
+                          });
                         }
                       } else if (step === 2) {
-                        const result = await form.trigger(['startDate', 'startTime']);
-                        console.log("Validation result:", result, "Form errors:", form.formState.errors);
-                        
+                        // For step 2, we can use the trigger method
+                        const result = await form.trigger(["startDate", "startTime"]);
                         if (result) {
                           setStep(step + 1);
                         }
