@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Calendar as CalendarIcon, Clock, DollarSign, MapPin, AlertCircle, CheckCircle } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, DollarSign, MapPin, AlertCircle, CheckCircle, Home, Building, Castle } from 'lucide-react';
+import AddressAutocomplete from '@/components/map/AddressAutocomplete';
+import PropertySizeSelector, { propertySizes } from './PropertySizeSelector';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
