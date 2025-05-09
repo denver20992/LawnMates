@@ -182,13 +182,42 @@ export class MemStorage implements IStorage {
       title: "Lawn Mowing",
       description: "Need lawn mowing service for a 2500 sq ft yard",
       price: 4500, // $45.00
-      status: "posted",
+      status: "completed", // Set to completed so reviews can be added
       startDate: new Date("2023-07-15T14:00:00Z").toISOString(),
       endDate: new Date("2023-07-15T17:00:00Z").toISOString(),
       isRecurring: false,
       requiresEquipment: true,
       latitude: 41.8781,
       longitude: -87.6298,
+      landscaperId: 3, // Assign to landscaper
+    });
+    
+    // Create test reviews
+    // Property Owner reviewing Landscaper
+    this.createReview({
+      jobId: 1,
+      reviewerId: 2, // Property owner
+      revieweeId: 3, // Landscaper
+      rating: 5,
+      comment: "Did an excellent job with my lawn. Very professional and finished on time!"
+    });
+    
+    // Landscaper reviewing Property Owner
+    this.createReview({
+      jobId: 1,
+      reviewerId: 3, // Landscaper
+      revieweeId: 2, // Property owner
+      rating: 4,
+      comment: "Great property owner, clear instructions and paid promptly. Would work with again."
+    });
+    
+    // Admin reviewing Landscaper (to show multiple reviews for the landscaper)
+    this.createReview({
+      jobId: 1,
+      reviewerId: 1, // Admin
+      revieweeId: 3, // Landscaper
+      rating: 3,
+      comment: "Good service but slightly late to the job. Communication could be improved."
     });
   }
 
