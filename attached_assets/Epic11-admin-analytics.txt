@@ -1,0 +1,163 @@
+# Epic 11: Advanced Admin & Analytics
+
+### Story 11.1: Geo/Job Heatmaps and Filterable Dashboards
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As an admin, I want to see geographic and historical job trends, so I can make informed operational decisions.
+
+**Context:** Improves admin oversight by visualising where and when jobs are active.
+
+## Detailed Requirements
+
+* Add heatmap layer to admin dashboard
+* Fetch job location and timestamp data
+* Filter by role, status, and time period
+
+## Acceptance Criteria (ACs)
+
+* AC1: Heatmap visualises job density by location
+* AC2: Dashboard filters by time and job status
+* AC3: Supports toggle between map and list modes
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `src/features/admin/AnalyticsMap.tsx`
+  * `pages/api/admin/jobs.ts`
+
+* **Key Technologies:**
+
+  * Mapbox or Leaflet, Supabase
+
+* **API Interactions:**
+
+  * GET jobs with lat/lng, createdAt
+
+* **Data Structures:**
+
+  * `Job.location` (geocoded address or coordinates)
+
+## Tasks / Subtasks
+
+* [ ] Add map visualisation component
+* [ ] Build API to serve geo-stats
+* [ ] Wire filters to map/dashboard
+
+## Testing Requirements
+
+* **Unit Tests:** Filter logic
+* **Integration Tests:** Job data → map rendering
+* **E2E:** Admin filter jobs by region/date
+
+---
+
+### Story 11.2: Auto-Detect Anomalies (e.g. Dispute Spikes)
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As an admin, I want to be alerted to unusual patterns, so that I can act on potential abuse or fraud.
+
+**Context:** Automates identification of risky user behaviour using rule-based or statistical triggers.
+
+## Detailed Requirements
+
+* Define rule set: e.g., >3 disputes/user in 7 days
+* Create dashboard tile for anomalies
+* Optional: send notification to admins
+
+## Acceptance Criteria (ACs)
+
+* AC1: Admin dashboard shows flagged anomalies
+* AC2: Rules evaluated daily or on update
+* AC3: Actionable insights include user/job IDs
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `core/analytics/anomalyRules.ts`
+  * `src/features/admin/AnomalyDashboard.tsx`
+
+* **Key Technologies:**
+
+  * Supabase queries, server cron job or trigger
+
+* **API Interactions:**
+
+  * Scheduled query on disputes, jobs, messages
+
+* **Data Structures:**
+
+  * `Dispute`, `User`, `Job`
+
+## Tasks / Subtasks
+
+* [ ] Define and implement anomaly rules
+* [ ] Build query pipeline and test outputs
+* [ ] Display findings in admin UI
+
+## Testing Requirements
+
+* **Unit Tests:** Rule evaluation
+* **Integration Tests:** Cross-table joins
+* **E2E:** View flagged anomalies in dashboard
+
+---
+
+### Story 11.3: Add Admin Roles/Permissions Matrix
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As a system admin, I want to manage which admins have access to which tools, so that we can enforce proper separation of duties.
+
+**Context:** Expands RBAC to differentiate admin roles (moderator, finance, superadmin).
+
+## Detailed Requirements
+
+* Add `admin_roles` column to `User`
+* UI to grant/revoke roles
+* Conditional rendering of admin tools by role
+
+## Acceptance Criteria (ACs)
+
+* AC1: Admin users see only tools they are permitted to use
+* AC2: Superadmin can grant/revoke roles
+* AC3: Role assignments stored in DB
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `common/types/user.ts`, `src/features/admin/RoleManager.tsx`
+
+* **Key Technologies:**
+
+  * Supabase RLS, React
+
+* **API Interactions:**
+
+  * Admin roles table/query updates
+
+* **Data Structures:**
+
+  * `User.admin_role: 'moderator' | 'finance' | 'superadmin'`
+
+## Tasks / Subtasks
+
+* [ ] Extend user table and types
+* [ ] Build UI for superadmin role manager
+* [ ] Apply conditional logic across admin tools
+
+## Testing Requirements
+
+* **Unit Tests:** Role-based rendering logic
+* **Integration Tests:** DB read/write for role updates
+* **E2E:** Superadmin grants new admin role

@@ -1,0 +1,101 @@
+# ✅ LawnMates Sprint 4 – QA Checklist & Ticket Templates
+
+## 🔍 Acceptance Test Checklist
+
+### Story 11.1 – Admin Job Heatmap + Filters
+
+* [ ] Map visual renders with heatmap overlay
+* [ ] Filters: date range, status, role
+* [ ] Switches between map and list views
+* [ ] Location density reflects job activity correctly
+
+### Story 10.2 – Push Notifications via Service Workers
+
+* [ ] User prompted for push permissions
+* [ ] Subscribed users receive test push
+* [ ] Push triggered on new job status
+* [ ] Fallback alert if push fails
+
+### Story 9.3 – Referral & Discount System
+
+* [ ] Referral code input at signup works
+* [ ] Both inviter and invitee receive reward
+* [ ] Promo code accepted at job checkout
+* [ ] Stripe coupon is correctly applied
+
+### Story 11.2 – Auto-Detect Anomalies
+
+* [ ] Rules trigger alert on dispute spike (>3/week)
+* [ ] Flagged users/jobs shown in admin dashboard
+* [ ] Clear logs of anomaly type and time
+
+### Story 12.3 – NLP Pattern Flagging
+
+* [ ] Job/messages scanned on creation
+* [ ] Flag stored with source + reason
+* [ ] Admin can override or escalate
+
+---
+
+## 📋 Jira/Linear Ticket Templates
+
+### 🗺️ Story 11.1 – Admin Heatmap + Filters
+
+**Summary:** Visualize job activity by geo and time filters
+**Scope:** Map UI, filters, API integration
+**Files:** AnalyticsMap.tsx, admin/jobs.ts
+**Test:** Filter by time, location → heatmap shows results
+
+### 🔔 Story 10.2 – Push Notification Infra
+
+**Summary:** Add service worker + push setup for job/message alerts
+**Scope:** Web push permissions, Supabase event triggers
+**Files:** PushManager.ts, notifications.ts
+**Test:** Subscribe, receive, and fallback test
+
+### 💌 Story 9.3 – Referral/Promo Code System
+
+**Summary:** Add referral and promo code input to signup and checkout
+**Scope:** FE form, BE reward logic, Stripe coupon application
+**Files:** referral.ts, discount.ts
+**Test:** Signup w/ code → discount applied on job
+
+### ⚠️ Story 11.2 – Anomaly Detection
+
+**Summary:** Run daily rule-based checks for operational red flags
+**Scope:** Job/dispute scan → flag logic → dashboard display
+**Files:** anomalyRules.ts, AnomalyDashboard.tsx
+**Test:** Seed 3+ disputes → admin sees anomaly
+
+### 🧠 Story 12.3 – NLP Flagging
+
+**Summary:** Auto-flag jobs/messages with harmful or spammy text
+**Scope:** NLP trigger + admin moderation queue
+**Files:** patternDetector.ts, ModerationQueue.tsx
+**Test:** Add offensive message → flagged and displayed
+
+---
+
+*Structured to match remaining stories from Epics 9–12. Ready for QA and backlog import.*
+
+# LawnMates Full Story Set (Epics 7–12)
+
+## 🔗 Related Documents Index
+
+| File Name                             | Purpose                                                  |
+| ------------------------------------- | -------------------------------------------------------- |
+| `Epic7-User-Reviews`                  | Stories related to user reviews and moderation           |
+| `Epic8-Repeat-Favourites`             | Stories on rebooking and favourite functionality         |
+| `Epic9-Subscriptions-Loyalty`         | Monthly recurring jobs, loyalty points, referral rewards |
+| `Epic10-Mobile-PWA`                   | PWA install, push notifications, native wrappers         |
+| `Epic11-Admin-Analytics`              | Admin heatmap, anomaly detection, roles matrix           |
+| `Epic12-AI-Automation`                | AI photo scoring, assistant, NLP moderation              |
+| `Lawnmates-sprint3-tests-and-tickets` | QA checklist and ticket templates for Sprint 3           |
+| `Lawnmates-sprint4-tests-and-tickets` | QA checklist and ticket templates for Sprint 4           |
+
+---
+
+## 🏁 LawnMates Sprint 3 Plan
+
+...(rest of content remains unchanged)...
+

@@ -1,0 +1,56 @@
+✅ LawnMates Sprint 3 – QA Checklist & Ticket Templates
+
+🔍 Acceptance Test Checklist
+
+Story 7.1 – Leave Review Modal
+
+
+
+Story 8.2 – Favorite Landscaper or Property
+
+
+
+Story 9.1 – Monthly Recurring Jobs
+
+
+
+Story 9.2 – Loyalty Points
+
+
+
+Story 10.1 – PWA Install and Offline
+
+
+
+Story 12.1 – Photo Trust Classifier (Stub)
+
+
+
+📋 Jira/Linear Ticket Templates
+
+🟩 Story 7.1 – Leave Review Modal
+
+Summary: Add modal to submit reviews post-job completionScope: FE modal + BE POST /api/reviewsFiles: ReviewModal.tsx, pages/api/reviews.tsTest: Submit valid + invalid review, RLS access control
+
+⭐ Story 8.2 – Favorite Landscaper or Property
+
+Summary: Toggle and store favorite usersScope: FE toggle + BE storage + dashboard listFiles: FavoriteToggle.tsx, DashboardFavorites.tsx, /api/favorites.tsTest: Add/remove favorite, list renders correctly
+
+🔁 Story 9.1 – Monthly Recurring Jobs
+
+Summary: Flag jobs as recurring and schedule clonesScope: Extend job model + Supabase cron jobFiles: JobPostForm.tsx, cron/jobCloner.tsTest: Form input, job clone confirmed in DB
+
+🎖️ Story 9.2 – Loyalty Points System
+
+Summary: Add loyalty_points to user and increment on payoutScope: Stripe webhook + Supabase updateFiles: payout.ts, userSchema.sqlTest: Manual payout event → points +1
+
+📲 Story 10.1 – PWA Support
+
+Summary: Create manifest + SW to support offline use + installScope: public/manifest.json, SW logic, icon setFiles: manifest.json, serviceWorker.tsTest: PWA audit via Lighthouse, mobile install test
+
+🧠 Story 12.1 – Trust Score Stub
+
+Summary: Add mock trust score field on photo uploadScope: Add field, simulate ML scoringFiles: photoUpload.ts, photoTrust.tsTest: Upload → score appears → flagged if < 0.5
+
+Structured from Epic 7–12 stories planned for Sprint 3. Ready for QA and ticket import.
+

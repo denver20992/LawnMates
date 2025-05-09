@@ -1,0 +1,92 @@
+# LawnMates Post-MVP Feature Roadmap
+
+This roadmap outlines strategic feature expansions following the MVP launch, focusing on trust, repeat use, mobile experience, and operational automation.
+
+---
+
+## Epic 7: User Reviews & Ratings
+
+**Goal:** Build trust with transparent performance feedback.
+
+* ✅ Story 7.1: Leave review after job completion (both roles)
+* ✅ Story 7.2: Display average rating on user profile
+* ✅ Story 7.3: Admin moderation for flagged reviews
+
+**Dependencies:** Completed job lifecycle + user identity
+
+---
+
+## Epic 8: Repeat Booking & Favorites
+
+**Goal:** Encourage retention through convenience.
+
+* ✅ Story 8.1: Rebook past jobs from chat/history
+* ✅ Story 8.2: Favorite a landscaper or property
+* ✅ Story 8.3: Add “repeat interval” suggestion UI
+
+**Dependencies:** Completed jobs + job history views
+
+---
+
+## Epic 9: Subscription & Loyalty System
+
+**Goal:** Drive platform loyalty and consistent revenue.
+
+* ✅ Story 9.1: Monthly recurring jobs (auto-schedule + pay)
+* ✅ Story 9.2: Points or credits for frequent use
+* ✅ Story 9.3: Referral bonuses and discount codes
+
+**Dependencies:** Payment system + job scheduling logic
+
+---
+
+## Epic 10: Mobile App Shell (PWA / Native)
+
+**Goal:** Improve mobile UX and offline usability.
+
+* ✅ Story 10.1: Add PWA install prompt and offline fallback
+* ✅ Story 10.2: Push notifications via service workers
+* ✅ Story 10.3: Native wrappers via Capacitor or Expo
+
+**Dependencies:** Web-first app stabilization
+
+---
+
+## Epic 11: Advanced Admin & Analytics
+
+**Goal:** Provide deeper ops insights and moderation tools.
+
+* ✅ Story 11.1: Geo/job heatmaps and filterable dashboards
+* ✅ Story 11.2: Auto-detect anomalies (e.g. dispute spikes)
+* ✅ Story 11.3: Add admin roles/permissions matrix
+
+**Dependencies:** Data warehouse or advanced analytics tooling
+
+---
+
+## Epic 12: AI-Enhanced Support & Moderation
+
+**Goal:** Automate repetitive tasks and surface insights.
+
+* ✅ Story 12.1: Auto-score photos via trust classifier
+* ✅ Story 12.2: In-app AI assistant for help or setup
+* ✅ Story 12.3: NLP-based pattern flagging in jobs/messages
+
+**Dependencies:** LLM provider integration + moderation queue
+
+---
+
+## Prioritization Recommendation
+
+1. **Epic 7–8** (Trust and repeat use)
+2. **Epic 10** (Mobile growth)
+3. **Epic 9** (Revenue expansion)
+4. **Epic 11–12** (Internal efficiency)
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description               | Author  |
+| ------------- | ---------- | ------- | ------------------------- | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Post-MVP roadmap compiled | ChatGPT |

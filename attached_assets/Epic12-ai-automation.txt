@@ -1,0 +1,165 @@
+# Epic 12: AI-Enhanced Support & Automation
+
+### Story 12.1: Auto-Score Photos via Trust Classifier
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As an admin, I want uploaded photos to be scored automatically, so I can quickly spot suspicious or poor-quality submissions.
+
+**Context:** Adds an ML pipeline that flags low-confidence photos before verification.
+
+## Detailed Requirements
+
+* Integrate ML model to score trustworthiness of photos
+* Store confidence score in photo metadata
+* Flag low-confidence items for admin review
+
+## Acceptance Criteria (ACs)
+
+* AC1: Photos are scored on upload
+* AC2: Score stored in Supabase alongside photo
+* AC3: Low-trust photos appear in admin dashboard
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `src/features/photos/photoTrust.ts`
+  * `core/ml/photoScorer.ts`
+
+* **Key Technologies:**
+
+  * Cloudinary, ML model (external or hosted)
+
+* **API Interactions:**
+
+  * Upload → trigger classifier API → update DB
+
+* **Data Structures:**
+
+  * `Photo.trustScore: number`
+
+## Tasks / Subtasks
+
+* [ ] Connect ML model for scoring
+* [ ] Trigger on upload event
+* [ ] Update DB with score
+* [ ] Display flagged photos to admin
+
+## Testing Requirements
+
+* **Unit Tests:** Scoring handler logic
+* **Integration Tests:** Upload → score → store
+* **E2E:** Admin sees flagged low-trust photo
+
+---
+
+### Story 12.2: In-App AI Assistant for Help or Setup
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As a user, I want to ask questions or get help from an AI assistant, so I can navigate the platform more easily.
+
+**Context:** Adds a contextual assistant UI for onboarding and common help tasks.
+
+## Detailed Requirements
+
+* Add chat-like assistant to dashboard
+* Provide prompt starters (e.g., "How do I post a job?")
+* Integrate with knowledge base or scripted LLM agent
+
+## Acceptance Criteria (ACs)
+
+* AC1: Assistant accessible from main UI
+* AC2: Prompt starters help guide users
+* AC3: Answers based on site-specific knowledge
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `components/AiAssistantWidget.tsx`
+  * `src/features/support/assistant.ts`
+
+* **Key Technologies:**
+
+  * LLM API (OpenAI, Anthropic), LangChain (optional)
+
+* **API Interactions:**
+
+  * Chat endpoint to call LLM backend
+
+* **Data Structures:**
+
+  * Prompt history (optional localStorage/session)
+
+## Tasks / Subtasks
+
+* [ ] Build assistant UI widget
+* [ ] Configure backend LLM endpoint
+* [ ] Add onboarding prompt flow
+
+## Testing Requirements
+
+* **Unit Tests:** Prompt formatting and API calls
+* **Integration Tests:** Widget state + response rendering
+* **E2E:** Ask “how to” and receive response
+
+---
+
+### Story 12.3: NLP-Based Pattern Flagging in Jobs/Messages
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As an admin, I want the system to automatically flag suspicious text patterns, so I can moderate issues more efficiently.
+
+**Context:** Leverages NLP to detect spam, offensive content, or abuse in real-time.
+
+## Detailed Requirements
+
+* Define NLP pipeline to scan job descriptions and messages
+* On match, flag content and notify admin
+* Store flags and allow overrides
+
+## Acceptance Criteria (ACs)
+
+* AC1: NLP scanner runs on new jobs/messages
+* AC2: Flagged content appears in moderation queue
+* AC3: Admin can mark as safe or escalate
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `core/nlp/patternDetector.ts`
+  * `src/features/admin/ModerationQueue.tsx`
+
+* **Key Technologies:**
+
+  * NLP model (OpenAI, Hugging Face), Supabase triggers
+
+* **API Interactions:**
+
+  * On insert trigger → NLP scan
+
+* **Data Structures:**
+
+  * `FlaggedContent`: type, sourceId, reason, status
+
+## Tasks / Subtasks
+
+* [ ] Integrate NLP model with trigger or batch scan
+* [ ] Build moderation view
+* [ ] Store flag status and updates
+
+## Testing Requirements
+
+* **Unit Tests:** Pattern detection rules
+* **Integration Tests:** Job/message → flag flow
+* **E2E:** Admin views/modifies flagged entry

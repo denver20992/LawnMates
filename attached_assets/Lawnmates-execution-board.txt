@@ -1,0 +1,77 @@
+# LawnMates Developer Execution Board – Sprint Planning Foundation
+
+This board converts post-MVP epics into structured dev tasks for Jira, Linear, or Notion. Use these as initial backlog items and customize with estimates and owners.
+
+---
+
+## Epic 7: User Reviews & Ratings
+
+* [ ] FE: Review modal after job completion (UI + state)
+* [ ] BE: Submit review endpoint + validation
+* [ ] FE: Display ratings on user profiles
+* [ ] BE: Aggregate average ratings query
+* [ ] Admin: Moderation tool for flagged reviews
+* [ ] Test: Write E2E test for review flow
+
+---
+
+## Epic 8: Repeat Booking & Favorites
+
+* [ ] FE: Add 'Rebook Job' button in history/chat
+* [ ] BE: Reuse job POST logic with past values
+* [ ] FE: Favorite toggle on profile and job view
+* [ ] BE: Store and list favorites per user
+* [ ] FE: Suggested repeat interval modal/UI
+
+---
+
+## Epic 9: Subscription & Loyalty System
+
+* [ ] BE: Create recurring job engine (cron-based)
+* [ ] FE: Opt-in UI for monthly jobs
+* [ ] BE: Add user points system table
+* [ ] FE: Display rewards/credits on dashboard
+* [ ] BE: Implement promo/referral code logic
+
+---
+
+## Epic 10: Mobile App Shell (PWA / Native)
+
+* [ ] PWA: Add manifest + install prompt support
+* [ ] PWA: Offline fallback and cached views
+* [ ] Push: Service worker and permission handling
+* [ ] Native: Setup Capacitor/Expo project wrapper
+
+---
+
+## Epic 11: Advanced Admin & Analytics
+
+* [ ] Admin: Map heatmap view of jobs
+* [ ] Analytics: Job/dispute trends over time
+* [ ] Admin: Role-permission manager UI
+* [ ] BE: Define anomaly rules (e.g. >X disputes/user)
+
+---
+
+## Epic 12: AI-Enhanced Support & Automation
+
+* [ ] AI: Research model for photo trust scoring
+* [ ] BE: Integrate photo classifier + confidence logic
+* [ ] AI: Add support assistant UI w/ prompt starter
+* [ ] NLP: Dispute pattern detection proof-of-concept
+
+---
+
+## Additional Tasks
+
+* [ ] Infra: Add staging analytics dashboards (admin only)
+* [ ] Docs: Update architecture and testing docs for new features
+* [ ] QA: Add new test flows to E2E suite
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description                 | Author  |
+| ------------- | ---------- | ------- | --------------------------- | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Post-MVP board seed created | ChatGPT |

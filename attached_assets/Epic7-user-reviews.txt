@@ -1,0 +1,166 @@
+# Epic 7: User Reviews & Ratings
+
+### Story 7.1: Leave Review After Job Completion (Both Roles)
+
+**Status:** Complete
+
+## Goal & Context
+
+**User Story:** As a user, I want to leave a review after completing a job, so that I can share my experience with others.
+
+**Context:** Enables trust-building through transparent feedback. Triggered only after job marked as 'completed'.
+
+## Detailed Requirements
+
+* Display review modal on job completion
+* Allow 1–5 star rating and text comment
+* Persist review in `reviews` table
+* One review per user per job (bidirectional possible)
+
+## Acceptance Criteria (ACs)
+
+* AC1: Modal appears when user completes job
+* AC2: Rating and comment saved to DB
+* AC3: Review linked to correct job and users
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `src/features/reviews/ReviewModal.tsx`
+  * `pages/api/reviews.ts`
+  * `common/types/review.ts`
+
+* **Key Technologies:**
+
+  * React, Supabase, Form validation
+
+* **API Interactions:**
+
+  * `POST /api/reviews`
+
+* **Data Structures:**
+
+  * `Review`: jobId, reviewerId, revieweeId, rating, comment, createdAt
+
+## Tasks / Subtasks
+
+* [x] Create review modal UI
+* [x] Wire form to API endpoint
+* [x] Insert review into DB
+
+## Testing Requirements
+
+* **Unit Tests:** Form validation logic
+* **Integration Tests:** DB insert on POST
+* **E2E:** Submit review from dashboard
+
+---
+
+### Story 7.2: Display Average Rating on Profile
+
+**Status:** Complete
+
+## Goal & Context
+
+**User Story:** As a user, I want to see others' average ratings, so that I can make informed hiring decisions.
+
+**Context:** Reviews are surfaced on profile and job views to influence future job acceptance.
+
+## Detailed Requirements
+
+* Show star average and count on profile
+* Aggregate reviews per user
+* Only display once at least one review exists
+
+## Acceptance Criteria (ACs)
+
+* AC1: Profile page includes average rating
+* AC2: Only verified reviews are counted
+* AC3: Count and average updated on new reviews
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `components/RatingStars.tsx`
+  * `src/features/reviews/hooks/useAverageRating.ts`
+
+* **Key Technologies:**
+
+  * React, Supabase
+
+* **API Interactions:**
+
+  * `GET /api/reviews?userId={id}`
+
+* **Data Structures:**
+
+  * `Review[]` filter by revieweeId
+
+## Tasks / Subtasks
+
+* [x] Build average rating hook
+* [x] Render star count and rating
+* [x] Update dynamically on submission
+
+## Testing Requirements
+
+* **Unit Tests:** Aggregation logic
+* **Integration Tests:** Query result validation
+* **E2E:** Rating display on dashboard
+
+---
+
+### Story 7.3: Admin Moderation for Flagged Reviews
+
+**Status:** Complete
+
+## Goal & Context
+
+**User Story:** As an admin, I want to moderate flagged reviews, so that I can maintain quality and prevent abuse.
+
+**Context:** Allows admins to view, edit, or remove reviews that violate guidelines.
+
+## Detailed Requirements
+
+* Display flagged reviews list in Admin dashboard
+* Ability to delete or approve reviews
+* Track status (flagged, reviewed, removed)
+
+## Acceptance Criteria (ACs)
+
+* AC1: Admin can see all flagged reviews
+* AC2: Admin can remove or restore reviews
+* AC3: Action logs stored per moderation
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `src/features/admin/ModerationPanel.tsx`
+  * `pages/api/admin/reviews.ts`
+
+* **Key Technologies:**
+
+  * Supabase, React Admin UI
+
+* **API Interactions:**
+
+  * `GET/POST /api/admin/reviews`
+
+* **Data Structures:**
+
+  * `Review.status`: 'approved' | 'flagged' | 'removed'
+
+## Tasks / Subtasks
+
+* [x] Build admin moderation UI
+* [x] Implement API routes
+* [x] Write admin logs to DB
+
+## Testing Requirements
+
+* **Unit Tests:** Action handler logic
+* **Integration Tests:** Flagged review filtering
+* **E2E:** Admin removes flagged review

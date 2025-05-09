@@ -1,0 +1,109 @@
+# 👋 LawnMates Developer Onboarding Kit
+
+Welcome to the LawnMates team! This onboarding kit provides everything you need to start contributing—whether you're a frontend dev, backend engineer, or AI assistant (Replit, GitHub Copilot).
+
+---
+
+## 🗺️ Overview
+
+**Project:** LawnMates – A two-sided Canadian platform for property owners to hire landscapers, powered by photo verification, escrow payments, and realtime messaging.
+
+**Stack:**
+
+* Frontend: Next.js, Tailwind, React Context
+* Backend: Supabase (Postgres, Auth, Realtime)
+* Payments: Stripe Connect
+* Images: Cloudinary
+* Notifications: Supabase Realtime + optional email (SendGrid)
+
+---
+
+## 🧠 Core Concepts
+
+* Jobs are posted by Owners and claimed by Landscapers
+* Payment is held in escrow until photo verification
+* Messaging and notifications support coordination
+* Admins moderate disputes and flagged content
+
+---
+
+## 📁 Key Docs
+
+| Purpose                 | File                             |
+| ----------------------- | -------------------------------- |
+| 📜 Product Requirements | `docs/prd.md`                    |
+| 🧱 Architecture         | `lawnmates-architecture`         |
+| 🧪 Testing Strategy     | `Testing Strategy Lawnmates`     |
+| 🔌 API Reference        | `Api Reference Lawnmates`        |
+| 🎨 UI/UX Spec           | `Ui Ux Spec Lawnmates`           |
+| 📆 Sprint Plan (1)      | `lawnmates-sprint-1-plan`        |
+| 📘 Sprint Plan (2)      | `lawnmates-sprint-2-plan`        |
+| 📘 Sprint README        | `lawnmates-sprint-readme`        |
+| 🧠 Agent Checklist      | `lawnmates-agent-review`         |
+| 🔧 Code Standards       | `lawnmates-standards-and-models` |
+| 🧩 Project Structure    | `lawnmates-project-structure`    |
+| 📋 Task Board           | `lawnmates-execution-board`      |
+| 🚀 Roadmap              | `lawnmates-post-mvp-roadmap`     |
+| 📚 Full Index           | `lawnmates-doc-index`            |
+
+---
+
+## 🧑‍💻 Local Setup
+
+1. Clone the repo or use Replit
+2. Copy `.env.example` → `.env.local` and fill in secrets
+3. Install deps: `yarn install`
+4. Run dev server: `yarn dev`
+5. Run tests:
+
+   * Unit: `yarn test:unit`
+   * Integration: `yarn test:integration`
+   * E2E (Cypress): `yarn test:e2e`
+
+---
+
+## 🧪 Test Plan
+
+| Type        | Tools            | Location            |
+| ----------- | ---------------- | ------------------- |
+| Unit        | Jest + RTL       | `test/unit/`        |
+| Integration | Jest + Supertest | `test/integration/` |
+| E2E         | Cypress          | `test/e2e/`         |
+| a11y        | axe-core         | Cypress plugin      |
+
+CI: GitHub Actions auto-runs all test tiers + Vercel preview deploy
+
+---
+
+## 📦 Feature Folder Pattern
+
+* `src/features/auth/` → Login, RBAC, JWT
+* `src/features/jobs/` → Post, discover, accept jobs
+* `src/features/payments/` → Stripe logic
+* `src/features/photos/` → Upload, verify
+* `src/features/messaging/` → Realtime chat
+* `src/features/admin/` → Dashboard, moderation
+
+---
+
+## 🔐 Environment Variables
+
+Sensitive keys like Stripe and Supabase must be configured via Vercel or `.env.local`. See `lawnmates-standards-and-models` for the full list.
+
+---
+
+## 🧠 AI Agent Tips
+
+* Follow naming conventions and file structure
+* All APIs are REST in `pages/api/`
+* Types live in `common/types/`
+* Feature logic lives under `src/features/{domain}/`
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description                 | Author  |
+| ------------- | ---------- | ------- | --------------------------- | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Onboarding kit generated    | ChatGPT |
+| Synced Index  | 2025-05-08 | 0.2     | Linked to full document set | ChatGPT |

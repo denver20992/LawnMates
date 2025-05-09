@@ -1,0 +1,152 @@
+# Epic 10: Mobile App Shell (PWA / Native)
+
+### Story 10.1: Add PWA Install Prompt and Offline Fallback
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As a mobile user, I want to install the LawnMates app and use it offline, so that I can access key features without internet.
+
+**Context:** Provides installable app-like experience with offline support for primary screens.
+
+## Detailed Requirements
+
+* Create `manifest.json` with app name, icons, theme colours
+* Add service worker for offline support
+* Handle install prompt on mobile browsers
+* Cache login, dashboard, and job views
+
+## Acceptance Criteria (ACs)
+
+* AC1: User sees install prompt on mobile
+* AC2: App installs with LawnMates icon
+* AC3: Dashboard loads offline after first visit
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `public/manifest.json`, `src/serviceWorkerRegistration.ts`
+  * `pages/_app.tsx` (bootstrap install)
+
+* **Key Technologies:**
+
+  * PWA, Service Worker API, React
+
+* **API Interactions:**
+
+  * None; use Cache API in service worker
+
+## Tasks / Subtasks
+
+* [ ] Create manifest file with icons
+* [ ] Register and test service worker
+* [ ] Handle install event prompt on iOS/Android
+
+## Testing Requirements
+
+* **Unit Tests:** N/A
+* **Integration Tests:** Manifest and SW audit
+* **E2E:** Install prompt and offline dashboard load
+
+---
+
+### Story 10.2: Push Notifications via Service Workers
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As a user, I want to get push notifications about jobs or messages, so I stay updated without opening the app.
+
+**Context:** Adds native-like messaging to improve engagement and reliability.
+
+## Detailed Requirements
+
+* Register push subscription via service worker
+* Request user permission on login
+* Integrate notification send on job events
+
+## Acceptance Criteria (ACs)
+
+* AC1: User can enable push permissions
+* AC2: Notifications received when job status changes or messages arrive
+* AC3: Push delivery tested across devices
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `src/serviceWorker.ts`, `src/features/notifications/PushManager.ts`
+
+* **Key Technologies:**
+
+  * Service Workers, Web Push, Supabase events
+
+* **API Interactions:**
+
+  * Push subscription stored in Supabase
+  * Triggered via Supabase Edge Functions or backend webhook
+
+## Tasks / Subtasks
+
+* [ ] Add push subscription logic
+* [ ] Store subscription for user
+* [ ] Send push via backend on message/job event
+
+## Testing Requirements
+
+* **Unit Tests:** Subscription storage
+* **Integration Tests:** Trigger → delivery path
+* **E2E:** Permission → receive push test
+
+---
+
+### Story 10.3: Native Wrappers via Capacitor or Expo
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As a mobile user, I want a native LawnMates app, so that I can access platform features with better integration and UX.
+
+**Context:** Wraps the PWA into a native shell for App Store / Play Store deployment.
+
+## Detailed Requirements
+
+* Setup Capacitor or Expo wrapper for existing Next.js app
+* Enable native bridge features: install, deep links, notifications
+* Deploy test builds to TestFlight / internal track
+
+## Acceptance Criteria (ACs)
+
+* AC1: App launches inside native shell
+* AC2: Deep linking works from job invites
+* AC3: Submitted to test environments (no public release yet)
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `native/` directory for Capacitor or Expo config
+
+* **Key Technologies:**
+
+  * Capacitor or Expo, Next.js, React Native Bridge
+
+* **API Interactions:**
+
+  * Same as PWA, proxied through shell
+
+## Tasks / Subtasks
+
+* [ ] Initialize wrapper project
+* [ ] Configure launch, splash, and deep link handling
+* [ ] Build/test native versions on iOS/Android
+
+## Testing Requirements
+
+* **Unit Tests:** N/A
+* **Integration Tests:** App shell startup tests
+* **E2E:** Deep link test across OS

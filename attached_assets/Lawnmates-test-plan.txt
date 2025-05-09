@@ -1,0 +1,118 @@
+# LawnMates MVP Test Plan Breakdown
+
+This plan defines concrete test responsibilities, locations, and CI jobs based on the architecture and testing strategy.
+
+---
+
+## 1. Unit Tests
+
+**Scope:** Functions, components, utilities (pure logic)
+
+* ✅ Auth utilities (`auth/`, `common/utils/`)
+* ✅ Job filtering/sorting logic (`jobs/`)
+* ✅ Stripe helpers and webhook verifier (`services/stripe.ts`)
+* ✅ Notification formatter and display logic
+
+**Tools:** Jest, React Testing Library
+
+**Location:** `test/unit/` + inline `*.test.ts` next to source
+
+**CI Task:** `yarn test:unit`
+
+---
+
+## 2. Integration Tests
+
+**Scope:** Feature modules with DB/API dependencies
+
+* ✅ Job creation + payment intent
+* ✅ Job accept → photo upload → verification trigger
+* ✅ Messaging thread persistence + access control
+
+**Tools:** Supertest (for Next.js API), Jest
+
+**Mocks:** Stripe test mode, Supabase local or test env
+
+**Location:** `test/integration/`
+
+**CI Task:** `yarn test:integration`
+
+---
+
+## 3. E2E Tests
+
+**Scope:** Full workflows, from UI to backend
+
+* ✅ Auth: signup → email verify → login
+* ✅ Job: post → claim → photo → verify → payout
+* ✅ Admin: flag review → refund → notifications
+
+**Tools:** Cypress
+
+**Envs:** Staging with real Stripe test + Cloudinary test bucket
+
+**Location:** `test/e2e/`
+
+**CI Task:** `yarn test:e2e`
+
+---
+
+## 4. Accessibility Tests (a11y)
+
+**Scope:** Forms, image uploads, color contrast, nav
+
+* ✅ Signup and login
+* ✅ Dashboard and job modals
+
+**Tools:** axe-core plugin with Cypress
+
+**CI Task:** `yarn test:a11y`
+
+---
+
+## 5. Manual / Exploratory QA
+
+Checklist:
+
+* [ ] Role-based dashboards load expected data
+* [ ] Stripe payments and refunds behave correctly
+* [ ] Photos render responsively and securely
+* [ ] Notifications trigger on key actions
+* [ ] Admin access cannot be spoofed
+
+Run pre-release on staging.
+
+---
+
+## 6. CI/CD Pipeline Integration
+
+**Platform:** GitHub Actions
+
+**Workflow Steps:**
+
+1. Lint (`yarn lint`)
+2. Type check (`yarn tsc`)
+3. Run all tests (`unit`, `integration`, `e2e`, `a11y`)
+4. Upload coverage
+5. Deploy preview (Vercel)
+
+**Trigger:** Push or PR to `main`, `dev`
+
+---
+
+## Coverage Targets
+
+| Area              | Goal      |
+| ----------------- | --------- |
+| Unit Tests        | 80%+      |
+| Integration Tests | Key flows |
+| E2E Tests         | All core  |
+| a11y Compliance   | WCAG 2.1  |
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description                | Author  |
+| ------------- | ---------- | ------- | -------------------------- | ------- |
+| Initial draft | 2025-05-08 | 0.1     | MVP test breakdown created | ChatGPT |

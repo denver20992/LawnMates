@@ -1,0 +1,62 @@
+# LawnMates Project Structure
+
+This structure reflects a modular monolith pattern optimized for Supabase + Next.js with Stripe and Cloudinary integrations. It ensures separation of concerns, developer discoverability, and AI agent compatibility.
+
+```plaintext
+lawnmates/
+├── .github/                    # CI/CD workflows (GitHub Actions)
+│   └── workflows/
+│       └── main.yml
+├── public/                    # Static assets
+├── src/                       # Core application source
+│   ├── common/                # Shared utilities, types, constants
+│   │   ├── types/             # TypeScript interfaces (User, Job, etc.)
+│   │   ├── utils/             # Formatters, validators, helpers
+│   ├── components/            # Reusable UI components (e.g., JobCard, Modal)
+│   ├── pages/                 # Next.js route files (API + UI)
+│   │   ├── api/               # API route handlers (Next.js serverless functions)
+│   │   ├── index.tsx          # Homepage UI
+│   │   └── dashboard/         # Role-specific dashboards
+│   ├── features/              # Feature modules (job, auth, messaging, admin)
+│   │   ├── auth/              # Signup, login, role-based session logic
+│   │   ├── jobs/              # Post, discover, view, accept jobs
+│   │   ├── payments/          # Stripe logic (escrow, payout, refunds)
+│   │   ├── photos/            # Upload, store, verify images
+│   │   ├── messaging/         # Realtime chat threads per job
+│   │   ├── notifications/     # Notification center, bell icon, email fallback
+│   │   └── admin/             # Admin dashboard, moderation tools
+│   ├── services/              # External SDKs and integrations
+│   │   ├── supabase.ts        # Supabase client
+│   │   ├── stripe.ts          # Stripe SDK setup
+│   │   ├── cloudinary.ts      # Image upload/signature helpers
+│   │   └── email.ts           # Email service (e.g., SendGrid)
+│   ├── core/                  # Business logic (job rules, photo validation)
+│   └── app.tsx                # App entrypoint
+├── test/                      # All test files
+│   ├── unit/                  # Utility and component tests (Jest)
+│   ├── integration/           # Cross-module flow tests (Supertest)
+│   └── e2e/                   # Cypress end-to-end specs
+├── docs/                      # Project documentation (PRD, architecture, etc.)
+│   ├── prd.md
+│   ├── architecture.md
+│   ├── tech-stack.md
+│   └── testing-strategy.md
+├── .env.example               # Example environment file
+├── tsconfig.json              # TypeScript config
+├── next.config.js             # Next.js custom config
+├── package.json               # Project metadata and dependencies
+├── README.md                  # Setup and usage instructions
+```
+
+## Notes
+
+* `features/` folder modularizes the business domains.
+* `services/` wraps third-party libraries to isolate implementation.
+* `common/types/` is used by both frontend and backend.
+* API endpoints use `pages/api/` per Next.js serverless route model.
+
+## Change Log
+
+| Change        | Date       | Version | Description                | Author  |
+| ------------- | ---------- | ------- | -------------------------- | ------- |
+| Initial draft | 2025-05-08 | 0.1     | MVP project layout defined | ChatGPT |

@@ -1,0 +1,106 @@
+# LawnMates Architecture Document
+
+## Technical Summary
+
+LawnMates is a modular monolith MVP web platform serving three roles: Property Owner, Landscaper, and Admin. It enables job posting and discovery, photo-based verification, Stripe-based escrow payments, messaging, and dispute resolution. Built with Next.js (SPA) on Vercel and backed by Supabase (PostgreSQL, Auth, Realtime), the system emphasizes secure, role-based access and scalable modular components.
+
+## High-Level Overview
+
+Architecture Style: Modular Monolith (MVP phase), deployed on serverless infrastructure (Vercel + Supabase).
+
+Key data flows include:
+
+* Owners post jobs, pay into escrow
+* Landscapers discover and accept jobs
+* Upload photos for verification
+* Owners approve or dispute completion
+* Messaging and notifications support coordination
+
+```mermaid
+graph TD
+    Owner -->|Post job| Backend
+    Backend -->|Create Stripe escrow| Stripe
+    Landscaper -->|Discover jobs| Backend
+    Landscaper -->|Upload photos| Cloudinary
+    Backend -->|Trigger photo review| Owner
+    Owner -->|Verify or Dispute| Backend
+    Admin -->|Override| AdminPanel
+    Backend -->|Release/Refund| Stripe
+```
+
+## Component View
+
+```mermaid
+graph TD
+    Frontend[Next.js SPA]
+    Auth[Supabase Auth + JWT]
+    API[REST API Endpoints]
+    DB[Supabase Postgres]
+    Stripe[Stripe Connect]
+    Cloudinary[Image Hosting]
+    Messaging[Supabase Realtime or Socket.io]
+    AdminPanel[Admin Dashboard]
+
+    Frontend --> API
+    API --> Auth
+    API --> DB
+    API --> Stripe
+    API --> Cloudinary
+    API --> Messaging
+    AdminPanel --> API
+```
+
+* **Frontend**: UI, job discovery map, chat, dashboards (Next.js + Tailwind CSS)
+* **Auth**: Supabase email/password + JWT, with RLS enforcement
+* **API Layer**: REST endpoints per feature domain (auth, jobs, photos, admin)
+* **Database**: PostgreSQL with strict row-level security
+* **Payments**: Stripe Connect (escrow, payouts, refunds)
+* **Image Uploads**: Cloudinary (secure, signed URLs)
+* **Messaging/Realtime**: Supabase Realtime (job-based chat, notifications)
+* **Admin Tools**: Moderation, refunds, overrides
+
+## Key Architectural Decisions & Patterns
+
+* **Modular Monolith over Microservices** – Simpler MVP development and deployment
+* **Supabase Platform** – Combines auth, DB, Realtime, and storage, reducing infra overhead
+* **Stripe Escrow Integration** – Ensures trust through hold-and-release payments
+* **JWT Auth with RLS** – Secures access based on roles at the data level
+* **Cloudinary for Photo Handling** – Offloads image storage with secure delivery
+* **Realtime via Supabase Channels** – Used for chat and live job status updates
+
+## Infrastructure and Deployment Overview
+
+* **Cloud Providers**:
+
+  * Frontend: Vercel
+  * Backend: Supabase (Managed Postgres, Auth, Realtime)
+
+* **IaC**: Not needed for MVP; environment configuration via Supabase and Vercel settings
+
+* **Deployment Strategy**:
+
+  * GitHub Actions CI/CD
+  * Auto-deploy on push to `main`
+
+* **Environments**: `dev`, `staging`, `production`
+
+## Key Reference Documents
+
+* `docs/prd.md` → PRD-Draft.txt
+* `docs/epic1.md` → Epic1 User Auth
+* `docs/epic2.md` → Epic2 Job Discovery
+* `docs/epic3.md` → Epic3 Escrow Payments
+* `docs/epic4.md` → Epic4 Job Verification
+* `docs/epic5.md` → Epic5 Admin Tools
+* `docs/epic6.md` → Epic6 Messaging Notifications
+* `docs/epic-post-mvp.md` → Epics Post Mvp Lawnmates
+* `docs/api-reference.md` → Api Reference Lawnmates
+* `docs/tech-stack.md` → Tech Stack Lawnmates
+* `docs/testing-strategy.md` → Testing Strategy Lawnmates
+* `docs/ui-ux-spec.md` → Ui Ux Spec Lawnmates
+
+## Change Log
+
+| Change        | Date       | Version | Description                    | Author  |
+| ------------- | ---------- | ------- | ------------------------------ | ------- |
+| Initial draft | 2025-05-08 | 0.1     | MVP architecture consolidation | ChatGPT |

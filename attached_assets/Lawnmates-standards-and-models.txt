@@ -1,0 +1,145 @@
+# LawnMates Coding Standards and Data Models
+
+## Coding Standards
+
+### Architectural / Design Patterns Adopted
+
+* **Modular Monolith** – Single-deployable unit with separated domain logic
+* **Role-Based Access Control (RBAC)** – Enforced via Supabase RLS and frontend route guards
+* **Escrow Payment Flow** – Stripe Connect Custom, payment intent on job creation
+* **Realtime Messaging** – Supabase Realtime or Socket.io channels per job
+* **JWT Auth + Claims** – For session handling and role enforcement
+
+### Coding Conventions
+
+* **Primary Language:** TypeScript
+* **Runtime:** Node.js (for API custom logic)
+* **Style:** ESLint + Prettier with Airbnb config
+* **Naming Conventions:**
+
+  * Variables/Functions: `camelCase`
+  * Classes/Interfaces: `PascalCase`
+  * Constants: `UPPER_SNAKE_CASE`
+  * Files: `kebab-case.ts`
+
+### Error Handling Strategy
+
+* Use `try/catch` around external calls (Stripe, Cloudinary)
+* Central error handler middleware in API layer
+* Contextual logging (user ID, job ID, action)
+
+### Security Best Practices
+
+* JWT expiry checks and refresh
+* Signed image URLs with expiration
+* RLS enforced at DB level
+* Stripe webhook validation
+* Rate limiting middleware for auth endpoints
+
+---
+
+## Core Data Models
+
+### User
+
+```typescript
+export interface User {
+  id: string;
+  email: string;
+  role: 'owner' | 'landscaper' | 'admin';
+  isVerified: boolean;
+  stripeAccountId?: string;
+  createdAt: string;
+}
+```
+
+### Job
+
+```typescript
+export interface Job {
+  id: string;
+  ownerId: string;
+  landscaperId?: string;
+  tier: string;
+  squareFootage: number;
+  date: string;
+  location: string;
+  price: number;
+  status: 'open' | 'in-progress' | 'completed' | 'disputed';
+  photoBeforeUrl?: string;
+  photoAfterUrl?: string;
+  createdAt: string;
+}
+```
+
+### Message
+
+```typescript
+export interface Message {
+  id: string;
+  jobId: string;
+  senderId: string;
+  message: string;
+  timestamp: string;
+}
+```
+
+### Notification
+
+```typescript
+export interface Notification {
+  id: string;
+  userId: string;
+  type: 'chat' | 'status' | 'payment';
+  content: string;
+  read: boolean;
+  timestamp: string;
+}
+```
+
+### Dispute
+
+```typescript
+export interface Dispute {
+  id: string;
+  jobId: string;
+  raisedBy: string;
+  reason: string;
+  status: 'open' | 'resolved';
+  resolution?: string;
+  createdAt: string;
+}
+```
+
+---
+
+## Environment Variables
+
+| Variable Name           | Description                            | Example                       | Required | Sensitive |
+| ----------------------- | -------------------------------------- | ----------------------------- | -------- | --------- |
+| `NEXT_PUBLIC_API_URL`   | Frontend base URL for API calls        | `https://api.lawnmates.ca/v1` | Yes      | No        |
+| `SUPABASE_URL`          | Supabase project base URL              | `https://xyz.supabase.co`     | Yes      | Yes       |
+| `SUPABASE_ANON_KEY`     | Public Supabase key for frontend       | `xyz...`                      | Yes      | Yes       |
+| `SUPABASE_SERVICE_ROLE` | Secure key for server-side RLS updates | `abc...`                      | No       | Yes       |
+| `STRIPE_SECRET_KEY`     | Stripe secret for payment processing   | `sk_live_...`                 | Yes      | Yes       |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook validation secret       | `whsec_...`                   | Yes      | Yes       |
+| `CLOUDINARY_API_KEY`    | Cloudinary key for image upload        | `1234567890`                  | Yes      | Yes       |
+| `CLOUDINARY_SECRET`     | Cloudinary API secret                  | `abcdefg`                     | Yes      | Yes       |
+| `EMAIL_SERVICE_KEY`     | SendGrid/Mail service API key          | `SG.xxxxxx`                   | No       | Yes       |
+| `APP_ENV`               | Current environment                    | `development` / `production`  | Yes      | No        |
+
+---
+
+## Notes
+
+* All `.env` variables validated at boot via config schema.
+* `.env.example` provided in repo for developer onboarding.
+* Secrets injected via Vercel/Supabase settings in prod.
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description                 | Author  |
+| ------------- | ---------- | ------- | --------------------------- | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Coding and data model setup | ChatGPT |

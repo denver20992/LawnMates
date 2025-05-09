@@ -1,0 +1,167 @@
+# Epic 8: Repeat Booking & Favourites
+
+### Story 8.1: Rebook Past Jobs from Chat/History
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As a user, I want to rebook a past job, so that I can quickly request recurring services.
+
+**Context:** Simplifies follow-up jobs by copying prior details.
+
+## Detailed Requirements
+
+* Add "Rebook" button to chat and job history
+* Prepopulate job form with previous data
+* Allow optional edits before submission
+
+## Acceptance Criteria (ACs)
+
+* AC1: Rebook button visible in job view
+* AC2: Job form prefilled with past details
+* AC3: New job is created on confirm
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `components/RebookButton.tsx`
+  * `src/features/jobs/JobPostForm.tsx`
+
+* **Key Technologies:**
+
+  * React, Supabase
+
+* **API Interactions:**
+
+  * Use `POST /api/jobs` with existing data
+
+* **Data Structures:**
+
+  * `Job` payload reuse
+
+## Tasks / Subtasks
+
+* [ ] Add "Rebook" UI in job history/chat
+* [ ] Load job into form state
+* [ ] Submit cloned job
+
+## Testing Requirements
+
+* **Unit Tests:** Form population logic
+* **Integration Tests:** Rebook POST logic
+* **E2E:** Rebook from history → confirmation
+
+---
+
+### Story 8.2: Favourite a Landscaper or Property
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As a user, I want to favourite landscapers or properties, so that I can easily find and work with them again.
+
+**Context:** Enables quick access to trusted providers or preferred properties for recurring jobs.
+
+## Detailed Requirements
+
+* Add a favourite/unfavourite toggle on profile/job views
+* Store favourites in the `favourites` table
+* Display list of favourites in user dashboard
+
+## Acceptance Criteria (ACs)
+
+* AC1: Users can toggle favourite status on others’ profiles
+* AC2: Favourited users appear in a dashboard list
+* AC3: Removing a favourite updates the list instantly
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `src/features/favorites/FavoriteToggle.tsx`
+  * `pages/api/favorites.ts`
+  * `src/features/favorites/DashboardList.tsx`
+
+* **Key Technologies:**
+
+  * Supabase, React
+
+* **API Interactions:**
+
+  * `POST /api/favorites`
+  * `GET /api/favorites?userId={}`
+
+* **Data Structures:**
+
+  * `Favourite`: userId, targetUserId, createdAt
+
+## Tasks / Subtasks
+
+* [ ] Add toggle button UI
+* [ ] Connect API to toggle/store
+* [ ] Display favourite list on dashboard
+
+## Testing Requirements
+
+* **Unit Tests:** Toggle logic and API mocks
+* **Integration Tests:** Favourites DB add/remove
+* **E2E:** Full favourite/unfavourite flow
+
+---
+
+### Story 8.3: Add “Repeat Interval” Suggestion UI
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As a user, I want to set a preferred repeat interval, so that I can automate job rebooking.
+
+**Context:** Adds metadata to jobs to suggest automatic recurring scheduling.
+
+## Detailed Requirements
+
+* Add modal with interval options (e.g., weekly, biweekly, monthly)
+* Store suggestion on job model
+* Use for recurring job logic in Epic 9
+
+## Acceptance Criteria (ACs)
+
+* AC1: Interval UI appears in job posting flow
+* AC2: Selected value saved in job metadata
+* AC3: Display interval in job summary
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `src/features/jobs/RepeatIntervalModal.tsx`
+  * `JobPostForm.tsx`
+  * `common/types/job.ts`
+
+* **Key Technologies:**
+
+  * React, Supabase
+
+* **API Interactions:**
+
+  * Included in job `POST` payload
+
+* **Data Structures:**
+
+  * `Job.recurrenceInterval`: string
+
+## Tasks / Subtasks
+
+* [ ] Create repeat interval modal
+* [ ] Add interval field to job type
+* [ ] Persist in `POST /api/jobs`
+
+## Testing Requirements
+
+* **Unit Tests:** Modal selection logic
+* **Integration Tests:** Form + API persistence
+* **E2E:** Interval displayed post-creation

@@ -1,0 +1,170 @@
+# Epic 9: Subscription & Loyalty System
+
+### Story 9.1: Monthly Recurring Jobs (Auto-Schedule + Pay)
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As a user, I want to set up monthly recurring jobs, so that I don't have to rebook every time.
+
+**Context:** Core subscription functionality that auto-clones jobs and manages Stripe payments on a recurring basis.
+
+## Detailed Requirements
+
+* Add checkbox for monthly recurrence in JobPostForm
+* Add `recurring` and `recurrenceInterval` to job model
+* Schedule backend job to clone original post every month
+* Trigger new payment intent with each recurrence
+
+## Acceptance Criteria (ACs)
+
+* AC1: User can flag a job as recurring
+* AC2: Recurring job is cloned monthly with payment triggered
+* AC3: Clones preserve owner, property, and tier
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `JobPostForm.tsx`, `pages/api/jobs.ts`
+  * `common/types/job.ts`
+  * Cron logic via Supabase scheduled job
+
+* **Key Technologies:**
+
+  * Supabase Jobs (cron), Stripe, TypeScript
+
+* **API Interactions:**
+
+  * Clone existing job and call Stripe intent API
+
+* **Data Structures:**
+
+  * `Job.recurring`, `Job.recurrenceInterval`
+
+## Tasks / Subtasks
+
+* [ ] Add recurring toggle UI
+* [ ] Extend job model
+* [ ] Setup backend job scheduler (cron)
+* [ ] Clone and reinitiate payment each month
+
+## Testing Requirements
+
+* **Unit Tests:** Cloning function logic
+* **Integration Tests:** Monthly scheduler
+* **E2E:** Submit recurring job and verify clone
+
+---
+
+### Story 9.2: Points or Credits for Frequent Use
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As a frequent user, I want to earn points for completed jobs, so that I feel rewarded for loyalty.
+
+**Context:** Introduces basic loyalty system with job completion milestones.
+
+## Detailed Requirements
+
+* Add `loyalty_points` field to user schema
+* Increment on job completion payout
+* Show badge or counter in user dashboard
+
+## Acceptance Criteria (ACs)
+
+* AC1: Points increment only on job payout
+* AC2: Counter visible in user dashboard
+* AC3: Points stored in DB and tied to userId
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `src/features/payments/payout.ts`
+  * `src/features/user/DashboardLoyalty.tsx`
+  * `common/types/user.ts`
+
+* **Key Technologies:**
+
+  * Supabase, Stripe webhook
+
+* **API Interactions:**
+
+  * Stripe payout triggers DB update
+
+* **Data Structures:**
+
+  * `User.loyalty_points: number`
+
+## Tasks / Subtasks
+
+* [ ] Add loyalty field to user table
+* [ ] Update logic on payout success
+* [ ] Display in dashboard UI
+
+## Testing Requirements
+
+* **Unit Tests:** Incrementer logic
+* **Integration Tests:** Stripe payout webhook
+* **E2E:** Job complete → points visible
+
+---
+
+### Story 9.3: Referral Bonuses and Discount Codes
+
+**Status:** Draft
+
+## Goal & Context
+
+**User Story:** As a user, I want to invite friends and apply discounts, so that I get rewarded for referrals.
+
+**Context:** Adds optional promo engine and user growth loop.
+
+## Detailed Requirements
+
+* User can enter referral code during signup
+* Store referrer and reward both parties
+* Enable discount code field in job flow
+
+## Acceptance Criteria (ACs)
+
+* AC1: Referral codes stored and linked
+* AC2: Bonus points or discounts applied on use
+* AC3: Admin can issue promo codes
+
+## Technical Implementation Context
+
+* **Relevant Files:**
+
+  * `src/features/auth/referral.ts`
+  * `src/features/payments/discount.ts`
+  * `common/types/user.ts`, `promo.ts`
+
+* **Key Technologies:**
+
+  * Supabase, Stripe Coupons
+
+* **API Interactions:**
+
+  * Stripe promo codes and Supabase joins
+
+* **Data Structures:**
+
+  * `Referral`: inviterId, inviteeId, timestamp
+  * `PromoCode`: code, discountAmount, expiration
+
+## Tasks / Subtasks
+
+* [ ] Add referral capture on signup
+* [ ] Validate and store referrer → invitee
+* [ ] Apply discount on checkout flow
+
+## Testing Requirements
+
+* **Unit Tests:** Referral linking logic
+* **Integration Tests:** Stripe discount validation
+* **E2E:** Signup with referral → job with discount

@@ -1,0 +1,69 @@
+# LawnMates Sprint 2 Plan – Mobile & Loyalty Focus
+
+This sprint initiates Epic 9 (Subscriptions & Loyalty) and Epic 10 (Mobile PWA Shell) to drive user retention and mobile experience enhancement.
+
+---
+
+## 🎯 Sprint Goals (2 weeks)
+
+* Add recurring job flow and loyalty tracking table
+* Begin mobile install support (PWA manifest + offline fallback)
+* Establish usage-based reward logic foundation
+
+---
+
+## 📦 Sprint 2 Tasks
+
+### Epic 9: Subscription & Loyalty
+
+| Task                                                 | Owner  | Est.  | Notes                                    |
+| ---------------------------------------------------- | ------ | ----- | ---------------------------------------- |
+| FE: Add monthly opt-in toggle to `JobPostForm.tsx`   | FE Dev | 3 pts | Triggers recurring metadata flag         |
+| BE: Modify job model to include `recurring: boolean` | BE Dev | 2 pts | With `recurrenceInterval` (e.g. monthly) |
+| BE: Add `loyalty_points` field to user schema        | BE Dev | 2 pts | Initialize on job complete event         |
+| BE: Update payout flow to increment loyalty points   | BE Dev | 2 pts | Add point per job payout completed       |
+| FE: Show loyalty badge or counter in dashboard       | FE Dev | 2 pts | Basic reward indicator in profile UI     |
+
+### Epic 10: Mobile PWA Shell
+
+| Task                                              | Owner  | Est.  | Notes                            |
+| ------------------------------------------------- | ------ | ----- | -------------------------------- |
+| FE: Add `manifest.json` and icons                 | FE Dev | 2 pts | Configure PWA metadata and name  |
+| FE: Add service worker for basic caching          | FE Dev | 3 pts | Pages: login, dashboard, job map |
+| FE: Add PWA install prompt logic                  | FE Dev | 2 pts | Show on mobile browsers          |
+| Test: Validate install and offline mode in Chrome | QA     | 2 pts | Follow PWA Lighthouse audit      |
+
+---
+
+## 🧪 Shared / Support
+
+| Task                                                      | Owner  | Est.  | Notes                         |
+| --------------------------------------------------------- | ------ | ----- | ----------------------------- |
+| Infra: Add recurring job scheduler (cron or Supabase job) | DevOps | 3 pts | Emulates monthly post clones  |
+| Docs: Update API docs with `recurring` job fields         | Docs   | 1 pt  | Include in `api-reference.md` |
+| Test: Write unit test for loyalty incrementer             | QA     | 2 pts | Job complete → points logic   |
+
+---
+
+## ✅ Acceptance Criteria
+
+* Jobs can be flagged as recurring and cloned monthly
+* Users see and accrue loyalty points after completion
+* Mobile users can install PWA and launch offline
+
+---
+
+## 🧠 AI Hints
+
+* Extend `Job` type with `recurring`, `interval`
+* Use `public/manifest.json` for PWA config
+* Add `serviceWorkerRegistration.ts` to bootstrap SW logic
+* Loyalty logic can reuse Stripe webhook event path
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description              | Author  |
+| ------------- | ---------- | ------- | ------------------------ | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Sprint 2 goals and tasks | ChatGPT |
