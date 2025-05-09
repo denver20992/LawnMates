@@ -32,14 +32,15 @@ import { useToast } from '@/hooks/use-toast';
 import { useJobs } from '@/hooks/useJobs';
 import { useAuth } from '@/hooks/useAuth';
 
-// Define available services
+// Define available services with market rates in the area
 const AVAILABLE_SERVICES = [
   { id: 'lawn-mowing', label: 'Lawn Mowing', basePrice: 40 },
   { id: 'hedge-trimming', label: 'Hedge Trimming', basePrice: 50 },
   { id: 'leaf-removal', label: 'Leaf Removal', basePrice: 45 },
   { id: 'garden-maintenance', label: 'Garden Maintenance', basePrice: 60 },
   { id: 'weed-control', label: 'Weed Control', basePrice: 55 },
-  { id: 'fertilization', label: 'Fertilization', basePrice: 65 }
+  { id: 'fertilization', label: 'Fertilization', basePrice: 65 },
+  { id: 'dethatching', label: 'Dethatching', basePrice: 75 }
 ];
 
 // Extend the job schema for the form
@@ -251,8 +252,12 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                         <div className="mb-4">
                           <FormLabel>Services Needed</FormLabel>
                           <FormDescription>
-                            Select the services you need for this job
+                            Select the services you need for this job. Rates shown are the average market rates for landscapers in your area.
                           </FormDescription>
+                          <div className="mt-2 p-3 bg-muted/50 rounded-md text-xs">
+                            <p className="font-medium mb-1">Pricing Information</p>
+                            <p>The estimated rates below are based on market data from landscapers in your area. Actual prices may vary based on property size, complexity, and special requirements. Final prices will be adjusted after property assessment.</p>
+                          </div>
                         </div>
                         <div className="grid grid-cols-2 gap-2">
                           {AVAILABLE_SERVICES.map((service) => (
@@ -284,7 +289,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                                         {service.label}
                                       </FormLabel>
                                       <FormDescription className="text-xs">
-                                        Base rate: ${service.basePrice} CAD
+                                        Estimated rate: ${service.basePrice} CAD
                                       </FormDescription>
                                     </div>
                                   </FormItem>
@@ -370,9 +375,25 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                         </FormControl>
                         <FormDescription>
                           {field.value ? (
-                            <span className="text-sm text-primary-600 font-medium">
-                              Estimated amount: ${field.value} CAD
-                            </span>
+                            <div className="space-y-1">
+                              <span className="text-sm text-primary-600 font-medium">
+                                Estimated amount: ${field.value} CAD
+                              </span>
+                              {selectedServices?.length > 0 && (
+                                <div className="text-xs text-muted-foreground">
+                                  <p>Based on selected services:</p>
+                                  <ul className="list-disc list-inside mt-1">
+                                    {selectedServices.map(serviceId => {
+                                      const service = AVAILABLE_SERVICES.find(s => s.id === serviceId);
+                                      return service ? (
+                                        <li key={serviceId}>{service.label}: ${service.basePrice} CAD</li>
+                                      ) : null;
+                                    })}
+                                  </ul>
+                                  <p className="mt-1">Adjusted based on property size and complexity.</p>
+                                </div>
+                              )}
+                            </div>
                           ) : (
                             <span>
                               Amount you're willing to pay for this job (in CAD)
@@ -574,13 +595,23 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                         <span className="font-medium">${form.getValues('price')} CAD</span>
                       </div>
                       
-                      <div className="flex justify-between">
+                      <div>
                         <span className="text-neutral-500">Selected Services:</span>
-                        <span className="font-medium text-right">
-                          {form.getValues('selectedServices').map(serviceId => 
-                            AVAILABLE_SERVICES.find(s => s.id === serviceId)?.label
-                          ).join(', ')}
-                        </span>
+                        <div className="mt-2 ml-4">
+                          {form.getValues('selectedServices').map(serviceId => {
+                            const service = AVAILABLE_SERVICES.find(s => s.id === serviceId);
+                            return service ? (
+                              <div key={serviceId} className="flex justify-between mb-1">
+                                <span className="font-medium">{service.label}</span>
+                                <span>${service.basePrice} CAD</span>
+                              </div>
+                            ) : null;
+                          })}
+                          <div className="border-t mt-2 pt-1 flex justify-between">
+                            <span className="font-medium">Total (adjusted for property):</span>
+                            <span className="font-medium">${form.getValues('price')} CAD</span>
+                          </div>
+                        </div>
                       </div>
                       
                       <div className="flex justify-between">
