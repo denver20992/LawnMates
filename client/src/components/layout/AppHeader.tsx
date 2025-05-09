@@ -71,48 +71,36 @@ const AppHeader: React.FC = () => {
             </div>
             {isAuthenticated && (
               <nav className="ml-6 hidden md:flex md:space-x-8">
-                <Link href="/">
-                  <a className={`inline-flex items-center border-b-2 ${
+                <Link href="/" className={`inline-flex items-center border-b-2 ${
                     location === '/' ? 'border-primary-500 text-neutral-900' : 'border-transparent text-neutral-500 hover:border-neutral-300 hover:text-neutral-700'
                   } px-1 pt-1 text-sm font-medium`}>
                     Dashboard
-                  </a>
                 </Link>
-                <Link href="/jobs">
-                  <a className={`inline-flex items-center border-b-2 ${
+                <Link href="/jobs" className={`inline-flex items-center border-b-2 ${
                     location.startsWith('/jobs') ? 'border-primary-500 text-neutral-900' : 'border-transparent text-neutral-500 hover:border-neutral-300 hover:text-neutral-700'
                   } px-1 pt-1 text-sm font-medium`}>
                     Jobs
-                  </a>
                 </Link>
-                <Link href="/messages">
-                  <a className={`inline-flex items-center border-b-2 ${
+                <Link href="/messages" className={`inline-flex items-center border-b-2 ${
                     location.startsWith('/messages') ? 'border-primary-500 text-neutral-900' : 'border-transparent text-neutral-500 hover:border-neutral-300 hover:text-neutral-700'
                   } px-1 pt-1 text-sm font-medium`}>
                     Messages
-                  </a>
                 </Link>
-                <Link href="/profile">
-                  <a className={`inline-flex items-center border-b-2 ${
+                <Link href="/profile" className={`inline-flex items-center border-b-2 ${
                     location.startsWith('/profile') ? 'border-primary-500 text-neutral-900' : 'border-transparent text-neutral-500 hover:border-neutral-300 hover:text-neutral-700'
                   } px-1 pt-1 text-sm font-medium`}>
                     Profile
-                  </a>
                 </Link>
-                <Link href="/reviews">
-                  <a className={`inline-flex items-center border-b-2 ${
+                <Link href="/reviews" className={`inline-flex items-center border-b-2 ${
                     location.startsWith('/reviews') ? 'border-primary-500 text-neutral-900' : 'border-transparent text-neutral-500 hover:border-neutral-300 hover:text-neutral-700'
                   } px-1 pt-1 text-sm font-medium`}>
                     Reviews
-                  </a>
                 </Link>
                 {user?.role === 'admin' && (
-                  <Link href="/admin">
-                    <a className={`inline-flex items-center border-b-2 ${
+                  <Link href="/admin" className={`inline-flex items-center border-b-2 ${
                       location.startsWith('/admin') ? 'border-primary-500 text-neutral-900' : 'border-transparent text-neutral-500 hover:border-neutral-300 hover:text-neutral-700'
                     } px-1 pt-1 text-sm font-medium`}>
                       Admin
-                    </a>
                   </Link>
                 )}
               </nav>
@@ -215,19 +203,15 @@ const AppHeader: React.FC = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem>
-                      <Link href="/profile">
-                        <a className="flex items-center">
-                          <User className="mr-2 h-4 w-4" />
-                          <span>Profile</span>
-                        </a>
+                      <Link href="/profile" className="flex items-center">
+                        <User className="mr-2 h-4 w-4" />
+                        <span>Profile</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <Link href="/profile/settings">
-                        <a className="flex items-center">
-                          <Settings className="mr-2 h-4 w-4" />
-                          <span>Settings</span>
-                        </a>
+                      <Link href="/profile/settings" className="flex items-center">
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>Settings</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -240,15 +224,11 @@ const AppHeader: React.FC = () => {
               </>
             ) : (
               <div className="flex items-center space-x-4">
-                <Link href="/login">
-                  <a className="text-sm font-medium text-neutral-700 hover:text-neutral-900">
-                    Log in
-                  </a>
+                <Link href="/login" className="text-sm font-medium text-neutral-700 hover:text-neutral-900">
+                  Log in
                 </Link>
-                <Link href="/register">
-                  <a className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                    Sign up
-                  </a>
+                <Link href="/register" className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                  Sign up
                 </Link>
               </div>
             )}
