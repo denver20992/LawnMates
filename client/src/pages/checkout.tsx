@@ -119,6 +119,13 @@ export default function Checkout() {
     enabled: !!jobId,
   });
 
+  // Use our payment hook
+  const { createPaymentIntent, isLoading: isPaymentLoading } = usePayment({
+    onError: () => {
+      navigate('/dashboard');
+    }
+  });
+  
   useEffect(() => {
     if (!jobId) {
       toast({
@@ -132,23 +139,14 @@ export default function Checkout() {
 
     if (job) {
       // Create PaymentIntent as soon as the job data is available
-      apiRequest("POST", "/api/create-payment-intent", { 
-        jobId: job.id,
-        amount: job.price
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setClientSecret(data.clientSecret);
-        })
-        .catch(err => {
-          toast({
-            title: "Payment Setup Failed",
-            description: err.message || "Could not set up payment. Please try again.",
-            variant: "destructive",
-          });
+      createPaymentIntent(job)
+        .then((secret) => {
+          if (secret) {
+            setClientSecret(secret);
+          }
         });
     }
-  }, [job, jobId, navigate, toast]);
+  }, [job, jobId, navigate, toast, createPaymentIntent]);
 
   if (isJobLoading) {
     return (
