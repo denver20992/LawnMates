@@ -148,8 +148,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to fetch my jobs" });
     }
   });
-
-  // Get a specific job
+  
+  // Get a specific job by ID
   app.get("/api/jobs/:id", isAuthenticated, async (req, res) => {
     const jobId = parseInt(req.params.id);
     
