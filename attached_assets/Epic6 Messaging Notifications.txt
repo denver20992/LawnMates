@@ -1,0 +1,95 @@
+# Epic 6: Messaging & Notifications
+
+**Goal:** Provide in-platform messaging and real-time notifications to support seamless coordination between property owners and landscapers and improve responsiveness across the job lifecycle.
+
+## Story List
+
+### Story 6.1: Per-Job Chat Between Users
+
+* **User Story / Goal:** As a user, I want to chat with the other party on a job so that I can clarify details and coordinate directly.
+* **Detailed Requirements:**
+
+  * Chat interface scoped to each job (1:1 only)
+  * Message history stored and timestamped
+  * Role-based visibility (only job participants)
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Users can send and receive messages within a job
+  * AC2: Messages persist and reload across sessions
+  * AC3: Non-participants cannot access the thread
+* **Tasks:**
+
+  * [ ] Build chat UI component
+  * [ ] Implement real-time backend (e.g., Supabase Realtime)
+  * [ ] Secure access to threads via job ID & user role
+
+---
+
+### Story 6.2: Real-Time Job Status Notifications
+
+* **User Story / Goal:** As a user, I want to receive updates about my job status in real time so I stay informed without refreshing.
+* **Detailed Requirements:**
+
+  * Events: job posted, accepted, photos uploaded, payment released
+  * Push or in-app toast notifications
+  * Real-time data update in job list/dashboard
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Status changes are reflected immediately in UI
+  * AC2: Users receive visible alerts for key events
+  * AC3: Notifications persist in bell/log view
+* **Tasks:**
+
+  * [ ] Define and emit notification events
+  * [ ] Create notification component and log
+  * [ ] Connect WebSocket/polling to update dashboard
+
+---
+
+### Story 6.3: Notification Bell & History Log
+
+* **User Story / Goal:** As a user, I want a centralized place to view all past alerts so I can review what happened and when.
+* **Detailed Requirements:**
+
+  * Bell icon opens recent alerts
+  * Click-through links to job or chat
+  * Alert log with timestamp, type, status (read/unread)
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Notification bell shows count and opens drawer
+  * AC2: Log displays alert history with timestamps
+  * AC3: Clicking an alert navigates to the relevant context
+* **Tasks:**
+
+  * [ ] Build notification drawer/bell UI
+  * [ ] Persist alert records in backend DB
+  * [ ] Add routing logic from alert to view
+
+---
+
+### Story 6.4: Email Backup Notifications
+
+* **User Story / Goal:** As a user, I want to receive email alerts for important events so I don’t miss anything when I’m offline.
+* **Detailed Requirements:**
+
+  * Emails for job acceptance, chat messages, payment actions
+  * Configurable user preference (opt-in/out)
+  * Email templates with CTA links
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Emails sent reliably for major job actions
+  * AC2: Users can manage email preferences
+  * AC3: Emails link clearly to platform
+* **Tasks:**
+
+  * [ ] Define email templates and triggers
+  * [ ] Implement email service integration
+  * [ ] Add settings for user opt-in/out
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description                          | Author  |
+| ------------- | ---------- | ------- | ------------------------------------ | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Epic for messaging and notifications | ChatGPT |

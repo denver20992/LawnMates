@@ -278,10 +278,10 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       // Create job payload
       const jobData = {
         title: values.title, // Always use the title from the form
-        description: values.description,
+        description: values.description || '', // Ensure description is at least an empty string
         price: priceInCents,
-        startDate: startDateTime,
-        endDate: endDateTime,
+        startDate: startDateTime.toISOString(), // Convert to ISO string for API
+        endDate: endDateTime ? endDateTime.toISOString() : undefined,
         isRecurring: values.isRecurring,
         recurrenceInterval: values.isRecurring ? values.recurrenceInterval : undefined,
         requiresEquipment: values.requiresEquipment,
@@ -293,8 +293,14 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
         ownerId: user?.id || 0, // This should be set on the server
       };
       
+      // Convert dates to Date objects for TypeScript compatibility
+      const formattedData = {
+        ...jobData,
+        // Note: Even though we send ISO strings, the server will handle proper conversion 
+      };
+      
       // Submit the job
-      await createJob(jobData);
+      await createJob(formattedData);
       
       toast({
         title: "Job Posted Successfully",

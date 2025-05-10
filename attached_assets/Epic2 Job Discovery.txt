@@ -1,0 +1,96 @@
+# Epic 2: Job Posting & Discovery
+
+**Goal:** Enable property owners to create job listings and landscapers to discover relevant jobs through a map-based, filtered interface—facilitating efficient service matching.
+
+## Story List
+
+### Story 2.1: Job Creation by Property Owner
+
+* **User Story / Goal:** As a property owner, I want to post a lawn care job with clear service and timing details so that landscapers can apply and complete the task.
+* **Detailed Requirements:**
+
+  * Tiered service selection (e.g., Basic Mow, Full Cleanup)
+  * Inputs: square footage, location, date, optional photos
+  * Suggested price guidance shown based on service & size
+  * Job is saved with escrow payment initiated
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Owners can complete and submit job forms successfully
+  * AC2: Form validations and pricing suggestions work correctly
+  * AC3: Jobs appear in landscaper feed upon submission
+* **Tasks:**
+
+  * [ ] Design job post form UI with fields and help tooltips
+  * [ ] Implement backend API for job creation
+  * [ ] Trigger Stripe escrow via payment service on submission
+
+---
+
+### Story 2.2: Map-Based Job Discovery for Landscapers
+
+* **User Story / Goal:** As a landscaper, I want to view jobs nearby on a map so that I can find relevant work within a convenient radius.
+* **Detailed Requirements:**
+
+  * Map integration using Mapbox or Google Maps
+  * View jobs as pins with hoverable previews
+  * Support clustering and location filters
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Jobs display as pins with key metadata
+  * AC2: Users can pan/zoom map and filter dynamically
+  * AC3: Location permissions and fallback handled gracefully
+* **Tasks:**
+
+  * [ ] Integrate maps SDK and configure key limits
+  * [ ] Fetch and render job data with clustering
+  * [ ] Add filters for price, date, service
+
+---
+
+### Story 2.3: Job Filtering and Sorting
+
+* **User Story / Goal:** As a landscaper, I want to filter and sort jobs by price, service, and date so that I can prioritize my workflow efficiently.
+* **Detailed Requirements:**
+
+  * Filters: service type, price range, date range
+  * Sort options: date posted, proximity, price
+  * Applied filters should persist in view
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Filters apply in real time to map and list
+  * AC2: Sorting changes visible order of job cards
+  * AC3: Filters persist on page refresh/session resume
+* **Tasks:**
+
+  * [ ] Build filtering UI and connect to query engine
+  * [ ] Implement sort logic for frontend display
+  * [ ] Add URL/state sync for persistent filters
+
+---
+
+### Story 2.4: Job Card Preview & Detail Modal
+
+* **User Story / Goal:** As a landscaper, I want to see job details quickly from a card preview so I can assess job fit without friction.
+* **Detailed Requirements:**
+
+  * Job card includes: tier, location, date, price, preview photo
+  * Click opens modal or sidebar with full details
+  * Mobile-friendly interaction patterns
+* **Acceptance Criteria (ACs):**
+
+  * AC1: All jobs have a standard preview card
+  * AC2: Clicking a card reveals full job detail
+  * AC3: UI behaves responsively across breakpoints
+* **Tasks:**
+
+  * [ ] Design job card component
+  * [ ] Build modal/sidebar detail view
+  * [ ] Ensure responsiveness for mobile and tablet
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description                      | Author  |
+| ------------- | ---------- | ------- | -------------------------------- | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Epic for job posting & discovery | ChatGPT |

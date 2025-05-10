@@ -1,0 +1,119 @@
+# LawnMates Architecture Brief
+
+This brief provides architectural guidance for building and scaling the LawnMates MVP based on the product's core features, integrations, and infrastructure needs.
+
+---
+
+## 1. System Overview
+
+LawnMates is a web-based platform with three main roles (Property Owner, Landscaper, Admin) and a two-sided job marketplace. Core workflows include job posting/discovery, escrow payments, photo verification, messaging, and admin intervention.
+
+---
+
+## 2. Architecture Style
+
+* **Architecture Type:** Modular monolith (MVP) with clear domain boundaries
+* **Frontend:** SPA using Next.js (deployed via Vercel)
+* **Backend:** Supabase (preferred) or Node.js/Express if custom logic required
+* **Database:** PostgreSQL with Supabase RLS for role-based data access
+* **API:** RESTful endpoints (defined in `api-reference.md`)
+
+---
+
+## 3. Core Components
+
+### Authentication & RBAC
+
+* Supabase Auth with JWT sessions and custom claims
+* Email verification required for activation
+* RBAC enforced via frontend guards and RLS policies
+
+### Job Lifecycle & Escrow
+
+* Job data stored in `jobs` table (linked to users, location, status)
+* Stripe Connect Custom accounts for landscapers
+* Payment intent created on job post, released on verification
+
+### Photo Upload & Verification
+
+* Cloudinary or Firebase for signed, secure photo storage
+* Images tied to job ID; deletion restricted to admin or timeout logic
+
+### Messaging & Notifications
+
+* Supabase Realtime channels or custom Socket.io layer
+* Push notifications (future) and in-app notification store
+* Per-job message thread table scoped by job ID
+
+### Admin Tools
+
+* Custom admin panel gated by Supabase role or RLS flag
+* Actions: job override, user moderation, photo approval, refunds
+
+---
+
+## 4. Key Integrations
+
+| Function      | Tool/Service                                 |
+| ------------- | -------------------------------------------- |
+| Auth          | Supabase Auth                                |
+| Database      | Supabase Postgres                            |
+| Payments      | Stripe Connect                               |
+| Maps          | Mapbox or Google Maps                        |
+| Image Hosting | Cloudinary or Firebase                       |
+| Notifications | Supabase Realtime, Email (SendGrid optional) |
+
+---
+
+## 5. Environments & Deployment
+
+* **Environments:** `dev`, `staging`, `production`
+* **CI/CD:** GitHub Actions for lint/test/deploy
+* **Hosting:**
+
+  * Frontend: Vercel
+  * Backend/DB: Supabase (managed)
+
+---
+
+## 6. Local Development Guidance
+
+* Supabase CLI for local database + auth testing
+* Docker optional for Postgres, mock APIs
+* `.env` config for API keys and environment variables
+* Mock services for Stripe test mode, Cloudinary test bucket
+
+---
+
+## 7. Security Considerations
+
+* JWT token validation and expiry checks
+* Stripe webhook verification
+* RLS policies for data isolation per role
+* Secure signed image URLs with expiry
+* Rate limiting and input sanitation
+
+---
+
+## 8. Scalability Considerations
+
+* Ready for regional expansion with job geolocation
+* Stripe scales with CAD payments and multi-payouts
+* Modular feature toggles for post-MVP rollouts
+
+---
+
+## 9. Monitoring & Observability
+
+* Vercel analytics for frontend performance
+* Supabase logs and dashboard for queries/auth events
+* Sentry (recommended) for error tracking
+* Admin panel displays job/job-user issue metrics
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description                    | Author  |
+| ------------- | ---------- | ------- | ------------------------------ | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Architecture direction for MVP | ChatGPT |

@@ -1,0 +1,61 @@
+# Post-MVP Epic Plan – LawnMates
+
+This document outlines proposed epics for post-MVP enhancements to expand user engagement, operational automation, and platform growth.
+
+---
+
+## Epic 7: User Reviews & Ratings
+
+**Goal:** Enable transparent feedback via reviews to build trust and improve job quality.
+
+* Story 7.1: Leave review after job completion (both roles)
+* Story 7.2: Display rating average on user profile
+* Story 7.3: Admin moderation for flagged reviews
+
+## Epic 8: Repeat Booking & Favorites
+
+**Goal:** Make it easier for users to rebook trusted landscapers or repost similar jobs.
+
+* Story 8.1: “Rebook Job” from history or chat
+* Story 8.2: Save landscaper/property as favorite
+* Story 8.3: Suggested repeat intervals and reminders
+
+## Epic 9: Subscription & Loyalty System
+
+**Goal:** Drive repeat use and platform loyalty via incentives.
+
+* Story 9.1: Monthly plan for recurring lawn care
+* Story 9.2: Points or credits for frequent users
+* Story 9.3: Referral bonuses and promo codes
+
+## Epic 10: Mobile App Shell (PWA / Native)
+
+**Goal:** Enhance mobile experience with a dedicated app version.
+
+* Story 10.1: Progressive Web App (PWA) install prompt
+* Story 10.2: Push notification support
+* Story 10.3: Native wrappers for iOS/Android via Capacitor or Expo
+
+## Epic 11: Advanced Admin & Analytics
+
+**Goal:** Expand admin control and insights.
+
+* Story 11.1: Geographic/job volume heatmaps
+* Story 11.2: Anomaly detection (e.g. high dispute rate)
+* Story 11.3: Admin roles & permissions
+
+## Epic 12: AI-Enhanced Support & Automation
+
+**Goal:** Use AI to streamline moderation and support.
+
+* Story 12.1: Auto-classify job photos for trust scoring
+* Story 12.2: AI assistant for basic support and help
+* Story 12.3: Auto-flag pattern detection in job or message history
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description           | Author  |
+| ------------- | ---------- | ------- | --------------------- | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Post-MVP epic roadmap | ChatGPT |

@@ -1,0 +1,74 @@
+# Epic 4: Job Execution & Verification
+
+**Goal:** Enable landscapers to document completed work through photo uploads and ensure property owners can verify and approve job completion, reinforcing trust and quality assurance.
+
+## Story List
+
+### Story 4.1: Before & After Photo Upload by Landscaper
+
+* **User Story / Goal:** As a landscaper, I want to upload before and after photos of the job so that property owners can visually confirm the work.
+* **Detailed Requirements:**
+
+  * Upload UI supports at least two images per job (before, after)
+  * Images linked to job ID and user ID
+  * File size and format validation
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Landscaper can upload two labeled images
+  * AC2: Images are stored and associated correctly
+  * AC3: Upload errors are handled gracefully
+* **Tasks:**
+
+  * [ ] Design photo upload component with preview
+  * [ ] Integrate Cloudinary/Firebase storage
+  * [ ] Store photo URLs in job object
+
+---
+
+### Story 4.2: Review and Payment Release Prompt for Property Owner
+
+* **User Story / Goal:** As a property owner, I want to review job photos and confirm completion so that I can release payment confidently.
+* **Detailed Requirements:**
+
+  * UI shows before/after photos and job summary
+  * Confirmation button triggers Stripe release
+  * Countdown timer starts upon photo submission
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Owners can view uploaded images and confirm job
+  * AC2: Timer starts correctly if no action taken
+  * AC3: Confirmation triggers payment release
+* **Tasks:**
+
+  * [ ] Build photo review UI with job metadata
+  * [ ] Implement confirm/release workflow
+  * [ ] Trigger timer logic on photo upload
+
+---
+
+### Story 4.3: Auto-Release and Admin Review Flow
+
+* **User Story / Goal:** As a system admin, I want jobs to be auto-completed after 48 hours or flagged for review so that the platform can operate autonomously.
+* **Detailed Requirements:**
+
+  * 48-hr timer auto-releases payment if no owner response
+  * Admin can intervene in flagged or disputed jobs
+  * Logs kept for every auto or manual action
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Auto-release works correctly after timeout
+  * AC2: Admin dashboard highlights flagged jobs
+  * AC3: Logs show action timestamps and actor
+* **Tasks:**
+
+  * [ ] Implement auto-release job scheduler
+  * [ ] Extend admin tools for job override
+  * [ ] Record audit logs of actions
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description                           | Author  |
+| ------------- | ---------- | ------- | ------------------------------------- | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Epic for photo-based job verification | ChatGPT |

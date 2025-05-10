@@ -1,0 +1,104 @@
+# LawnMates Testing Strategy (MVP)
+
+This document outlines the QA and testing approach for the LawnMates MVP, ensuring functionality, performance, security, and usability across the platform.
+
+---
+
+## 1. Testing Scope
+
+* **Critical Functional Areas:**
+
+  * User authentication & role logic
+  * Job posting, discovery, and acceptance
+  * Payment flows (escrow, release, refund)
+  * Photo uploads and verification
+  * Messaging and notifications
+  * Admin tools and dispute handling
+
+* **Supported Platforms:**
+
+  * Mobile and desktop browsers (Chrome, Safari, Firefox, Edge)
+  * Responsive design tested at standard breakpoints
+
+---
+
+## 2. Test Types & Tools
+
+### Unit Tests
+
+* **Scope:** Component logic, utility functions, API responses
+* **Tools:** Jest, React Testing Library
+
+### Integration Tests
+
+* **Scope:** Feature modules (e.g., job + payment, chat + notification)
+* **Tools:** Jest + mocks, Supertest (for backend)
+
+### End-to-End (E2E) Tests
+
+* **Scope:** Full flows (sign-up → post job → pay → complete)
+* **Tools:** Cypress (UI and backend workflows)
+
+### Accessibility (a11y) Tests
+
+* **Scope:** Forms, buttons, contrast, keyboard nav
+* **Tools:** axe-core (Cypress plugin or browser devtools)
+
+### Performance Tests
+
+* **Scope:** Map rendering, job feed load, image upload
+* **Tools:** Lighthouse, Web Vitals, Vercel Analytics
+
+### Security Tests
+
+* **Scope:** JWT auth, API access control, XSS upload protection
+* **Tools:** Manual testing, Supabase policies, ESLint plugins
+
+---
+
+## 3. Testing Environments
+
+* **Local Dev:** Full stack with mocked services if needed
+* **Staging:** Mirror of production with real services (Stripe test mode)
+* **Production:** Smoke tests post-deploy
+
+---
+
+## 4. Test Coverage Goals
+
+| Area              | Target Coverage                          |
+| ----------------- | ---------------------------------------- |
+| Unit Tests        | 80%+                                     |
+| Integration Tests | Key flows only                           |
+| E2E Tests         | All critical flows (auth, job lifecycle) |
+| a11y Compliance   | WCAG 2.1 AA                              |
+
+---
+
+## 5. Test Automation & CI
+
+* **CI Tool:** GitHub Actions
+* **Triggers:** On PR open/merge to `main` or `dev`
+* **Jobs:**
+
+  * Run lint and format checks
+  * Run all tests and coverage check
+  * Build preview deploy on Vercel (PR)
+
+---
+
+## 6. Manual Testing Checklist
+
+* Role-based dashboards load correctly
+* Stripe payment test cards work end-to-end
+* Photo upload handles size/format edge cases
+* Notifications and emails trigger correctly
+* Admin overrides are restricted and logged
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description                 | Author  |
+| ------------- | ---------- | ------- | --------------------------- | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Full MVP test coverage plan | ChatGPT |

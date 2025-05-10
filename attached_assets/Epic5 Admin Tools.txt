@@ -1,0 +1,95 @@
+# Epic 5: Admin Tools
+
+**Goal:** Provide internal admins with tools to moderate content, resolve disputes, manage users and jobs, and maintain the operational health of the platform.
+
+## Story List
+
+### Story 5.1: Admin Dashboard Overview
+
+* **User Story / Goal:** As an admin, I want a dashboard where I can see KPIs and pending actions so I can quickly assess the state of the platform.
+* **Detailed Requirements:**
+
+  * Metrics: Jobs created, completed, disputed, flagged
+  * Quick links to flagged items and user reports
+  * Overview of recent activity
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Dashboard loads with live metrics and summary widgets
+  * AC2: Flags and alerts show most recent first
+  * AC3: Actions link to relevant job or user page
+* **Tasks:**
+
+  * [ ] Design KPI and status card layout
+  * [ ] Implement metric queries and update logic
+  * [ ] Link dashboard tiles to admin tools
+
+---
+
+### Story 5.2: User & Job Management Tools
+
+* **User Story / Goal:** As an admin, I want to view and manage all users and jobs so I can intervene or resolve issues as needed.
+* **Detailed Requirements:**
+
+  * User list with filter/search, role indicators, and ban/unban
+  * Job list with filter by status, flags, or dispute
+  * Action buttons to edit status, notes, refund flags
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Admins can find and update users or jobs quickly
+  * AC2: Bans and job status updates are logged
+  * AC3: Edits reflect immediately in the system
+* **Tasks:**
+
+  * [ ] Build admin list views for users and jobs
+  * [ ] Implement actions for role updates, banning
+  * [ ] Ensure all changes write to logs/audit trail
+
+---
+
+### Story 5.3: Photo Moderation and Flag Queue
+
+* **User Story / Goal:** As an admin, I want to review flagged photos and job disputes so I can maintain platform quality and fairness.
+* **Detailed Requirements:**
+
+  * Queue shows photo uploads flagged by users/system
+  * Modal view of before/after with flag reason
+  * Approve, reject, or escalate options
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Admin can resolve flags with a click
+  * AC2: Actions notify relevant users
+  * AC3: Decision history stored for each case
+* **Tasks:**
+
+  * [ ] Design flag moderation UI and modal views
+  * [ ] Build resolution actions and notification logic
+  * [ ] Store decision metadata for auditing
+
+---
+
+### Story 5.4: Dispute & Refund Handling
+
+* **User Story / Goal:** As an admin, I want to intervene in disputes and issue refunds where needed to maintain trust and fairness.
+* **Detailed Requirements:**
+
+  * See full dispute history and communication thread
+  * Refund options (partial/full) and notes
+  * Trigger Stripe refund with confirmation
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Admin can initiate and confirm refunds
+  * AC2: System reflects refund status and updates job
+  * AC3: Users notified of decision and payout timeline
+* **Tasks:**
+
+  * [ ] Extend job and payment model for refunds
+  * [ ] Add UI for dispute resolution and refund execution
+  * [ ] Hook into Stripe for secure refund action
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description                      | Author  |
+| ------------- | ---------- | ------- | -------------------------------- | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Admin tools for moderation, KPIs | ChatGPT |

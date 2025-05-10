@@ -1,0 +1,93 @@
+# LawnMates Tech Stack Overview
+
+This document outlines the chosen technologies and platforms that will support the development and deployment of the LawnMates MVP.
+
+---
+
+## Frontend
+
+* **Framework:** Next.js
+
+  * Server-side rendering (SSR) for performance and SEO
+  * File-based routing for clean navigation
+
+* **Styling:** Tailwind CSS
+
+  * Utility-first for rapid UI development
+  * Design consistency and responsiveness built-in
+
+* **State Management:** React Context (or optional Redux if scaling complexity arises)
+
+* **Real-Time Features:** Supabase Realtime or Socket.io (for messaging and notifications)
+
+* **Map Integration:**
+
+  * Mapbox GL JS (preferred)
+  * Google Maps JS SDK (fallback option)
+
+## Backend
+
+* **Platform:** Supabase (preferred) or Node.js/Express (fallback)
+
+  * Supabase for built-in auth, Postgres DB, Realtime, and storage
+  * Node.js for custom middleware or business logic if needed
+
+* **Database:** PostgreSQL
+
+  * Hosted via Supabase with row-level security (RLS) for role-based access
+
+* **Authentication:** Supabase Auth (email/password + JWT)
+
+  * Role-based access via JWT claims
+  * Email verification flow built-in
+
+## Payments
+
+* **Provider:** Stripe Connect (Custom Accounts)
+
+  * CAD-only transactions
+  * Escrow logic: hold on job creation, release on completion
+  * KYC for landscapers, refund support for admins
+
+## File & Media Handling
+
+* **Provider:** Cloudinary (preferred) or Firebase Storage
+
+  * For photo uploads (before/after)
+  * Expiring, signed URLs for secure access
+
+## Deployment
+
+* **Frontend Hosting:** Vercel
+* **Backend Hosting:** Supabase (managed)
+* **CI/CD:** GitHub Actions
+
+  * Auto-deploy on push to `main` or PR merge
+
+## Testing
+
+* **Unit Testing:** Jest + React Testing Library
+* **E2E Testing:** Cypress
+* **Linting & Formatting:** ESLint, Prettier
+
+## Monitoring & Logging
+
+* **Platform Logs:** Supabase dashboard
+* **Error Tracking:** Sentry (recommended)
+* **Performance Monitoring:** Vercel Analytics + optional LogRocket
+
+## Development Environment
+
+* **Tooling:**
+
+  * Node.js LTS
+  * Docker (optional for local Postgres/mock services)
+  * `.env` for local secrets and keys
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description            | Author  |
+| ------------- | ---------- | ------- | ---------------------- | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Initial MVP tech stack | ChatGPT |

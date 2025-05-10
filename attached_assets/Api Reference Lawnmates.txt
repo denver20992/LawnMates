@@ -1,0 +1,130 @@
+# LawnMates API Reference (MVP)
+
+This document outlines the core REST API endpoints for the LawnMates MVP, focusing on job management, authentication, messaging, and admin tools.
+
+---
+
+## Base URL
+
+```
+https://api.lawnmates.ca/v1
+```
+
+---
+
+## Authentication
+
+### `POST /auth/signup`
+
+* Request: `{ email, password, role }`
+* Response: `201 Created` + JWT token
+
+### `POST /auth/login`
+
+* Request: `{ email, password }`
+* Response: `200 OK` + JWT token
+
+### `GET /auth/me`
+
+* Header: `Authorization: Bearer <token>`
+* Response: User profile with role
+
+---
+
+## Job Management
+
+### `POST /jobs`
+
+* Auth required: Owner
+* Request: `{ tier, squareFootage, date, location, price, photos }`
+* Action: Creates a job and triggers Stripe escrow
+
+### `GET /jobs`
+
+* Auth required: Landscaper
+* Query: `?lat=...&lng=...&radius=...&filter=...`
+* Response: Array of nearby job listings
+
+### `GET /jobs/:id`
+
+* Auth required: All roles
+* Response: Full job detail
+
+### `POST /jobs/:id/accept`
+
+* Auth required: Landscaper
+* Action: Claim job and mark as in-progress
+
+### `POST /jobs/:id/photos`
+
+* Auth required: Landscaper
+* Payload: `{ beforePhoto, afterPhoto }`
+* Action: Uploads and triggers review window
+
+### `POST /jobs/:id/verify`
+
+* Auth required: Owner
+* Action: Confirms completion and releases payment
+
+### `POST /jobs/:id/dispute`
+
+* Auth required: Owner
+* Action: Flags job for admin review
+
+---
+
+## Messaging
+
+### `GET /messages/:jobId`
+
+* Auth required: Owner or Landscaper
+* Response: Chat thread for job
+
+### `POST /messages/:jobId`
+
+* Payload: `{ message }`
+* Action: Send new chat message
+
+---
+
+## Notifications
+
+### `GET /notifications`
+
+* Auth required: All roles
+* Response: List of notifications (alerts, chat, payment, etc.)
+
+### `POST /notifications/preferences`
+
+* Request: `{ emailOptIn: boolean }`
+* Action: Update email settings
+
+---
+
+## Admin Endpoints
+
+### `GET /admin/dashboard`
+
+* Auth required: Admin
+* Response: KPIs and flagged items
+
+### `GET /admin/users`
+
+* Response: List of users with filters
+
+### `POST /admin/jobs/:id/refund`
+
+* Action: Full or partial refund via Stripe
+
+### `POST /admin/photos/:id/resolve`
+
+* Payload: `{ decision: approve | reject }`
+* Action: Moderates flagged image
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description              | Author  |
+| ------------- | ---------- | ------- | ------------------------ | ------- |
+| Initial draft | 2025-05-08 | 0.1     | MVP API endpoints listed | ChatGPT |

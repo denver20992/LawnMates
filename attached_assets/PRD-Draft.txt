@@ -1,0 +1,105 @@
+## 🟢 Product Manager Prompt: LawnMates PRD Creation
+
+Create a detailed Product Requirements Document (PRD) for **LawnMates**, a Canadian web-based platform that connects property owners (residential or commercial) with local landscapers for lawn maintenance. The platform enables job posting, discovery, secure payment, and photo-verified job completion.
+
+### 🌟 Core Objectives
+
+* Build a frictionless, secure, and scalable MVP for a two-sided lawn care marketplace.
+* Launch in select Canadian cities using a map-based job discovery and escrow payment model.
+* Ensure high trust via photo verification, fair pricing, and clear job expectations.
+
+---
+
+### 🧑‍💼 Users
+
+1. **Property Owners**: Individuals or businesses needing lawn mowing, trimming, or seasonal cleanup.
+2. **Landscapers**: Freelancers or businesses offering lawn maintenance.
+3. **Admin Team**: Handles disputes, verifies photos, manages user reports, and monitors marketplace health.
+
+---
+
+### ✨ MVP Features
+
+#### 🔐 Authentication & Roles
+
+* Email/password sign-up with role selection
+* Email verification
+* JWT session tokens with RBAC (Property Owner, Landscaper, Admin)
+
+#### 📋 Job Posting (Property Owner)
+
+* Choose from tiered service types (e.g., “Basic Mow”, “Full Cleanup”)
+* Enter square footage, location, and preferred date
+* Suggested pricing guidance (based on size + service)
+* Option to upload photos or check common conditions (e.g., “Fenced?”, “Pets?”)
+* Escrow payment triggered on job post via Stripe Connect
+
+#### 🗌 Map View & Filtering (Landscaper)
+
+* View jobs within X km
+* Filter by price, service, size, and date
+* Job cards show tier, location, and offer
+
+#### 📸 Job Execution & Verification
+
+* Landscaper uploads **before & after photos**
+* Photos trigger a “Review & Release Payment” prompt for property owner
+* Funds held in escrow until verification
+* If not reviewed in 48 hrs, auto-release or admin check
+
+#### 🚰 Admin Dashboard
+
+* View/edit jobs, disputes, and users
+* Photo moderation, flag queue, and refund tools
+* KPI metrics: jobs created, verified, paid, disputed
+
+#### 💬 Messaging & Notifications
+
+* Per-job chat
+* Realtime job status updates
+* Alerts for payment, photo upload, and new messages
+
+#### 💳 Payments (Stripe Connect)
+
+* CAD-only, platform holds funds until job verification
+* Landscapers complete KYC via Stripe
+* Dispute flow with photo-based evidence
+
+#### 🧑‍🗺 UX Smoothing & Friction Fixes
+
+* Quick post templates & job history reuse
+* Suggested pricing guidance
+* Status tracker timeline for both roles
+* Onboarding modals per user role
+* Profile badges, bios, and recent reviews to humanize users
+* Notification bell, email backups, mobile-first responsive design
+
+---
+
+### 🔐 Security & Compliance
+
+* PIPEDA-compliant data handling
+* TLS, encrypted tokens, role-locked APIs
+* Rate limiting, JWT auth middleware, signed image upload URLs
+* Admin tools for banning/reporting
+
+---
+
+### 🌐 Deployment & Hosting
+
+* Domain: [lawnmates.ca](https://lawnmates.ca)
+* Frontend: Next.js + TailwindCSS
+* Backend: Supabase/Postgres or Express/Node.js (Replit environment)
+* Map: Mapbox or Google Maps
+* Payments: Stripe Connect (CAD escrow)
+* Image: Cloudinary or Firebase Storage
+
+---
+
+### 📊 Metrics for Success
+
+* Job match rate (posts vs completions)
+* Median time to job acceptance
+* Repeat booking rate
+* Net Promoter Score (NPS)
+* Dispute frequency and resolution rate

@@ -1,0 +1,173 @@
+# LawnMates UI/UX Specification
+
+## Introduction
+
+This document defines the user experience goals, information architecture, user flows, and visual design specifications for the LawnMates platform interface.
+
+* **Link to Primary Design Files:** *(placeholder for Figma)*
+* **Link to Deployed Storybook / Design System:** *(TBD)*
+
+## Overall UX Goals & Principles
+
+* **Target User Personas:**
+
+  * **Property Owners:** Want fast, trustworthy, competitively priced lawn care.
+  * **Landscapers:** Want steady job flow, transparent pay, and ease of job tracking.
+  * **Admins:** Want quick access to issues, clear oversight, and content moderation tools.
+
+* **Usability Goals:**
+
+  * Minimize effort to post or claim a job.
+  * Ensure all roles understand their next steps.
+  * Reduce ambiguity with visual proof and confirmations.
+
+* **Design Principles:**
+
+  * Clarity over cleverness
+  * Role-specific onboarding and context
+  * Visual trust through photo evidence and humanized profiles
+  * Responsive design for mobile-first access
+  * Minimalist and modern interface
+  * Prioritize visual hierarchy and use of whitespace
+
+## Information Architecture (IA)
+
+```mermaid
+graph TD
+    A[Homepage] --> B(Job Feed & Map);
+    B --> C[Job Details & Chat];
+    A --> D[Dashboard];
+    D --> E[My Jobs];
+    D --> F[Notifications];
+    D --> G[Settings];
+    G --> H[Profile];
+    G --> I[Payment Info];
+    D --> J[Admin Panel];
+```
+
+* **Navigation Structure:**
+
+  * Top bar or sidebar for core dashboard nav (role dependent)
+  * Mobile bottom nav for Job Feed, Messages, Notifications, Profile
+  * Breadcrumbs for Admin tools or sub-views
+
+## User Flows
+
+### User Signup & Onboarding
+
+* **Goal:** Complete registration and land in role-specific onboarding
+* **Steps:**
+
+```mermaid
+graph TD
+    Start --> EnterDetails[Enter Email/Password + Role];
+    EnterDetails --> EmailVerification;
+    EmailVerification --> Onboarding[Role-Based Walkthrough];
+    Onboarding --> Dashboard;
+```
+
+### Post a Job (Owner)
+
+* **Goal:** Submit job with required details and payment
+* **Steps:**
+
+```mermaid
+graph TD
+    Dashboard --> NewJob[Post a Job];
+    NewJob --> ServiceTier;
+    ServiceTier --> PropertyDetails;
+    PropertyDetails --> PricePreview;
+    PricePreview --> Payment;
+    Payment --> Confirmation[Job Live];
+```
+
+### Discover Jobs (Landscaper)
+
+* **Goal:** Browse available jobs and accept relevant ones
+* **Steps:**
+
+```mermaid
+graph TD
+    Dashboard --> MapFeed;
+    MapFeed --> FilterSort;
+    FilterSort --> JobPreview;
+    JobPreview --> DetailModal;
+    DetailModal --> AcceptJob;
+```
+
+## Wireframes & Mockups
+
+*(Add Figma or screenshots per screen if available)*
+
+* **Job Card & Detail View:** Tier, date, price, photo, CTA
+* **Map Page:** Clustered pins, real-time refresh, filters
+* **Chat Interface:** Message list, photo-sharing
+* **Admin Tools:** List views with actions and flag queue
+
+## Component Library / Design System Reference
+
+* **Primary Button**
+
+  * Appearance: Solid fill, large radius corners
+  * States: Default, Hover, Disabled, Loading
+  * Behavior: Triggers action or submits form
+
+* **Job Card**
+
+  * Fields: Tier, Date, Address, Price, Status
+  * Behavior: Opens modal or detail screen
+
+## Branding & Style Guide Reference
+
+* **Color Palette:**
+
+  * Background: #FFFDf7 (Cream)
+  * Text / Primary Green: #137048
+  * Secondary (Olive Green): #137048
+  * Accent: #FFC107 (Amber)
+  * Feedback: #F44336 (Red), #2196F3 (Blue)
+
+* **Typography:**
+
+  * Headers: Inter Bold, 24–32px
+  * Body: Inter Regular, 14–16px
+
+* **Iconography:**
+
+  * Feather or Lucide icons
+  * Status and CTA consistent across views
+
+* **Spacing & Grid:**
+
+  * 8pt grid system
+  * Card padding: 16–24px
+
+## Accessibility (AX) Requirements
+
+* **Target Compliance:** WCAG 2.1 AA
+* **Specific Requirements:**
+
+  * Label all form elements and image uploads
+  * Maintain contrast ratios above 4.5:1
+  * Ensure full keyboard navigation and screen reader roles
+
+## Responsiveness
+
+* **Breakpoints:**
+
+  * Mobile: <768px
+  * Tablet: 768–1024px
+  * Desktop: >1024px
+
+* **Adaptation Strategy:**
+
+  * Stacked components on mobile
+  * Collapsed nav into bottom drawer
+  * Sticky action bars where relevant
+
+## Change Log
+
+| Change          | Date       | Version | Description                      | Author  |
+| --------------- | ---------- | ------- | -------------------------------- | ------- |
+| Initial draft   | 2025-05-08 | 0.1     | Full UI/UX MVP spec              | ChatGPT |
+| Add design tone | 2025-05-08 | 0.2     | Added minimalist visual guidance | ChatGPT |

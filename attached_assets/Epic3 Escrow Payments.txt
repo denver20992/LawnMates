@@ -1,0 +1,95 @@
+# Epic 3: Escrow Payments
+
+**Goal:** Ensure secure, transparent financial transactions between property owners and landscapers using Stripe Connect with escrow logic tied to job lifecycle events.
+
+## Story List
+
+### Story 3.1: Escrow Payment on Job Creation
+
+* **User Story / Goal:** As a property owner, I want to pay for a job at posting time with funds held in escrow until completion.
+* **Detailed Requirements:**
+
+  * Integration with Stripe Connect for payment
+  * Escrow setup: charge occurs on job creation, not release
+  * Payment confirmation stored with job record
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Users are prompted for payment on job post
+  * AC2: Funds are held, not released until job marked complete
+  * AC3: Payment metadata is stored securely and accessibly
+* **Tasks:**
+
+  * [ ] Connect Stripe to job creation endpoint
+  * [ ] Implement escrow payment trigger and logging
+  * [ ] Store Stripe payment ID and status in DB
+
+---
+
+### Story 3.2: KYC for Landscapers via Stripe
+
+* **User Story / Goal:** As a landscaper, I want to receive payments only after I verify my identity so that payments are legal and compliant.
+* **Detailed Requirements:**
+
+  * Use Stripe Connect onboarding for landscapers
+  * Block payments to unverified accounts
+  * UI prompt and status badge for KYC
+* **Acceptance Criteria (ACs):**
+
+  * AC1: KYC prompt shown upon signup or first job claim
+  * AC2: Payment release only enabled for verified landscapers
+  * AC3: Admin dashboard shows KYC status
+* **Tasks:**
+
+  * [ ] Embed Stripe Connect onboarding flow
+  * [ ] Add KYC status to user profile
+  * [ ] Display verification prompts and state indicators
+
+---
+
+### Story 3.3: Payment Release Upon Job Verification
+
+* **User Story / Goal:** As a property owner, I want to release payment only after verifying job completion so I can ensure the service was done well.
+* **Detailed Requirements:**
+
+  * “Release payment” action triggered after photo review
+  * If no action in 48 hrs, auto-release or flag to admin
+  * Funds disbursed via Stripe to landscaper
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Owner sees release prompt after photos are uploaded
+  * AC2: Payments release on confirmation or timeout
+  * AC3: Disputes can block release and alert admin
+* **Tasks:**
+
+  * [ ] Implement photo trigger for payment release
+  * [ ] Add 48-hr timer and auto-release fallback
+  * [ ] Integrate payout API to landscaper account
+
+---
+
+### Story 3.4: Refund & Dispute Handling
+
+* **User Story / Goal:** As an admin, I want to handle disputes and trigger refunds when necessary so that users feel protected.
+* **Detailed Requirements:**
+
+  * Admin dashboard shows flagged jobs and payment status
+  * Manual refund option with photo evidence review
+  * Notify both parties upon dispute resolution
+* **Acceptance Criteria (ACs):**
+
+  * AC1: Admin can initiate partial/full refund
+  * AC2: Photo review is linked to dispute record
+  * AC3: Users notified of refund status via UI/email
+* **Tasks:**
+
+  * [ ] Add refund option to admin job view
+  * [ ] Implement refund trigger via Stripe
+  * [ ] Link refund with notification and audit log
+
+---
+
+## Change Log
+
+| Change        | Date       | Version | Description                    | Author  |
+| ------------- | ---------- | ------- | ------------------------------ | ------- |
+| Initial draft | 2025-05-08 | 0.1     | Epic for escrow payments logic | ChatGPT |

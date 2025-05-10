@@ -206,12 +206,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
         propertyId = newProperty.id;
       }
       
-      // Now create the job with the property ID
-      const jobData = insertJobSchema.parse({
+      // Log request body for debugging 
+      console.log("Creating job with data:", JSON.stringify(req.body, null, 2));
+      
+      // Attempt to fix date issues by parsing dates if they are strings
+      let jobPayload = {
         ...req.body,
         ownerId: req.user!.id,
         propertyId: propertyId
-      });
+      };
+      
+      // Convert date strings to Date objects if needed
+      if (typeof jobPayload.startDate === 'string') {
+        jobPayload.startDate = new Date(jobPayload.startDate);
+      }
+      if (typeof jobPayload.endDate === 'string') {
+        jobPayload.endDate = new Date(jobPayload.endDate);
+      }
+      
+      // Now validate with the schema
+      const jobData = insertJobSchema.parse(jobPayload);
       
       const newJob = await storage.createJob(jobData);
       res.status(201).json(newJob);

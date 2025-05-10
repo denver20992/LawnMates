@@ -1,0 +1,47 @@
+📄 Core Product Documents
+
+    ✅ [Product Requirements Document (PRD)]
+    Goals, scope, features, tech stack, KPIs, and MVP alignment
+    → Lawnmates Prd
+
+    ✅ [UI/UX Specification]
+    User personas, flows, architecture, components, branding, accessibility
+    → Ui Ux Spec Lawnmates
+
+    ✅ [Tech Stack Overview]
+    Frontend, backend, auth, maps, payments, deployment tools
+    → Tech Stack Lawnmates
+
+    ✅ [Architecture Brief]
+    System style, component boundaries, integrations, scalability plan
+    → Architecture Brief Lawnmates
+
+    ✅ [API Reference]
+    REST endpoint documentation by feature domain (auth, jobs, chat, admin)
+    → Api Reference Lawnmates
+
+    ✅ [Testing Strategy]
+    Unit/integration/E2E, accessibility, CI/CD, coverage targets
+    → Testing Strategy Lawnmates
+
+🧩 MVP Feature Epics
+
+    Epic 1: User Registration & Auth
+
+    Epic 2: Job Posting & Discovery
+
+    Epic 3: Escrow Payments
+
+    Epic 4: Job Execution & Verification
+
+    Epic 5: Admin Tools
+
+    Epic 6: Messaging & Notifications
+    → All stored as individual docs (e.g., Epic1 User Auth, Epic2 Job Discovery, etc.)
+
+🚀 Post-MVP Roadmap
+
+    ✅ [Post-MVP Epics Document]
+    Reviews, rebooking, subscriptions, mobile apps, AI moderation
+    → Epics Post Mvp Lawnmates
+
