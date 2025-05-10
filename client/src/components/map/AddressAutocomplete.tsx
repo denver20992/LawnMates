@@ -94,6 +94,9 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     const query = e.target.value;
     setValue(query);
     
+    // Store the current cursor position
+    const cursorPosition = e.target.selectionStart;
+    
     // Clear any existing timeout
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
@@ -105,10 +108,13 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         // Fetch suggestions without interfering with focus
         fetchAddressSuggestions(query)
           .then(() => {
-            // If there are suggestions and input is still focused
-            if (suggestions.length > 0 && document.activeElement === inputRef.current) {
-              // Don't open automatically - this prevents cursor jumping
-              // Let the user click into the field again if they want suggestions
+            // Ensure dropdown doesn't automatically open - prevents cursor jumping
+            // User must click the button to see suggestions
+            // Do NOT set isOpen to true here
+            
+            // Restore cursor position if input is still focused
+            if (document.activeElement === inputRef.current && inputRef.current) {
+              inputRef.current.setSelectionRange(cursorPosition, cursorPosition);
             }
           });
       } else {
@@ -123,12 +129,25 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     // First, close the popover
     setIsOpen(false);
     
-    // Wait for UI to update, then update the input value
-    // This prevents the cursor jumping issues
-    setTimeout(() => {
-      setValue(address.place_name);
+    // Update the value immediately to prevent weird flashing
+    setValue(address.place_name);
+    
+    // IMPORTANT: Let the UI settle down before focusing and notifying parent
+    // This delay is crucial for preventing cursor jumps
+    requestAnimationFrame(() => {
+      // Focus the input and place cursor at the end
+      if (inputRef.current) {
+        inputRef.current.focus();
+        // Place cursor at the end of the text
+        inputRef.current.setSelectionRange(
+          address.place_name.length,
+          address.place_name.length
+        );
+      }
+      
+      // Notify parent component about the selected address
       onAddressSelect(address.place_name, address.center[1], address.center[0]);
-    }, 50);
+    });
   }, [onAddressSelect]);
 
   // Input focuses or click handler - only now do we open the dropdown
