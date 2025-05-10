@@ -32,10 +32,13 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
   const { activeJobs, myJobs } = useJobs();
   
   // Get properties count
-  const { data: properties = [] } = useQuery({
+  const { data: properties = [] } = useQuery<any[]>({
     queryKey: ['/api/properties'],
     enabled: !!user && user.role === 'property_owner'
   });
+  
+  // Ensure properties is an array
+  const propertiesArray = Array.isArray(properties) ? properties : [];
   
   // Calculate completed jobs count
   const completedJobs = React.useMemo(() => {
@@ -102,7 +105,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
         {
           id: 'properties',
           label: 'Properties',
-          value: properties.length || 0,
+          value: propertiesArray.length || 0,
           icon: <Home className="h-6 w-6 text-green-600" />,
           bgColor: 'bg-green-100',
           iconColor: 'text-green-600',
@@ -147,7 +150,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
     }
     
     return [];
-  }, [user, activeJobs, myJobs, completedJobs, properties]);
+  }, [user, activeJobs, myJobs, completedJobs, propertiesArray]);
 
   const stats = propStats || defaultStats;
 

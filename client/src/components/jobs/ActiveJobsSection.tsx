@@ -108,7 +108,7 @@ const ActiveJobsSection: React.FC<ActiveJobsSectionProps> = ({
           <Button 
             variant="outline" 
             size="sm" 
-            onClick={() => onOpenChat(job.id, job.landscaperId)}
+            onClick={() => job.landscaperId && onOpenChat(job.id, job.landscaperId)}
           >
             <MessageCircle className="h-4 w-4 mr-1.5" />
             Message
@@ -135,10 +135,10 @@ const ActiveJobsSection: React.FC<ActiveJobsSectionProps> = ({
         <div className="bg-white shadow rounded-lg p-8 text-center">
           <p className="text-neutral-500">You don't have any active jobs.</p>
           {user?.role === 'property_owner' && (
-            <Button className="mt-4">Post a Job</Button>
+            <Button className="mt-4" onClick={() => window.location.href = '/jobs/post'}>Post a Job</Button>
           )}
           {user?.role === 'landscaper' && (
-            <Button className="mt-4">Find Jobs</Button>
+            <Button className="mt-4" onClick={() => window.location.href = '/jobs'}>Find Jobs</Button>
           )}
         </div>
       </div>

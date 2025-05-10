@@ -3,106 +3,103 @@ import { Link } from 'wouter';
 import AppHeader from '@/components/layout/AppHeader';
 import MobileMenu from '@/components/layout/MobileMenu';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
 
 const TermsOfService: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen bg-neutral-50 pb-16 md:pb-0">
       <AppHeader />
       
-      <main className="flex-grow container max-w-4xl mx-auto px-4 py-8">
-        <div className="mb-6">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Home
-            </Link>
-          </Button>
-        </div>
-        
-        <div className="prose prose-green max-w-none">
-          <h1>Terms of Service</h1>
+      <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="bg-white shadow rounded-lg p-6 sm:p-8">
+          <div className="mb-8">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Terms of Service</h1>
+            <p className="text-gray-600 mb-4">Last Updated: May 10, 2025</p>
+            
+            <div className="flex space-x-2 mb-8">
+              <Link href="/">
+                <Button variant="outline" size="sm">Home</Button>
+              </Link>
+              <Link href="/privacy-policy">
+                <Button variant="outline" size="sm">Privacy Policy</Button>
+              </Link>
+            </div>
+          </div>
           
-          <p className="lead">
-            Welcome to LawnMates. By using our platform, you agree to these Terms of Service.
-            Please read them carefully before using our services.
-          </p>
-          
-          <p><strong>Last Updated:</strong> May 10, 2025</p>
-          
-          <h2>1. Acceptance of Terms</h2>
-          <p>
-            By accessing or using the LawnMates platform, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site.
-          </p>
-          
-          <h2>2. Description of Service</h2>
-          <p>
-            LawnMates is a platform that connects property owners with lawn care professionals. We facilitate the arrangement of lawn care services but are not responsible for the actual provision of these services.
-          </p>
-          
-          <h2>3. User Accounts</h2>
-          <p>
-            To use certain features of LawnMates, you must register for an account. You agree to provide accurate and complete information during the registration process and to update such information to keep it accurate and current.
-          </p>
-          <p>
-            You are responsible for maintaining the confidentiality of your account password and for all activities that occur under your account. You agree to notify us immediately of any unauthorized use of your account.
-          </p>
-          
-          <h2>4. User Conduct</h2>
-          <p>
-            Users of LawnMates agree to:
-          </p>
-          <ul>
-            <li>Comply with all applicable laws and regulations</li>
-            <li>Respect the rights and privacy of others</li>
-            <li>Provide accurate information about their properties or services</li>
-            <li>Fulfill obligations related to booked services</li>
-            <li>Communicate respectfully with other users</li>
-            <li>Not engage in fraudulent, deceptive, or misleading activities</li>
-          </ul>
-          
-          <h2>5. Payment Terms</h2>
-          <p>
-            Property owners agree to pay for services as described at the time of booking. Payments are securely processed through our platform and held in escrow until services are verified as complete.
-          </p>
-          <p>
-            Landscapers agree to our service fee structure, which will be clearly communicated before signup and may be updated from time to time.
-          </p>
-          
-          <h2>6. Service Verification</h2>
-          <p>
-            Landscapers must provide photo verification of completed work. Property owners must verify that work has been completed satisfactorily before funds are released from escrow.
-          </p>
-          
-          <h2>7. Cancellation Policy</h2>
-          <p>
-            Cancellation policies will be clearly communicated during the booking process. Cancellations may result in fees depending on timing and circumstances.
-          </p>
-          
-          <h2>8. Limitation of Liability</h2>
-          <p>
-            LawnMates is not liable for the quality of services provided by landscapers, property conditions, or disputes between users. We provide a platform for connection but do not guarantee outcomes.
-          </p>
-          
-          <h2>9. Privacy</h2>
-          <p>
-            Your use of LawnMates is also governed by our Privacy Policy, which can be found <Link href="/privacy-policy" className="text-primary hover:underline">here</Link>.
-          </p>
-          
-          <h2>10. Modifications to Terms</h2>
-          <p>
-            LawnMates reserves the right to modify these terms at any time. We will provide notice of significant changes through the platform or via email.
-          </p>
-          
-          <h2>11. Termination</h2>
-          <p>
-            We reserve the right to terminate or suspend accounts that violate these terms or engage in inappropriate behavior on our platform.
-          </p>
-          
-          <h2>12. Contact Information</h2>
-          <p>
-            If you have any questions about these Terms of Service, please contact us at support@lawnmates.ca.
-          </p>
+          <div className="prose max-w-none">
+            <h2>1. Agreement to Terms</h2>
+            <p>
+              Welcome to LawnMates. These Terms of Service govern your use of our website, mobile applications, and services. By accessing or using our services, you agree to be bound by these Terms. If you disagree with any part of the terms, you may not access the service.
+            </p>
+            
+            <h2>2. Description of Service</h2>
+            <p>
+              LawnMates is a platform that connects property owners with landscape professionals. We do not provide landscaping services directly. Instead, we facilitate connections between property owners and independent landscape professionals who offer their services through our platform.
+            </p>
+            
+            <h2>3. User Accounts</h2>
+            <p>
+              To use certain features of our platform, you must register for an account. You must provide accurate and complete information and keep your account information updated. You are responsible for maintaining the security of your account and password. You may not share your account credentials with others. LawnMates cannot and will not be liable for any loss or damage from your failure to comply with this security obligation.
+            </p>
+            
+            <h2>4. User Conduct</h2>
+            <p>
+              Users shall not use the platform to:
+            </p>
+            <ul>
+              <li>Post false, inaccurate, misleading, defamatory, or libelous content</li>
+              <li>Harass, abuse, or harm another person</li>
+              <li>Impersonate another user or person</li>
+              <li>Use the service for any illegal purpose</li>
+              <li>Violate any laws in your jurisdiction</li>
+              <li>Attempt to interfere with the proper functioning of the platform</li>
+            </ul>
+            
+            <h2>5. Payments and Fees</h2>
+            <p>
+              Property owners agree to pay the agreed price for landscaping services. LawnMates charges a service fee for facilitating connections and processing payments. All payments are processed securely through our third-party payment processor. Landscape professionals will receive payment after the completion of services, subject to our verification process.
+            </p>
+            
+            <h2>6. Verification Process</h2>
+            <p>
+              To ensure quality service, landscape professionals are required to submit photo verification upon completion of jobs. Property owners have the right to dispute a job if the service does not meet the agreed-upon standards. LawnMates reserves the right to make the final decision on any disputed jobs.
+            </p>
+            
+            <h2>7. Cancellation Policy</h2>
+            <p>
+              Users may cancel a scheduled service subject to our cancellation policy. Cancellations made less than 24 hours before the scheduled service may incur a cancellation fee. Repeated cancellations may result in account restrictions.
+            </p>
+            
+            <h2>8. Liability Limitation</h2>
+            <p>
+              LawnMates is not liable for any damages or losses resulting from your use of the service. This includes but is not limited to:
+            </p>
+            <ul>
+              <li>Any direct, indirect, incidental, special, consequential, or punitive damages</li>
+              <li>Damages for loss of profits, goodwill, use, data, or other intangible losses</li>
+              <li>Damages resulting from the conduct of third parties on the platform</li>
+              <li>Damages resulting from acts of nature or circumstances beyond our control</li>
+            </ul>
+            
+            <h2>9. Indemnification</h2>
+            <p>
+              You agree to defend, indemnify, and hold harmless LawnMates and its officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, and expenses, including, without limitation, reasonable legal and accounting fees, arising out of or in any way connected with your access to or use of the service or your violation of these Terms.
+            </p>
+            
+            <h2>10. Termination</h2>
+            <p>
+              LawnMates may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms. Upon termination, your right to use the service will immediately cease.
+            </p>
+            
+            <h2>11. Changes to Terms</h2>
+            <p>
+              We reserve the right, at our sole discretion, to modify or replace these Terms at any time. By continuing to access or use our service after those revisions become effective, you agree to be bound by the revised terms.
+            </p>
+            
+            <h2>12. Contact Us</h2>
+            <p>
+              If you have any questions about these Terms, please contact us at support@lawnmates.ca.
+            </p>
+          </div>
         </div>
       </main>
       
