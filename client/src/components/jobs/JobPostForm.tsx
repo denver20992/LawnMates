@@ -71,7 +71,7 @@ const timeOptions = [
 const jobFormSchema = z.object({
   title: z.string().min(5, {
     message: "Address must be at least 5 characters",
-  }).optional(),
+  }),
   selectedServices: z.array(z.string()).min(1, {
     message: "Please select at least one service"
   }),
@@ -94,24 +94,6 @@ const jobFormSchema = z.object({
   latitude: z.number().optional(),
   longitude: z.number().optional(),
   useExistingProperty: z.boolean(),
-}).superRefine((data, ctx) => {
-  // If using an existing property, require propertyId
-  if (data.useExistingProperty && (!data.propertyId || data.propertyId <= 0)) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Please select a property",
-      path: ['propertyId'],
-    });
-  }
-  
-  // If not using existing property, require title (address)
-  if (!data.useExistingProperty && (!data.title || data.title.trim().length < 5)) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Please enter a valid address",
-      path: ['title'],
-    });
-  }
 });
 
 type JobFormValues = z.infer<typeof jobFormSchema>;
@@ -183,8 +165,8 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
   };
   
   // Initialize form with defaults
-  // Default to existing property if properties exist, otherwise default to new property
-  const hasExistingProperties = properties.length > 0;
+  // We're not using existing properties, always default to new property
+  const hasExistingProperties = false;
   
   const form = useForm<JobFormValues>({
     resolver: zodResolver(jobFormSchema),
@@ -192,7 +174,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       title: '',
       selectedServices: [],
       description: '',
-      propertyId: hasExistingProperties ? properties[0].id : 0,
+      propertyId: 0,
       propertySize: 'medium',
       yardType: 'both',
       isQuickService: false,
@@ -203,7 +185,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       isRecurring: false,
       recurrenceInterval: 'monthly',
       requiresEquipment: false,
-      useExistingProperty: hasExistingProperties,
+      useExistingProperty: false,
       latitude: undefined,
       longitude: undefined,
     },
@@ -276,10 +258,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
     try {
       setIsSubmitting(true);
       
-      // Convert form data to job data
-      const selectedProperty = values.useExistingProperty 
-        ? properties.find(p => p.id === values.propertyId)
-        : null;
+      // Since we're not using existing properties, always use the new address details
       
       // Calculate start and end dates from the date and time fields
       const startDateTime = new Date(values.startDate);
@@ -298,20 +277,19 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       
       // Create job payload
       const jobData = {
-        title: values.useExistingProperty ? selectedProperty?.address : values.title,
+        title: values.title, // Always use the title from the form
         description: values.description,
         price: priceInCents,
-        propertyId: values.useExistingProperty ? values.propertyId : undefined,
         startDate: startDateTime,
         endDate: endDateTime,
         isRecurring: values.isRecurring,
         recurrenceInterval: values.isRecurring ? values.recurrenceInterval : undefined,
         requiresEquipment: values.requiresEquipment,
-        // Use selected property coordinates or new coordinates from address autocomplete
-        latitude: values.useExistingProperty ? selectedProperty?.latitude : values.latitude,
-        longitude: values.useExistingProperty ? selectedProperty?.longitude : values.longitude,
-        // For new properties, include property size 
-        propertySize: !values.useExistingProperty ? values.propertySize : undefined,
+        // Use coordinates from address autocomplete
+        latitude: values.latitude,
+        longitude: values.longitude,
+        // Include property size 
+        propertySize: values.propertySize,
         ownerId: user?.id || 0, // This should be set on the server
       };
       
@@ -357,98 +335,8 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               {step === 1 && (
                 <div className="space-y-4">
-                  {/* Only show the property selector switch if user has properties */}
-                  {hasExistingProperties && (
-                    <FormField
-                      control={form.control}
-                      name="useExistingProperty"
-                      render={({ field }) => (
-                        <FormItem className="mb-4">
-                          <div className="flex flex-row items-center justify-between rounded-lg border p-4">
-                            <div className="space-y-0.5">
-                              <FormLabel className="text-base">
-                                Property Selection
-                              </FormLabel>
-                              <FormDescription>
-                                Choose whether to use an existing property or add a new address.
-                              </FormDescription>
-                            </div>
-                            <FormControl>
-                              <Switch
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                              />
-                            </FormControl>
-                          </div>
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  
-                  {useExistingProperty ? (
-                    <div className="space-y-4">
-                      <FormField
-                        control={form.control}
-                        name="propertyId"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Select Existing Property</FormLabel>
-                            <Select 
-                              onValueChange={(value) => field.onChange(parseInt(value, 10))} 
-                              value={field.value ? field.value.toString() : undefined}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select a property" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {properties.map((property) => (
-                                  <SelectItem key={property.id} value={property.id.toString()}>
-                                    {property.address}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormDescription>
-                              Choose from your saved properties.
-                            </FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      {/* Add yard type selection for existing properties */}
-                      <FormField
-                        control={form.control}
-                        name="yardType"
-                        render={({ field }) => (
-                          <FormItem className="space-y-1">
-                            <FormLabel>Yard Area</FormLabel>
-                            <FormDescription>
-                              Select which part of your yard needs service
-                            </FormDescription>
-                            <div className="flex flex-wrap gap-2 pt-2">
-                              {Object.entries(yardTypes).map(([key, { label, description }]) => (
-                                <div key={key} 
-                                  className={`flex flex-col items-center border rounded-lg p-3 cursor-pointer transition-all
-                                  ${field.value === key 
-                                    ? 'border-primary bg-primary/5 shadow-sm' 
-                                    : 'border-border hover:border-primary/50 hover:bg-muted/50'
-                                  }`}
-                                  onClick={() => field.onChange(key)}
-                                >
-                                  <div className="text-sm font-medium">{label}</div>
-                                  <div className="text-xs text-muted-foreground">{description}</div>
-                                </div>
-                              ))}
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  ) : (
+                  {/* New address form only - removed property selection */}
+                  {(
                     <FormField
                       control={form.control}
                       name="title"
@@ -996,18 +884,11 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                           errorFields.push("You must select at least one service");
                         }
                         
-                        // Check property information
-                        if (useExistingProperty) {
-                          if (!selectedPropertyId || selectedPropertyId <= 0) {
-                            isValid = false;
-                            errorFields.push("You must select a property");
-                          }
-                        } else {
-                          const title = form.getValues("title");
-                          if (!title || title.trim().length < 5) {
-                            isValid = false;
-                            errorFields.push("You must enter a valid address");
-                          }
+                        // Check address information
+                        const title = form.getValues("title");
+                        if (!title || title.trim().length < 5) {
+                          isValid = false;
+                          errorFields.push("You must enter a valid address");
                         }
                         
                         // Check price
