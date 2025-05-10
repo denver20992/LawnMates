@@ -145,24 +145,18 @@ export default function PropertyForm({ onSuccess, onSubmit }: PropertyFormProps)
       // Log the form submission to debug
       console.log("PropertyForm: Form submitted with values:", values);
       
-      // Format the data to ensure it matches what the API expects
-      const propertyData = {
-        address: values.address,
-        city: values.city,
-        state: values.state,
-        zipCode: values.zipCode,
-        propertyType: values.propertyType,
-        size: values.size,
-        // Make sure we exclude non-property fields that will be handled separately
-        // like saveAsFavorite, isRecurring, and notes
-      };
+      // Pass all the values as they are to ensure we have all required fields
+      // The API expects ownerId, but that will be assigned on the server
+      // based on the authenticated user
+      console.log("PropertyForm: Submitting property data");
       
-      console.log("PropertyForm: Sending property data:", propertyData);
-      
-      // Directly perform the mutation to create the property
-      await propertyMutation.mutateAsync(propertyData);
+      // Directly perform the mutation to create the property using the full values
+      await propertyMutation.mutateAsync(values);
       
       console.log("PropertyForm: Property creation successful");
+      
+      // Reset the form after successful submission for a better UX
+      form.reset();
     } catch (error) {
       console.error("PropertyForm: Error during form submission:", error);
       // The error handling is already in the mutation, but we log it here too
@@ -171,7 +165,7 @@ export default function PropertyForm({ onSuccess, onSubmit }: PropertyFormProps)
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+      <form className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-6 md:col-span-2">
             <FormField
@@ -375,16 +369,24 @@ export default function PropertyForm({ onSuccess, onSubmit }: PropertyFormProps)
 
         <div className="flex justify-end space-x-4">
           <Button 
-            type="submit" 
+            type="button"  
             disabled={propertyMutation.isPending || isSavingFavorite}
             className="bg-primary hover:bg-primary/90 text-white font-medium px-6"
             onClick={(e) => {
-              // This additional click handler ensures the form is manually triggered
-              // as a backup to make the submit button more reliable
-              if (!form.formState.isSubmitting) {
-                console.log("PropertyForm: Submit button clicked");
-                form.handleSubmit(handleSubmit)(e);
-              }
+              e.preventDefault();
+              console.log("PropertyForm: Submit button clicked");
+              // Validate the form first
+              const isValid = form.trigger();
+              isValid.then(valid => {
+                if (valid) {
+                  // If valid, get the form values and submit
+                  const values = form.getValues();
+                  console.log("PropertyForm: Form is valid, submitting with values:", values);
+                  handleSubmit(values);
+                } else {
+                  console.log("PropertyForm: Form validation failed");
+                }
+              });
             }}
           >
             {propertyMutation.isPending || isSavingFavorite ? (

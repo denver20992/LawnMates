@@ -965,9 +965,15 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                   </Button>
                 ) : (
                   <Button 
-                    type="submit" 
+                    type="button" // Changed to button type to prevent form submission 
                     disabled={isSubmitting}
                     className="w-full sm:w-auto order-1 sm:order-2"
+                    onClick={(e) => {
+                      // Only perform the actual submission when the user clicks this button
+                      e.preventDefault();
+                      console.log("JobPostForm: Post Job button clicked, triggering form submission");
+                      form.handleSubmit(onSubmit)(e);
+                    }}
                   >
                     {isSubmitting ? "Posting..." : "Post Job"}
                   </Button>
