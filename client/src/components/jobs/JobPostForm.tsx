@@ -335,7 +335,14 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={(e) => {
+               // Only submit the form when on the final step
+              if (step < 3) {
+                e.preventDefault();
+                return false;
+              }
+              return form.handleSubmit(onSubmit)(e);
+            }} className="space-y-8">
               {step === 1 && (
                 <div className="space-y-4">
                   {/* New address form only - removed property selection */}
