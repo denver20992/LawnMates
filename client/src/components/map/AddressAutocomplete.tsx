@@ -125,7 +125,18 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
             value={value}
             onChange={handleInputChange}
             className={cn("pl-9", className)}
-            onFocus={() => value.length >= 3 && setIsOpen(true)}
+            onFocus={() => {
+              setIsOpen(true);
+              if (value.length >= 3) {
+                fetchAddressSuggestions(value);
+              }
+            }}
+            onClick={() => {
+              setIsOpen(true);
+              if (value.length >= 3) {
+                fetchAddressSuggestions(value);
+              }
+            }}
           />
         </div>
       </PopoverTrigger>
@@ -142,8 +153,8 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
                 {suggestions.length === 0 ? (
                   <CommandEmpty>
                     {value.length < 3 
-                      ? 'Type at least 3 characters to search' 
-                      : 'No addresses found'}
+                      ? 'Type at least 3 characters to search for addresses' 
+                      : 'No addresses found matching your search. Try a different address.'}
                   </CommandEmpty>
                 ) : (
                   <CommandGroup heading="Suggestions">
