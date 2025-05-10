@@ -157,6 +157,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         <div className="relative w-full flex">
           <MapPin className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
+            ref={inputRef}
             placeholder={placeholder}
             value={value}
             onChange={handleInputChange}
