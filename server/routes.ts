@@ -182,10 +182,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     try {
-      // Validate job data
+      // Check if we need to create a property first
+      let propertyId = req.body.propertyId;
+      
+      // If no propertyId is provided, we need to create a new property first
+      if (!propertyId) {
+        // Create a new property from the job address
+        const propertyData = {
+          ownerId: req.user!.id,
+          address: req.body.title || "New Property",
+          city: req.body.city || "Unknown",
+          state: req.body.state || "Unknown",
+          zipCode: req.body.zipCode || "Unknown",
+          propertyType: req.body.propertyType || "residential",
+          size: req.body.propertySize === 'small' ? 1500 : req.body.propertySize === 'large' ? 7000 : 3500, // Estimate size based on the selected size
+          notes: req.body.description,
+          latitude: req.body.latitude,
+          longitude: req.body.longitude
+        };
+        
+        // Create the property
+        const newProperty = await storage.createProperty(propertyData);
+        propertyId = newProperty.id;
+      }
+      
+      // Now create the job with the property ID
       const jobData = insertJobSchema.parse({
         ...req.body,
-        ownerId: req.user!.id
+        ownerId: req.user!.id,
+        propertyId: propertyId
       });
       
       const newJob = await storage.createJob(jobData);
