@@ -382,6 +382,11 @@ export class MemStorage implements IStorage {
     return updatedJob;
   }
   
+  // Specialized helper for updating job status
+  async updateJobStatus(id: number, status: Job['status']): Promise<Job> {
+    return this.updateJob(id, { status });
+  }
+  
   // ===== Message methods =====
   
   async getMessage(id: number): Promise<Message | undefined> {

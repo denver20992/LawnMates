@@ -304,6 +304,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Mark job as complete (requires verification)
+  // Cancel a job (for property owners)
+  app.post("/api/jobs/:id/cancel", isAuthenticated, async (req, res) => {
+    try {
+      const jobId = parseInt(req.params.id);
+      const job = await storage.getJob(jobId);
+      
+      if (!job) {
+        return res.status(404).json({ error: "Job not found" });
+      }
+      
+      // Only the property owner who created the job can cancel it
+      if (job.ownerId !== req.user!.id) {
+        return res.status(403).json({ error: "You don't have permission to cancel this job" });
+      }
+      
+      // Only posted jobs can be cancelled
+      if (job.status !== 'posted') {
+        return res.status(400).json({ error: "Only posted jobs can be cancelled" });
+      }
+      
+      // Update job status to cancelled
+      const updatedJob = await storage.updateJobStatus(jobId, 'cancelled');
+      
+      return res.json(updatedJob);
+    } catch (error) {
+      console.error('Error cancelling job:', error);
+      return res.status(500).json({ error: "Failed to cancel job" });
+    }
+  });
+
   app.post("/api/jobs/:id/complete", isAuthenticated, async (req, res) => {
     const jobId = parseInt(req.params.id);
     
