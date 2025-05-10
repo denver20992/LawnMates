@@ -167,7 +167,20 @@ export const insertPropertySchema = createInsertSchema(properties).omit({
   updatedAt: true
 });
 
-export const insertJobSchema = createInsertSchema(jobs).omit({
+// Customize the job insert schema to handle both string and Date types for dates
+export const insertJobSchema = createInsertSchema(jobs, {
+  // Allow startDate to be either a string or a Date
+  startDate: z.union([
+    z.string().transform(val => new Date(val)),
+    z.date()
+  ]),
+  // Allow endDate to be optional, string, or Date
+  endDate: z.union([
+    z.string().transform(val => new Date(val)),
+    z.date(),
+    z.null()
+  ]).optional(),
+}).omit({
   id: true,
   status: true,
   createdAt: true,

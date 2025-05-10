@@ -40,9 +40,12 @@ export const useJobs = () => {
     enabled: !!user
   });
 
-  // Create a new job
+  // Create a new job - allow string or Date for date fields
   const createJobMutation = useMutation({
-    mutationFn: async (jobData: Partial<InsertJob>) => {
+    mutationFn: async (jobData: Partial<Omit<InsertJob, 'startDate' | 'endDate'>> & {
+      startDate?: string | Date;
+      endDate?: string | Date | null;
+    }) => {
       const res = await apiRequest('POST', '/api/jobs', jobData);
       return res.json();
     },
@@ -113,7 +116,11 @@ export const useJobs = () => {
     }
   });
 
-  const createJob = useCallback(async (jobData: Partial<InsertJob>) => {
+  // Update the createJob type to match our mutation function
+  const createJob = useCallback(async (jobData: Partial<Omit<InsertJob, 'startDate' | 'endDate'>> & {
+    startDate?: string | Date;
+    endDate?: string | Date | null;
+  }) => {
     return createJobMutation.mutateAsync(jobData);
   }, [createJobMutation]);
 

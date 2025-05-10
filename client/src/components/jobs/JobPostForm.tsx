@@ -293,11 +293,8 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
         ownerId: user?.id || 0, // This should be set on the server
       };
       
-      // Convert dates to Date objects for TypeScript compatibility
-      const formattedData = {
-        ...jobData,
-        // Note: Even though we send ISO strings, the server will handle proper conversion 
-      };
+      // Our schema now handles the string-to-date conversion
+      const formattedData = jobData;
       
       // Submit the job
       await createJob(formattedData);
