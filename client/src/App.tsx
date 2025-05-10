@@ -75,7 +75,18 @@ function Router() {
         <PrivateRoute component={JobsPage} />
       </Route>
       <Route path="/jobs/:id">
-        <PrivateRoute component={React.lazy(() => import("./pages/jobs/[id]").then(m => m.default))} />
+        <PrivateRoute component={() => {
+          // Import the component directly
+          const JobDetailsPage = lazy(() => import("./pages/jobs/JobDetailsPage"));
+          
+          return (
+            <Suspense fallback={<div className="h-screen flex items-center justify-center">
+              <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
+            </div>}>
+              <JobDetailsPage />
+            </Suspense>
+          );
+        }} />
       </Route>
       <Route path="/messages">
         <PrivateRoute component={MessagesPage} />

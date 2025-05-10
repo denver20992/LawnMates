@@ -3,7 +3,7 @@ import { useLocation } from 'wouter';
 import { useAuth } from '@/hooks/useAuth';
 import { useJobs } from '@/hooks/useJobs';
 import { useJobCancelDialog } from '@/hooks/useJobCancelDialog';
-import { JobCancelDialog } from '@/components/jobs/JobCancelDialog';
+import JobCancelDialog from '@/components/jobs/JobCancelDialog';
 import AppHeader from '@/components/layout/AppHeader';
 import MobileMenu from '@/components/layout/MobileMenu';
 import DashboardTabs from '@/components/layout/DashboardTabs';
