@@ -4,7 +4,6 @@ import AppHeader from '@/components/layout/AppHeader';
 import MobileMenu from '@/components/layout/MobileMenu';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
-import Footer from '@/components/layout/Footer';
 
 const TermsOfService: React.FC = () => {
   return (
@@ -107,7 +106,6 @@ const TermsOfService: React.FC = () => {
         </div>
       </main>
       
-      <Footer />
       <MobileMenu />
     </div>
   );

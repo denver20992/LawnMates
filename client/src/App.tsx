@@ -21,6 +21,8 @@ import AdminPage from "@/pages/admin/index";
 import Checkout from "@/pages/checkout";
 import SavedPropertiesPage from "@/pages/properties/saved";
 import AddPropertyPage from "@/pages/properties/add";
+import TermsOfService from "@/pages/terms-of-service";
+import PrivacyPolicy from "@/pages/privacy-policy";
 import WebSocketTestPage from "@/pages/websocket-test";
 import WebSocketSimpleTestPage from "@/pages/websocket-simple-test";
 import PublicWebSocketTest from "@/pages/public-ws-test";
@@ -89,6 +91,8 @@ function Router() {
       </Route>
       <Route path="/websocket-simple" component={WebSocketSimpleTestPage} />
       <Route path="/public-ws-test" component={PublicWebSocketTest} />
+      <Route path="/terms-of-service" component={TermsOfService} />
+      <Route path="/privacy-policy" component={PrivacyPolicy} />
       
       <Route component={NotFound} />
     </Switch>

@@ -4,7 +4,6 @@ import AppHeader from '@/components/layout/AppHeader';
 import MobileMenu from '@/components/layout/MobileMenu';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
-import Footer from '@/components/layout/Footer';
 
 const PrivacyPolicy: React.FC = () => {
   return (
@@ -141,7 +140,6 @@ const PrivacyPolicy: React.FC = () => {
         </div>
       </main>
       
-      <Footer />
       <MobileMenu />
     </div>
   );
