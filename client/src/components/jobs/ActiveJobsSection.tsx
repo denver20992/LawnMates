@@ -138,7 +138,7 @@ const ActiveJobsSection: React.FC<ActiveJobsSectionProps> = ({
               <MessageCircle className="h-4 w-4 mr-1.5" />
               Message
             </Button>
-            {(job.status !== 'completed' && job.status !== 'verification_pending' && job.status !== 'cancelled') && onCancelJob && (
+            {job.status !== 'completed' && job.status !== 'verification_pending' && job.status !== 'cancelled' && onCancelJob && (
               <Button 
                 variant="destructive" 
                 size="sm" 

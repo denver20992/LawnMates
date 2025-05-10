@@ -241,27 +241,8 @@ const JobsPage: React.FC = () => {
       {/* Job Cancellation Dialog */}
       <JobCancelDialog
         isOpen={isDialogOpen}
+        jobId={jobToCancel}
         onClose={closeCancelDialog}
-        onConfirm={() => {
-          if (jobToCancel) {
-            cancelJob(jobToCancel)
-              .then(() => {
-                toast({
-                  title: "Job Cancelled",
-                  description: "The job has been successfully cancelled.",
-                });
-                loadMyJobs();
-              })
-              .catch((error) => {
-                toast({
-                  title: "Error",
-                  description: "Failed to cancel job. Please try again.",
-                  variant: "destructive",
-                });
-              });
-          }
-          closeCancelDialog();
-        }}
         jobTitle={
           jobToCancel 
             ? myJobs.find(job => job.id === jobToCancel)?.title || "this job"

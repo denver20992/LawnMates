@@ -3,7 +3,7 @@ import { useLocation } from 'wouter';
 import { useAuth } from '@/hooks/useAuth';
 import { useJobs } from '@/hooks/useJobs';
 import { useJobCancelDialog } from '@/hooks/useJobCancelDialog';
-import { JobCancelDialog } from '@/components/jobs/JobCancelDialog';
+import JobCancelDialog from '@/components/jobs/JobCancelDialog';
 import AppHeader from '@/components/layout/AppHeader';
 import MobileMenu from '@/components/layout/MobileMenu';
 import ActiveJobsSection from '@/components/jobs/ActiveJobsSection';
@@ -83,26 +83,9 @@ const MyJobsPage: React.FC = () => {
       {/* Job Cancellation Dialog */}
       <JobCancelDialog
         isOpen={isDialogOpen}
+        jobId={jobToCancel}
         onClose={closeCancelDialog}
-        onConfirm={() => {
-          if (jobToCancel) {
-            cancelJob(jobToCancel)
-              .then(() => {
-                toast({
-                  title: "Job Cancelled",
-                  description: "The job has been successfully cancelled.",
-                });
-                loadMyJobs();
-              })
-              .catch((error) => {
-                toast({
-                  title: "Error",
-                  description: "Failed to cancel job. Please try again.",
-                  variant: "destructive",
-                });
-              });
-          }
-        }}
+        jobTitle={myJobs.find(job => job.id === jobToCancel)?.title || 'this job'}
       />
       
       <MobileMenu />
