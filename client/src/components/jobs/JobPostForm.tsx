@@ -127,12 +127,8 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
   const { createJob } = useJobs();
   const { user } = useAuth();
   
-  // Mock properties for the select dropdown
-  const [properties, setProperties] = useState([
-    { id: 1, address: '123 Main St, Toronto, ON', latitude: 43.6532, longitude: -79.3832, size: 'medium' },
-    { id: 2, address: '456 Oak Ave, Toronto, ON', latitude: 43.6711, longitude: -79.3458, size: 'large' },
-    { id: 3, address: '789 Maple Rd, Toronto, ON', latitude: 43.6426, longitude: -79.4065, size: 'small' }
-  ]);
+  // Use an empty array for properties to force new property creation
+  const [properties, setProperties] = useState([]);
   
   // Property size descriptions
   const propertySizeInfo = {
@@ -157,16 +153,8 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
     let sizeMultiplier = 1.0;
     let yardTypeMultiplier = 1.0;
     
-    // Determine size multiplier
-    if (useExistingProperty) {
-      // Get property details
-      const selectedProperty = propertyId ? properties.find(p => p.id === propertyId) : null;
-      if (!selectedProperty) return 0;
-      
-      // Get size multiplier from property
-      const propertySize = selectedProperty.size || 'medium';
-      sizeMultiplier = propertySizeInfo[propertySize as keyof typeof propertySizeInfo].multiplier;
-    } else if (customPropertySize) {
+    // Since we're not using existing properties, always use custom property size
+    if (customPropertySize) {
       // Use custom property size for new addresses
       sizeMultiplier = propertySizeInfo[customPropertySize as keyof typeof propertySizeInfo].multiplier;
     }
@@ -924,12 +912,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                         </div>
                       </div>
                       
-                      <div className="flex justify-between">
-                        <span className="text-neutral-500">Property:</span>
-                        <span className="font-medium">
-                          {properties.find(p => p.id === Number(selectedPropertyId))?.address || 'Not selected'}
-                        </span>
-                      </div>
+                      {/* Don't show property info since we're not using stored properties */}
                       
                       <div className="flex justify-between">
                         <span className="text-neutral-500">Date & Time:</span>
