@@ -62,7 +62,7 @@ const Dashboard: React.FC = () => {
     loadCounterparties();
   }, [activeJobs, user?.role]);
 
-  const handleOpenChat = (jobId: number, userId: number) => {
+  const handleOpenChat = (jobId: number, userId: number | null) => {
     setLocation(`/messages/${jobId}`);
   };
 

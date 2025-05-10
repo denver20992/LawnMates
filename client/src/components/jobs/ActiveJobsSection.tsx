@@ -7,11 +7,12 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/hooks/useAuth';
 import { useJobVerification } from '@/hooks/useJobVerification';
+import { useLocation } from 'wouter';
 
 interface ActiveJobsSectionProps {
   jobs: Job[];
   counterparties: Record<number, { id: number; username: string; avatar?: string; fullName?: string }>;
-  onOpenChat: (jobId: number, userId: number) => void;
+  onOpenChat: (jobId: number, userId: number | null) => void;
   onViewDetails: (jobId: number) => void;
   onRebook: (jobId: number) => void;
 }
@@ -25,6 +26,7 @@ const ActiveJobsSection: React.FC<ActiveJobsSectionProps> = ({
 }) => {
   const { user } = useAuth();
   const { openVerificationModal } = useJobVerification();
+  const [, setLocation] = useLocation();
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -108,7 +110,7 @@ const ActiveJobsSection: React.FC<ActiveJobsSectionProps> = ({
           <Button 
             variant="outline" 
             size="sm" 
-            onClick={() => job.landscaperId && onOpenChat(job.id, job.landscaperId)}
+            onClick={() => onOpenChat(job.id, job.landscaperId)}
           >
             <MessageCircle className="h-4 w-4 mr-1.5" />
             Message
@@ -135,10 +137,10 @@ const ActiveJobsSection: React.FC<ActiveJobsSectionProps> = ({
         <div className="bg-white shadow rounded-lg p-8 text-center">
           <p className="text-neutral-500">You don't have any active jobs.</p>
           {user?.role === 'property_owner' && (
-            <Button className="mt-4" onClick={() => window.location.href = '/jobs/post'}>Post a Job</Button>
+            <Button className="mt-4" onClick={() => setLocation('/jobs/post')}>Post a Job</Button>
           )}
           {user?.role === 'landscaper' && (
-            <Button className="mt-4" onClick={() => window.location.href = '/jobs'}>Find Jobs</Button>
+            <Button className="mt-4" onClick={() => setLocation('/jobs')}>Find Jobs</Button>
           )}
         </div>
       </div>
