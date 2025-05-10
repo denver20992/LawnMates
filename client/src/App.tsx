@@ -23,6 +23,7 @@ import SavedPropertiesPage from "@/pages/properties/saved";
 import AddPropertyPage from "@/pages/properties/add";
 import TermsOfService from "@/pages/terms-of-service";
 import PrivacyPolicy from "@/pages/privacy-policy";
+import PaymentsPage from "@/pages/payments";
 import WebSocketTestPage from "@/pages/websocket-test";
 import WebSocketSimpleTestPage from "@/pages/websocket-simple-test";
 import PublicWebSocketTest from "@/pages/public-ws-test";
@@ -93,6 +94,9 @@ function Router() {
         <PrivateRoute component={AddPropertyPage} />
       </Route>
       <Route path="/payments">
+        <PrivateRoute component={PaymentsPage} />
+      </Route>
+      <Route path="/checkout">
         <PrivateRoute component={Checkout} />
       </Route>
       <Route path="/websocket-test">
