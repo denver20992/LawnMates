@@ -70,6 +70,9 @@ function Router() {
       <Route path="/jobs/success">
         <PrivateRoute component={JobSuccessPage} />
       </Route>
+      <Route path="/jobs/:id">
+        <PrivateRoute component={() => import("@/pages/jobs/[id]").then(module => module.default)} />
+      </Route>
       <Route path="/jobs/mine">
         <PrivateRoute component={JobsPage} />
       </Route>
