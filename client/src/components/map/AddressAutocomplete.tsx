@@ -100,9 +100,13 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   };
 
   const handleSelectAddress = (address: AddressSuggestion) => {
-    setValue(address.place_name);
-    onAddressSelect(address.place_name, address.center[1], address.center[0]);
+    // First close the popup, then update values
     setIsOpen(false);
+    // Use setTimeout to prevent cursor issues
+    setTimeout(() => {
+      setValue(address.place_name);
+      onAddressSelect(address.place_name, address.center[1], address.center[0]);
+    }, 10);
   };
 
   // Auto-show dropdown when user starts typing
@@ -126,14 +130,8 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
             onChange={handleInputChange}
             className={cn("pl-9", className)}
             onFocus={() => {
-              setIsOpen(true);
               if (value.length >= 3) {
-                fetchAddressSuggestions(value);
-              }
-            }}
-            onClick={() => {
-              setIsOpen(true);
-              if (value.length >= 3) {
+                setIsOpen(true);
                 fetchAddressSuggestions(value);
               }
             }}
