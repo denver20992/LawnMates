@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
 import { useJobs } from '@/hooks/useJobs';
+import JobDistance from './JobDistance';
 
 interface JobCardProps {
   job: Job;
@@ -65,7 +66,19 @@ const JobCard: React.FC<JobCardProps> = ({ job, onClick, selected = false }) => 
             </div>
             <div className="mt-1 flex items-center text-sm text-neutral-500">
               <MapPin className="h-4 w-4 mr-1" />
-              <span>{job.latitude && job.longitude ? `${job.latitude.toFixed(6)}, ${job.longitude.toFixed(6)}` : 'Location not specified'} - {Math.floor(Math.random() * 5) + 1}.{Math.floor(Math.random() * 9) + 1} miles away</span>
+              <span>
+                {job.latitude && job.longitude 
+                  ? `${job.latitude.toFixed(4)}, ${job.longitude.toFixed(4)}` 
+                  : 'Location not specified'
+                }
+              </span>
+              {job.latitude && job.longitude && user?.role === 'landscaper' && (
+                <JobDistance
+                  jobLatitude={job.latitude}
+                  jobLongitude={job.longitude}
+                  className="ml-2"
+                />
+              )}
             </div>
             <div className="mt-1 flex items-center text-sm text-neutral-500">
               <Calendar className="h-4 w-4 mr-1" />
