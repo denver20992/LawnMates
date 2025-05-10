@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'wouter';
 import { useAuth } from '@/hooks/useAuth';
 import { useJobs } from '@/hooks/useJobs';
@@ -19,6 +19,11 @@ const JobsPage: React.FC = () => {
   const [, setLocation] = useLocation();
   const { jobs, activeJobs, myJobs, loadMyJobs, loadJobs, loading, cancelJob } = useJobs();
   const { isDialogOpen, jobToCancel, openCancelDialog, closeCancelDialog } = useJobCancelDialog();
+  
+  // Handle job cancellation with confirmation dialog
+  const handleCancelJob = useCallback((jobId: number) => {
+    openCancelDialog(jobId);
+  }, [openCancelDialog]);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [activeTab, setActiveTab] = useState<string>("available");
   const [counterparties, setCounterparties] = useState<Record<number, { id: number; username: string; avatar?: string; fullName?: string }>>({});
@@ -234,11 +239,12 @@ const JobsPage: React.FC = () => {
               </div>
             ) : (
               <ActiveJobsSection 
-                jobs={myJobs.filter(job => job.status !== 'posted')}
+                jobs={myJobs}
                 counterparties={counterparties}
                 onOpenChat={handleOpenChat}
                 onViewDetails={handleViewDetails}
                 onRebook={handleRebook}
+                onCancelJob={handleCancelJob}
               />
             )}
           </TabsContent>

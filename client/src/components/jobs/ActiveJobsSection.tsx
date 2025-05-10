@@ -15,6 +15,7 @@ interface ActiveJobsSectionProps {
   onOpenChat: (jobId: number, userId: number | null) => void;
   onViewDetails: (jobId: number) => void;
   onRebook: (jobId: number) => void;
+  onCancelJob?: (jobId: number) => void; // optional callback for canceling jobs
 }
 
 const ActiveJobsSection: React.FC<ActiveJobsSectionProps> = ({
@@ -23,6 +24,7 @@ const ActiveJobsSection: React.FC<ActiveJobsSectionProps> = ({
   onOpenChat,
   onViewDetails,
   onRebook,
+  onCancelJob,
 }) => {
   const { user } = useAuth();
   const { openVerificationModal } = useJobVerification();
@@ -104,17 +106,48 @@ const ActiveJobsSection: React.FC<ActiveJobsSectionProps> = ({
             Rebook
           </Button>
         );
+      } else if (job.status === 'posted' && onCancelJob) {
+        // Allow cancellation of jobs that are still in posted status
+        return (
+          <div className="flex space-x-2">
+            <Button 
+              variant="destructive" 
+              size="sm" 
+              onClick={() => onCancelJob(job.id)}
+            >
+              Cancel Job
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => onViewDetails(job.id)}
+            >
+              View Details
+            </Button>
+          </div>
+        );
       } else if (job.landscaperId) {
         // Has a landscaper assigned
         return (
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={() => onOpenChat(job.id, job.landscaperId)}
-          >
-            <MessageCircle className="h-4 w-4 mr-1.5" />
-            Message
-          </Button>
+          <div className="flex space-x-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => onOpenChat(job.id, job.landscaperId)}
+            >
+              <MessageCircle className="h-4 w-4 mr-1.5" />
+              Message
+            </Button>
+            {job.status !== 'completed' && job.status !== 'cancelled' && onCancelJob && (
+              <Button 
+                variant="destructive" 
+                size="sm" 
+                onClick={() => onCancelJob(job.id)}
+              >
+                Cancel Job
+              </Button>
+            )}
+          </div>
         );
       }
     }
