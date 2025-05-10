@@ -401,12 +401,9 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                                 // Select all quick service package services
                                 form.setValue('selectedServices', QUICK_SERVICE_PACKAGE.services);
                               } else {
-                                // If unchecking, clear services that belong to the quick service package
-                                const currentServices = form.getValues('selectedServices');
-                                const nonPackageServices = currentServices.filter(
-                                  service => !QUICK_SERVICE_PACKAGE.services.includes(service)
-                                );
-                                form.setValue('selectedServices', nonPackageServices);
+                                // When unchecking, completely reset the services to empty
+                                // This is more intuitive than keeping some services
+                                form.setValue('selectedServices', []);
                               }
                               
                               // Update price calculation
@@ -938,8 +935,16 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                       } else if (step === 2) {
                         // For step 2, we can use the trigger method
                         const result = await form.trigger(["startDate", "startTime"]);
+                        
                         if (result) {
+                          // Introduce a deliberate pause to show the confirmation page
                           setStep(step + 1);
+                          
+                          // Show a toast to emphasize confirmation is needed
+                          toast({
+                            title: "Please Review Your Job",
+                            description: "Confirm all details are correct before posting your job.",
+                          });
                         }
                       }
                     }}

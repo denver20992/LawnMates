@@ -134,12 +134,8 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
             value={value}
             onChange={handleInputChange}
             className={cn("pl-9", className)}
-            onFocus={() => {
-              if (value.length >= 3) {
-                setIsOpen(true);
-                fetchAddressSuggestions(value);
-              }
-            }}
+            onFocus={handleInputFocus}
+            onClick={handleInputFocus}
           />
         </div>
       </PopoverTrigger>
