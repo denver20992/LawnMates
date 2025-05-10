@@ -6,6 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import { insertPropertySchema } from '@shared/schema';
+import { Loader2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -135,10 +136,23 @@ export default function PropertyForm({ onSuccess, onSubmit }: PropertyFormProps)
   });
 
   const handleSubmit = async (values: FormValues) => {
-    if (onSubmit) {
-      onSubmit();
+    try {
+      // First, call the onSubmit callback to show the loading state
+      if (onSubmit) {
+        onSubmit();
+      }
+      
+      // Log the form submission to debug
+      console.log("PropertyForm: Form submitted with values:", values);
+      
+      // Directly perform the mutation to create the property
+      await propertyMutation.mutateAsync(values);
+      
+      console.log("PropertyForm: Property creation successful");
+    } catch (error) {
+      console.error("PropertyForm: Error during form submission:", error);
+      // The error handling is already in the mutation, but we log it here too
     }
-    propertyMutation.mutate(values);
   };
 
   return (
@@ -349,8 +363,24 @@ export default function PropertyForm({ onSuccess, onSubmit }: PropertyFormProps)
           <Button 
             type="submit" 
             disabled={propertyMutation.isPending || isSavingFavorite}
+            className="bg-primary hover:bg-primary/90 text-white font-medium px-6"
+            onClick={(e) => {
+              // This additional click handler ensures the form is manually triggered
+              // as a backup to make the submit button more reliable
+              if (!form.formState.isSubmitting) {
+                console.log("PropertyForm: Submit button clicked");
+                form.handleSubmit(handleSubmit)(e);
+              }
+            }}
           >
-            Create Property
+            {propertyMutation.isPending || isSavingFavorite ? (
+              <div className="flex items-center">
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                <span>Creating...</span>
+              </div>
+            ) : (
+              "Create Property"
+            )}
           </Button>
         </div>
       </form>

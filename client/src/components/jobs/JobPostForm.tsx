@@ -255,8 +255,18 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
   ]);
   
   const onSubmit = async (values: JobFormValues) => {
+    // Add console logs to debug the submission process
+    console.log("JobPostForm: Starting job submission", { step, values });
+    
     try {
+      // Important: Only allow submission when we're actually on step 3 (confirmation)
+      if (step !== 3) {
+        console.log("JobPostForm: Not on confirmation step, preventing submission");
+        return; // Exit early if not on confirmation step
+      }
+      
       setIsSubmitting(true);
+      console.log("JobPostForm: Setting isSubmitting to true");
       
       // Since we're not using existing properties, always use the new address details
       
@@ -293,11 +303,11 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
         ownerId: user?.id || 0, // This should be set on the server
       };
       
-      // Our schema now handles the string-to-date conversion
-      const formattedData = jobData;
+      console.log("JobPostForm: Job data prepared", jobData);
       
       // Submit the job
-      await createJob(formattedData);
+      await createJob(jobData);
+      console.log("JobPostForm: Job created successfully");
       
       toast({
         title: "Job Posted Successfully",
@@ -310,6 +320,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       
       // Call the success callback if provided
       if (onSuccess) {
+        console.log("JobPostForm: Calling onSuccess callback");
         onSuccess();
       }
     } catch (error) {
@@ -321,6 +332,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       });
     } finally {
       setIsSubmitting(false);
+      console.log("JobPostForm: Setting isSubmitting to false");
     }
   };
 
