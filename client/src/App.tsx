@@ -65,6 +65,9 @@ function Router() {
       <Route path="/jobs/post">
         <PrivateRoute component={JobPostPage} />
       </Route>
+      <Route path="/jobs/mine">
+        <PrivateRoute component={JobsPage} />
+      </Route>
       <Route path="/messages">
         <PrivateRoute component={MessagesPage} />
       </Route>
@@ -80,11 +83,17 @@ function Router() {
       <Route path="/checkout">
         <PrivateRoute component={Checkout} />
       </Route>
+      <Route path="/properties">
+        <PrivateRoute component={SavedPropertiesPage} />
+      </Route>
       <Route path="/properties/saved">
         <PrivateRoute component={SavedPropertiesPage} />
       </Route>
       <Route path="/properties/add">
         <PrivateRoute component={AddPropertyPage} />
+      </Route>
+      <Route path="/payments">
+        <PrivateRoute component={Checkout} />
       </Route>
       <Route path="/websocket-test">
         <PrivateRoute component={WebSocketTestPage} />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'wouter';
+import { useLocation, Link } from 'wouter';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -194,7 +194,7 @@ const Register: React.FC = () => {
                       </FormControl>
                       <div className="space-y-1 leading-none">
                         <FormLabel>
-                          I agree to the <a href="#" className="text-primary-600 hover:underline">Terms of Service</a> and <a href="#" className="text-primary-600 hover:underline">Privacy Policy</a>
+                          I agree to the <Link href="/terms-of-service" className="text-primary-600 hover:underline">Terms of Service</Link> and <Link href="/privacy-policy" className="text-primary-600 hover:underline">Privacy Policy</Link>
                         </FormLabel>
                         <FormMessage />
                       </div>

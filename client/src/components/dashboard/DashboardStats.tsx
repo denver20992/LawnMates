@@ -7,9 +7,12 @@ import {
   BarChart2, 
   Users, 
   CheckCircle, 
-  Activity 
+  Activity,
+  Home
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { useJobs } from '@/hooks/useJobs';
+import { useQuery } from '@tanstack/react-query';
 
 type Stat = {
   id: string;
@@ -26,6 +29,18 @@ interface DashboardStatsProps {
 
 const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => {
   const { user } = useAuth();
+  const { activeJobs, myJobs } = useJobs();
+  
+  // Get properties count
+  const { data: properties = [] } = useQuery({
+    queryKey: ['/api/properties'],
+    enabled: !!user && user.role === 'property_owner'
+  });
+  
+  // Calculate completed jobs count
+  const completedJobs = React.useMemo(() => {
+    return myJobs.filter(job => job.status === 'completed').length;
+  }, [myJobs]);
 
   // Default stats for each role
   const defaultStats = React.useMemo(() => {
@@ -36,7 +51,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
         {
           id: 'jobs-this-month',
           label: 'Jobs This Month',
-          value: 12,
+          value: myJobs.length || 0,
           icon: <Calendar className="h-6 w-6 text-primary-600" />,
           bgColor: 'bg-primary-100',
           iconColor: 'text-primary-600',
@@ -44,24 +59,24 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
         {
           id: 'total-earnings',
           label: 'Total Earnings',
-          value: '$1,250',
+          value: `$${myJobs.reduce((total, job) => total + (job.price / 100), 0).toFixed(2)}`,
           icon: <DollarSign className="h-6 w-6 text-secondary-600" />,
           bgColor: 'bg-secondary-100',
           iconColor: 'text-secondary-600',
         },
         {
-          id: 'rating',
-          label: 'Rating',
-          value: '4.8 / 5',
-          icon: <Star className="h-6 w-6 text-accent-600" />,
+          id: 'active-jobs',
+          label: 'Active Jobs',
+          value: activeJobs.length || 0,
+          icon: <Activity className="h-6 w-6 text-accent-600" />,
           bgColor: 'bg-accent-100',
           iconColor: 'text-accent-600',
         },
         {
-          id: 'response-time',
-          label: 'Response Time',
-          value: '15 min avg',
-          icon: <Clock className="h-6 w-6 text-green-600" />,
+          id: 'completed-jobs',
+          label: 'Completed Jobs',
+          value: completedJobs || 0,
+          icon: <CheckCircle className="h-6 w-6 text-green-600" />,
           bgColor: 'bg-green-100',
           iconColor: 'text-green-600',
         },
@@ -71,7 +86,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
         {
           id: 'active-jobs',
           label: 'Active Jobs',
-          value: 3,
+          value: activeJobs.length || 0,
           icon: <Activity className="h-6 w-6 text-primary-600" />,
           bgColor: 'bg-primary-100',
           iconColor: 'text-primary-600',
@@ -79,7 +94,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
         {
           id: 'completed-jobs',
           label: 'Completed Jobs',
-          value: 8,
+          value: completedJobs || 0,
           icon: <CheckCircle className="h-6 w-6 text-accent-600" />,
           bgColor: 'bg-accent-100',
           iconColor: 'text-accent-600',
@@ -87,18 +102,19 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
         {
           id: 'properties',
           label: 'Properties',
-          value: 2,
-          icon: <Users className="h-6 w-6 text-green-600" />,
+          value: properties.length || 0,
+          icon: <Home className="h-6 w-6 text-green-600" />,
           bgColor: 'bg-green-100',
           iconColor: 'text-green-600',
         },
       ];
     } else if (user.role === 'admin') {
+      // Admin stats could be fetched from an API in the future
       return [
         {
           id: 'total-users',
           label: 'Total Users',
-          value: 152,
+          value: 0,
           icon: <Users className="h-6 w-6 text-primary-600" />,
           bgColor: 'bg-primary-100',
           iconColor: 'text-primary-600',
@@ -106,7 +122,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
         {
           id: 'active-jobs',
           label: 'Active Jobs',
-          value: 47,
+          value: 0,
           icon: <Activity className="h-6 w-6 text-secondary-600" />,
           bgColor: 'bg-secondary-100',
           iconColor: 'text-secondary-600',
@@ -114,7 +130,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
         {
           id: 'completed-jobs',
           label: 'Completed Jobs',
-          value: 215,
+          value: 0,
           icon: <CheckCircle className="h-6 w-6 text-accent-600" />,
           bgColor: 'bg-accent-100',
           iconColor: 'text-accent-600',
@@ -122,7 +138,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
         {
           id: 'platform-revenue',
           label: 'Platform Revenue',
-          value: '$8,450',
+          value: '$0.00',
           icon: <BarChart2 className="h-6 w-6 text-green-600" />,
           bgColor: 'bg-green-100',
           iconColor: 'text-green-600',
@@ -131,7 +147,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
     }
     
     return [];
-  }, [user]);
+  }, [user, activeJobs, myJobs, completedJobs, properties]);
 
   const stats = propStats || defaultStats;
 
