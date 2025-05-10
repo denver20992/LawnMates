@@ -102,8 +102,11 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     debounceTimeout.current = setTimeout(() => {
       if (query.length >= 3) {
         fetchAddressSuggestions(query);
-        // Don't auto-open dropdown while typing, only show results in the background
-        // This prevents cursor issues while typing
+        // Auto-open dropdown after typing, but with a small delay
+        // to maintain focus and prevent cursor jumping
+        setTimeout(() => {
+          setIsOpen(true);
+        }, 50);
       } else {
         setSuggestions([]);
         setIsOpen(false);

@@ -184,7 +184,7 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       endTime: 'flexible',
       isRecurring: false,
       recurrenceInterval: 'monthly',
-      requiresEquipment: false,
+      requiresEquipment: true, // Set true to have it on by default
       useExistingProperty: false,
       latitude: undefined,
       longitude: undefined,

@@ -13,6 +13,7 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { useJobs } from '@/hooks/useJobs';
 import { useQuery } from '@tanstack/react-query';
+import { useFavorites } from '@/hooks/useFavorites';
 
 type Stat = {
   id: string;
@@ -30,6 +31,7 @@ interface DashboardStatsProps {
 const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => {
   const { user } = useAuth();
   const { activeJobs, myJobs } = useJobs();
+  const { favorites } = useFavorites();
   
   // Get properties count
   const { data: properties = [] } = useQuery<any[]>({
@@ -105,7 +107,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ stats: propStats }) => 
         {
           id: 'properties',
           label: 'Properties',
-          value: propertiesArray.length || 0,
+          value: favorites.length || 0, // Use favorites instead of propertiesArray
           icon: <Home className="h-6 w-6 text-green-600" />,
           bgColor: 'bg-green-100',
           iconColor: 'text-green-600',
