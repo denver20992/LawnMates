@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { MapPin, Loader2 } from 'lucide-react';
@@ -51,7 +52,11 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   const fetchAddressSuggestions = useCallback(async (query: string) => {
     if (!query || query.length < 3 || !MAPBOX_TOKEN) return;
     
-    setIsLoading(true);
+    // Don't update the loading state yet to prevent UI flicker
+    // Only show loading indicator after a short delay if the request is still pending
+    const loadingTimerId = setTimeout(() => {
+      setIsLoading(true);
+    }, 300);
     
     try {
       const searchParams = new URLSearchParams();
@@ -77,6 +82,8 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
       console.error('Error fetching address suggestions:', error);
       setSuggestions([]);
     } finally {
+      // Clear the timer and set loading to false
+      clearTimeout(loadingTimerId);
       setIsLoading(false);
     }
   }, [MAPBOX_TOKEN, searchOptions]);
@@ -95,7 +102,8 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     debounceTimeout.current = setTimeout(() => {
       if (query.length >= 3) {
         fetchAddressSuggestions(query);
-        setIsOpen(true);
+        // Don't auto-open dropdown while typing, only show results in the background
+        // This prevents cursor issues while typing
       } else {
         setSuggestions([]);
         setIsOpen(false);
@@ -105,19 +113,31 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
 
   // Improved select handler that prevents cursor issues
   const handleSelectAddress = useCallback((address: AddressSuggestion) => {
-    // This is the key part - close popover FIRST
+    // First, close the popover
     setIsOpen(false);
     
-    // Then update the input value and call the callback with coordinates
-    // We use requestAnimationFrame to ensure UI updates happen before we change input value
-    requestAnimationFrame(() => {
+    // Wait for UI to update, then update the input value
+    // This prevents the cursor jumping issues
+    setTimeout(() => {
       setValue(address.place_name);
       onAddressSelect(address.place_name, address.center[1], address.center[0]);
-    });
+    }, 50);
   }, [onAddressSelect]);
 
-  // Input focuses or click handler
+  // Input focuses or click handler - only now do we open the dropdown
   const handleInputFocus = useCallback(() => {
+    // Don't open the dropdown on focus unless we already have a value
+    // This prevents the dropdown from interrupting typing
+    if (value.length >= 3) {
+      fetchAddressSuggestions(value);
+      // We don't automatically open the dropdown on focus to prevent interruption
+      // User can click to open it when they're ready
+    }
+  }, [value, fetchAddressSuggestions]);
+  
+  // Only when user clicks dropdown button or specifically clicks to open
+  // do we show the dropdown
+  const handleOpenDropdown = useCallback(() => {
     if (value.length >= 3) {
       fetchAddressSuggestions(value);
       setIsOpen(true);
@@ -127,16 +147,26 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <div className="relative w-full">
+        <div className="relative w-full flex">
           <MapPin className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder={placeholder}
             value={value}
             onChange={handleInputChange}
-            className={cn("pl-9", className)}
+            className={cn("pl-9 flex-grow", className)}
             onFocus={handleInputFocus}
-            onClick={handleInputFocus}
           />
+          {value.length >= 3 && (
+            <Button 
+              type="button" 
+              variant="outline" 
+              size="sm" 
+              className="ml-2 px-2"
+              onClick={handleOpenDropdown}
+            >
+              {isOpen ? "↑" : "↓"}
+            </Button>
+          )}
         </div>
       </PopoverTrigger>
       <PopoverContent className="p-0 w-[var(--radix-popover-trigger-width)]" align="start">
