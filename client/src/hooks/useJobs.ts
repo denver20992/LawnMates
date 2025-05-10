@@ -166,13 +166,8 @@ export const useJobs = () => {
   }, [completeJobMutation]);
   
   const cancelJob = useCallback(async (jobId: number) => {
-    // Use the native window.confirm but with customized text directly
-    const userConfirmed = window.confirm("Cancel this job? This action cannot be undone.");
-    
-    if (userConfirmed) {
-      return cancelJobMutation.mutateAsync(jobId);
-    }
-    return Promise.reject("Cancelled by user");
+    // No confirm dialog here - we're now using the JobCancelDialog component
+    return cancelJobMutation.mutateAsync(jobId);
   }, [cancelJobMutation]);
 
   // Get a single job by ID
