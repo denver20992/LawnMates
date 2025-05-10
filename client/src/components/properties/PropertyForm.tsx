@@ -72,12 +72,26 @@ export default function PropertyForm({ onSuccess, onSubmit }: PropertyFormProps)
 
   const propertyMutation = useMutation({
     mutationFn: async (values: FormValues) => {
+      // Extract properties that are not part of the Property schema
       const { saveAsFavorite, isRecurring, recurrenceInterval, ...propertyData } = values;
+      
+      // Debug log to help diagnose issues
       console.log("Creating property with data:", propertyData);
+      
+      // Make the API request to create the property
       const response = await apiRequest('POST', '/api/properties', propertyData);
+      
+      // Check if the response is OK
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to create property");
+      }
+      
       return response.json();
     },
     onSuccess: async (data) => {
+      console.log("Property created successfully:", data);
+      
       // Check if we should save as favorite
       if (form.getValues('saveAsFavorite')) {
         setIsSavingFavorite(true);
@@ -90,6 +104,7 @@ export default function PropertyForm({ onSuccess, onSubmit }: PropertyFormProps)
             notes: form.getValues('notes'),
           });
         } catch (error) {
+          console.error("Error saving as favorite:", error);
           toast({
             title: "Error saving favorite",
             description: "Property was created but couldn't be saved as a favorite",

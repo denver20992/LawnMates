@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -47,7 +47,8 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     };
   }, []);
 
-  const fetchAddressSuggestions = async (query: string) => {
+  // Memoize the fetch function to avoid recreating it on every render
+  const fetchAddressSuggestions = useCallback(async (query: string) => {
     if (!query || query.length < 3 || !MAPBOX_TOKEN) return;
     
     setIsLoading(true);
@@ -78,9 +79,10 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [MAPBOX_TOKEN, searchOptions]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Improved input change handler with proper debouncing
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     setValue(query);
     
@@ -93,31 +95,34 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     debounceTimeout.current = setTimeout(() => {
       if (query.length >= 3) {
         fetchAddressSuggestions(query);
+        setIsOpen(true);
       } else {
         setSuggestions([]);
+        setIsOpen(false);
       }
     }, 300);
-  };
+  }, [fetchAddressSuggestions]);
 
-  const handleSelectAddress = (address: AddressSuggestion) => {
-    // First close the popup, then update values
+  // Improved select handler that prevents cursor issues
+  const handleSelectAddress = useCallback((address: AddressSuggestion) => {
+    // This is the key part - close popover FIRST
     setIsOpen(false);
-    // Use setTimeout to prevent cursor issues
-    setTimeout(() => {
+    
+    // Then update the input value and call the callback with coordinates
+    // We use requestAnimationFrame to ensure UI updates happen before we change input value
+    requestAnimationFrame(() => {
       setValue(address.place_name);
       onAddressSelect(address.place_name, address.center[1], address.center[0]);
-    }, 10);
-  };
+    });
+  }, [onAddressSelect]);
 
-  // Auto-show dropdown when user starts typing
-  useEffect(() => {
+  // Input focuses or click handler
+  const handleInputFocus = useCallback(() => {
     if (value.length >= 3) {
-      setIsOpen(true);
       fetchAddressSuggestions(value);
-    } else {
-      setSuggestions([]);
+      setIsOpen(true);
     }
-  }, [value]);
+  }, [value, fetchAddressSuggestions]);
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
