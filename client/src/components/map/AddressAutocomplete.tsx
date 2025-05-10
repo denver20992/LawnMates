@@ -102,14 +102,15 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     // Set a new timeout to debounce the API call
     debounceTimeout.current = setTimeout(() => {
       if (query.length >= 3) {
-        // Fetch suggestions
-        fetchAddressSuggestions(query);
-        
-        // Open the dropdown after suggestions are fetched
-        // Only if the input still has focus
-        if (document.activeElement === inputRef.current) {
-          setIsOpen(true);
-        }
+        // Fetch suggestions without interfering with focus
+        fetchAddressSuggestions(query)
+          .then(() => {
+            // If there are suggestions and input is still focused
+            if (suggestions.length > 0 && document.activeElement === inputRef.current) {
+              // Don't open automatically - this prevents cursor jumping
+              // Let the user click into the field again if they want suggestions
+            }
+          });
       } else {
         setSuggestions([]);
         setIsOpen(false);
