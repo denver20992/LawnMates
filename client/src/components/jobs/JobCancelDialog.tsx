@@ -34,7 +34,7 @@ export function JobCancelDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Cancel Job</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to cancel this job? This action cannot be undone.
+            Are you sure you want to cancel {jobTitle ? `"${jobTitle}"` : "this job"}? This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

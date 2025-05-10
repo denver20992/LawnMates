@@ -16,7 +16,11 @@ import { useNotifications } from '@/hooks/useNotifications';
 // Import the logo
 import lawnmatesLogo from '@assets/lawnmates-logo-horizontal.png.png';
 
-const AppHeader: React.FC = () => {
+interface AppHeaderProps {
+  title?: string;
+}
+
+const AppHeader: React.FC<AppHeaderProps> = ({ title }) => {
   const { user, logout, isAuthenticated } = useAuth();
   const { unreadCount, markAllAsRead, notifications } = useNotifications();
   const [location] = useLocation();

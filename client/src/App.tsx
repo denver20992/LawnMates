@@ -14,6 +14,7 @@ import Login from "@/pages/login";
 import Register from "@/pages/register";
 import JobsPage from "@/pages/jobs/index";
 import JobPostPage from "@/pages/jobs/post";
+import JobSuccessPage from "@/pages/jobs/success";
 import MessagesPage from "@/pages/messages/index";
 import ProfilePage from "@/pages/profile";
 import ReviewsPage from "@/pages/reviews";
@@ -65,6 +66,9 @@ function Router() {
       </Route>
       <Route path="/jobs/post">
         <PrivateRoute component={JobPostPage} />
+      </Route>
+      <Route path="/jobs/success">
+        <PrivateRoute component={JobSuccessPage} />
       </Route>
       <Route path="/jobs/mine">
         <PrivateRoute component={JobsPage} />
