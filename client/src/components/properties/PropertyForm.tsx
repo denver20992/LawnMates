@@ -145,8 +145,22 @@ export default function PropertyForm({ onSuccess, onSubmit }: PropertyFormProps)
       // Log the form submission to debug
       console.log("PropertyForm: Form submitted with values:", values);
       
+      // Format the data to ensure it matches what the API expects
+      const propertyData = {
+        address: values.address,
+        city: values.city,
+        state: values.state,
+        zipCode: values.zipCode,
+        propertyType: values.propertyType,
+        size: values.size,
+        // Make sure we exclude non-property fields that will be handled separately
+        // like saveAsFavorite, isRecurring, and notes
+      };
+      
+      console.log("PropertyForm: Sending property data:", propertyData);
+      
       // Directly perform the mutation to create the property
-      await propertyMutation.mutateAsync(values);
+      await propertyMutation.mutateAsync(propertyData);
       
       console.log("PropertyForm: Property creation successful");
     } catch (error) {
