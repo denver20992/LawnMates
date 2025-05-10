@@ -43,6 +43,7 @@ export interface IStorage {
   getAllJobs(): Promise<Job[]>;
   createJob(job: InsertJob): Promise<Job>;
   updateJob(id: number, jobData: Partial<Job>): Promise<Job>;
+  updateJobStatus(id: number, status: Job['status']): Promise<Job>;
   
   // Message methods
   getMessage(id: number): Promise<Message | undefined>;

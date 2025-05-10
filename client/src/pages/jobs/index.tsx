@@ -15,7 +15,7 @@ import { useToast } from '@/hooks/use-toast';
 const JobsPage: React.FC = () => {
   const { user, isAuthenticated, isLoading } = useAuth();
   const [, setLocation] = useLocation();
-  const { jobs, activeJobs, myJobs, loadMyJobs, loadJobs, loading } = useJobs();
+  const { jobs, activeJobs, myJobs, loadMyJobs, loadJobs, loading, cancelJob } = useJobs();
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [activeTab, setActiveTab] = useState<string>("available");
   const [counterparties, setCounterparties] = useState<Record<number, { id: number; username: string; avatar?: string; fullName?: string }>>({});
@@ -183,13 +183,24 @@ const JobsPage: React.FC = () => {
                               </Button>
                               <Button 
                                 variant="outline" 
-                                size="sm" 
+                                size="sm"
                                 onClick={() => {
-                                  // This would cancel the job in a real implementation
-                                  toast({
-                                    title: "Job cancelled",
-                                    description: "Your job has been cancelled successfully."
-                                  });
+                                  if (window.confirm("Are you sure you want to cancel this job? This action cannot be undone.")) {
+                                    cancelJob(job.id)
+                                      .then(() => {
+                                        // Success toast is shown by the mutation
+                                        // Force reload the job list
+                                        loadMyJobs();
+                                      })
+                                      .catch(error => {
+                                        console.error("Failed to cancel job:", error);
+                                        toast({
+                                          title: "Error",
+                                          description: "Failed to cancel job. Please try again.",
+                                          variant: "destructive",
+                                        });
+                                      });
+                                  }
                                 }}
                               >
                                 Cancel
