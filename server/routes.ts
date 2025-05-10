@@ -792,6 +792,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Create a setup intent for saving a payment method
+  app.post("/api/create-setup-intent", isAuthenticated, async (req, res) => {
+    try {
+      const { jobId } = req.body;
+      
+      // Verify the job exists and the user is the property owner
+      const job = await storage.getJob(parseInt(jobId));
+      
+      if (!job) {
+        return res.status(404).json({ error: "Job not found" });
+      }
+      
+      if (job.ownerId !== req.user!.id) {
+        return res.status(403).json({ error: "Only the property owner can setup payment for this job" });
+      }
+      
+      // Ensure customer has a Stripe customer ID
+      let user = await storage.getUser(req.user!.id);
+      
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      
+      // Create a Stripe customer if the user doesn't have one
+      if (!user.stripeCustomerId) {
+        const customer = await stripe.customers.create({
+          email: user.email,
+          name: user.fullName || user.username,
+        });
+        
+        user = await storage.updateStripeCustomerId(user.id, customer.id);
+      }
+      
+      // Create a setup intent to save the payment method
+      const setupIntent = await stripe.setupIntents.create({
+        customer: user.stripeCustomerId,
+        payment_method_types: ['card'],
+        metadata: {
+          jobId: job.id.toString(),
+          propertyOwnerId: job.ownerId.toString(),
+        },
+        usage: 'off_session',  // This will allow us to charge the card later
+      });
+      
+      // Return the client secret to the client
+      res.json({
+        clientSecret: setupIntent.client_secret
+      });
+    } catch (error) {
+      console.error("Error creating setup intent:", error);
+      res.status(500).json({ error: "Failed to create setup intent" });
+    }
+  });
+  
   // Release payment to landscaper after job is verified
   app.post("/api/release-payment", isAuthenticated, async (req, res) => {
     try {
