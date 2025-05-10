@@ -125,7 +125,7 @@ export const useJobs = () => {
   const cancelJobMutation = useMutation({
     mutationFn: async (jobId: number) => {
       // No confirmation here - this should only be called after the dialog confirmation
-      const res = await apiRequest('POST', `/api/jobs/${jobId}/cancel`, {});
+      const res = await apiRequest('PATCH', `/api/jobs/${jobId}/cancel`, {});
       return res.json();
     },
     onSuccess: () => {

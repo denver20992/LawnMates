@@ -7,7 +7,7 @@ import JobCancelDialog from '@/components/jobs/JobCancelDialog';
 import AppHeader from '@/components/layout/AppHeader';
 import MobileMenu from '@/components/layout/MobileMenu';
 import DashboardTabs from '@/components/layout/DashboardTabs';
-import JobMap from '@/components/jobs/JobMap';
+import JobsMap from '@/components/jobs/JobsMap';
 import ActiveJobsSection from '@/components/jobs/ActiveJobsSection';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -143,7 +143,7 @@ const JobsPage: React.FC = () => {
                     <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
                   </div>
                 ) : jobs.length > 0 ? (
-                  <JobMap 
+                  <JobsMap 
                     jobs={jobs}
                     onSelectJob={setSelectedJob}
                     selectedJob={selectedJob}
