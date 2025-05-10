@@ -175,6 +175,20 @@ export const useJobs = () => {
     return Promise.reject("Cancelled by user");
   }, [cancelJobMutation]);
 
+  // Get a single job by ID
+  const getJobById = useCallback(async (jobId: number) => {
+    try {
+      const res = await fetch(`/api/jobs/${jobId}`);
+      if (!res.ok) {
+        throw new Error('Failed to fetch job');
+      }
+      return await res.json();
+    } catch (error) {
+      console.error('Error fetching job details:', error);
+      throw error;
+    }
+  }, []);
+
   return {
     jobs,
     activeJobs,
@@ -186,6 +200,7 @@ export const useJobs = () => {
     cancelJob,
     loadJobs,
     loadActiveJobs,
-    loadMyJobs
+    loadMyJobs,
+    getJobById
   };
 };

@@ -1,3 +1,4 @@
+import React from "react";
 import { Switch, Route, Redirect, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -70,11 +71,11 @@ function Router() {
       <Route path="/jobs/success">
         <PrivateRoute component={JobSuccessPage} />
       </Route>
-      <Route path="/jobs/:id">
-        <PrivateRoute component={() => import("@/pages/jobs/[id]").then(module => module.default)} />
-      </Route>
       <Route path="/jobs/mine">
         <PrivateRoute component={JobsPage} />
+      </Route>
+      <Route path="/jobs/:id">
+        <PrivateRoute component={React.lazy(() => import("./pages/jobs/[id]").then(m => m.default))} />
       </Route>
       <Route path="/messages">
         <PrivateRoute component={MessagesPage} />

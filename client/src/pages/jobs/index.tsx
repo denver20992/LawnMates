@@ -192,24 +192,7 @@ const JobsPage: React.FC = () => {
                               <Button 
                                 variant="outline" 
                                 size="sm"
-                                onClick={() => {
-                                  if (window.confirm("Are you sure you want to cancel this job? This action cannot be undone.")) {
-                                    cancelJob(job.id)
-                                      .then(() => {
-                                        // Success toast is shown by the mutation
-                                        // Force reload the job list
-                                        loadMyJobs();
-                                      })
-                                      .catch(error => {
-                                        console.error("Failed to cancel job:", error);
-                                        toast({
-                                          title: "Error",
-                                          description: "Failed to cancel job. Please try again.",
-                                          variant: "destructive",
-                                        });
-                                      });
-                                  }
-                                }}
+                                onClick={() => handleCancelJob(job.id)}
                               >
                                 Cancel
                               </Button>
@@ -251,30 +234,7 @@ const JobsPage: React.FC = () => {
         </Tabs>
       </main>
       
-      {/* Job Cancellation Dialog */}
-      <JobCancelDialog
-        isOpen={isDialogOpen}
-        onClose={closeCancelDialog}
-        onConfirm={() => {
-          if (jobToCancel) {
-            cancelJob(jobToCancel)
-              .then(() => {
-                toast({
-                  title: "Job Cancelled",
-                  description: "The job has been successfully cancelled.",
-                });
-                loadMyJobs();
-              })
-              .catch((error) => {
-                toast({
-                  title: "Error",
-                  description: "Failed to cancel job. Please try again.",
-                  variant: "destructive",
-                });
-              });
-          }
-        }}
-      />
+
       
       <MobileMenu />
       
