@@ -245,6 +245,31 @@ const JobsPage: React.FC = () => {
         </Tabs>
       </main>
       
+      {/* Job Cancellation Dialog */}
+      <JobCancelDialog
+        isOpen={isDialogOpen}
+        onClose={closeCancelDialog}
+        onConfirm={() => {
+          if (jobToCancel) {
+            cancelJob(jobToCancel)
+              .then(() => {
+                toast({
+                  title: "Job Cancelled",
+                  description: "The job has been successfully cancelled.",
+                });
+                loadMyJobs();
+              })
+              .catch((error) => {
+                toast({
+                  title: "Error",
+                  description: "Failed to cancel job. Please try again.",
+                  variant: "destructive",
+                });
+              });
+          }
+        }}
+      />
+      
       <MobileMenu />
     </div>
   );
