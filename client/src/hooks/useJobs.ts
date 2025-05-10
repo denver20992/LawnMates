@@ -50,8 +50,13 @@ export const useJobs = () => {
       return res.json();
     },
     onSuccess: () => {
+      // Invalidate all job-related queries to ensure all views are updated
       queryClient.invalidateQueries({ queryKey: ['/api/jobs'] });
       queryClient.invalidateQueries({ queryKey: ['/api/jobs/mine'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/jobs/active'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/dashboard'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/properties'] });
+      
       toast({
         title: 'Job Posted',
         description: 'Your job has been posted successfully.',
@@ -115,6 +120,33 @@ export const useJobs = () => {
       });
     }
   });
+  
+  // Cancel a job (for property owners)
+  const cancelJobMutation = useMutation({
+    mutationFn: async (jobId: number) => {
+      const res = await apiRequest('POST', `/api/jobs/${jobId}/cancel`, {});
+      return res.json();
+    },
+    onSuccess: () => {
+      // Invalidate all job-related queries to ensure all views are updated
+      queryClient.invalidateQueries({ queryKey: ['/api/jobs'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/jobs/mine'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/jobs/active'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/dashboard'] }); 
+      toast({
+        title: 'Job Cancelled',
+        description: 'Your job has been cancelled successfully.',
+      });
+    },
+    onError: (error) => {
+      console.error('Error cancelling job:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to cancel job. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  });
 
   // Update the createJob type to match our mutation function
   const createJob = useCallback(async (jobData: Partial<Omit<InsertJob, 'startDate' | 'endDate'>> & {
@@ -131,6 +163,10 @@ export const useJobs = () => {
   const completeJob = useCallback(async (jobId: number) => {
     return completeJobMutation.mutateAsync(jobId);
   }, [completeJobMutation]);
+  
+  const cancelJob = useCallback(async (jobId: number) => {
+    return cancelJobMutation.mutateAsync(jobId);
+  }, [cancelJobMutation]);
 
   return {
     jobs,
@@ -140,6 +176,7 @@ export const useJobs = () => {
     createJob,
     acceptJob,
     completeJob,
+    cancelJob,
     loadJobs,
     loadActiveJobs,
     loadMyJobs
