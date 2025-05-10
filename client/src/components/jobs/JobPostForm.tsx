@@ -308,23 +308,28 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
       console.log("JobPostForm: Job data prepared", jobData);
       
       // Submit the job
-      await createJob(jobData);
-      console.log("JobPostForm: Job created successfully");
+      const createdJob = await createJob(jobData);
+      console.log("JobPostForm: Job created successfully", createdJob);
+      
+      // Format price for URL parameter (remove cents)
+      const priceForUrl = Math.floor(values.price).toString();
       
       toast({
         title: "Job Posted Successfully",
-        description: "Your job has been posted and is now visible to landscapers",
+        description: "Redirecting to setup payment...",
       });
       
-      // Reset form and go back to step 1
+      // Reset form
       form.reset();
-      setStep(1);
       
       // Call the success callback if provided
       if (onSuccess) {
         console.log("JobPostForm: Calling onSuccess callback");
         onSuccess();
       }
+      
+      // Redirect to success page with job details
+      setLocation(`/jobs/success?id=${createdJob.id}&title=${encodeURIComponent(values.title)}&price=${priceForUrl}`);
     } catch (error) {
       console.error('Error posting job:', error);
       toast({

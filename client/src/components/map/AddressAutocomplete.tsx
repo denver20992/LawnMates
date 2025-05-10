@@ -99,18 +99,19 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
       clearTimeout(debounceTimeout.current);
     }
     
+    // Close dropdown while typing to prevent cursor jumping
+    if (query.length >= 3) {
+      setIsOpen(false);
+    }
+    
     // Set a new timeout to debounce the API call
     debounceTimeout.current = setTimeout(() => {
       if (query.length >= 3) {
+        // Fetch suggestions in the background without opening dropdown
         fetchAddressSuggestions(query);
-        // Wait until the next render cycle to open the dropdown
-        // This prevents cursor jumping and focus issues
-        requestAnimationFrame(() => {
-          // Only open if we still have focus to avoid unexpected openings
-          if (document.activeElement === inputRef.current) {
-            setIsOpen(true);
-          }
-        });
+        
+        // Don't automatically open the dropdown as this causes cursor jumping
+        // The user will click the dropdown button when they're ready to select
       } else {
         setSuggestions([]);
         setIsOpen(false);
