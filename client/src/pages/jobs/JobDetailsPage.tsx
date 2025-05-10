@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Job } from '@shared/schema';
 import { Loader2, MapPin, Clock, Banknote, ArrowLeft, MessageCircle } from 'lucide-react';
+import JobMap from '@/components/jobs/JobMap';
+import JobDistance from '@/components/jobs/JobDistance';
 
 const JobDetailsPage: React.FC = () => {
   const [match, params] = useRoute<{ id: string }>('/jobs/:id');
@@ -132,8 +134,15 @@ const JobDetailsPage: React.FC = () => {
               <div className="flex items-center text-neutral-600 text-sm mb-2">
                 <MapPin className="h-4 w-4 mr-1 text-neutral-400" />
                 <span>
-                  {job.latitude.toFixed(6)}, {job.longitude.toFixed(6)}
+                  {job.latitude.toFixed(4)}, {job.longitude.toFixed(4)}
                 </span>
+                {user?.role === 'landscaper' && (
+                  <JobDistance
+                    jobLatitude={job.latitude}
+                    jobLongitude={job.longitude}
+                    className="ml-2"
+                  />
+                )}
               </div>
             )}
             <div className="flex items-center gap-4 text-sm text-neutral-600 mb-4">
@@ -154,6 +163,18 @@ const JobDetailsPage: React.FC = () => {
               <p className="text-neutral-700">{job.description || 'No description provided.'}</p>
             </div>
             
+            {job.latitude && job.longitude && user?.role === 'landscaper' && (
+              <div className="mb-4">
+                <h3 className="font-medium text-neutral-900 mb-2">Location</h3>
+                <JobMap 
+                  jobLatitude={job.latitude} 
+                  jobLongitude={job.longitude}
+                  jobTitle={job.title}
+                  className="mb-4"
+                />
+              </div>
+            )}
+
             <div className="mb-4">
               <h3 className="font-medium text-neutral-900 mb-2">Job Details</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
