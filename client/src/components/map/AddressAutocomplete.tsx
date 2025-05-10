@@ -32,6 +32,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Focus Canada with a bias towards populated places
   const searchOptions = {
@@ -102,11 +103,14 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     debounceTimeout.current = setTimeout(() => {
       if (query.length >= 3) {
         fetchAddressSuggestions(query);
-        // Auto-open dropdown after typing, but with a small delay
-        // to maintain focus and prevent cursor jumping
-        setTimeout(() => {
-          setIsOpen(true);
-        }, 50);
+        // Wait until the next render cycle to open the dropdown
+        // This prevents cursor jumping and focus issues
+        requestAnimationFrame(() => {
+          // Only open if we still have focus to avoid unexpected openings
+          if (document.activeElement === inputRef.current) {
+            setIsOpen(true);
+          }
+        });
       } else {
         setSuggestions([]);
         setIsOpen(false);

@@ -165,7 +165,10 @@ export const useJobs = () => {
   }, [completeJobMutation]);
   
   const cancelJob = useCallback(async (jobId: number) => {
-    return cancelJobMutation.mutateAsync(jobId);
+    if (window.confirm("Are you sure you want to cancel this job? This action cannot be undone.")) {
+      return cancelJobMutation.mutateAsync(jobId);
+    }
+    return Promise.reject("Cancelled by user");
   }, [cancelJobMutation]);
 
   return {

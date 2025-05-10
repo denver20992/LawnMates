@@ -824,7 +824,11 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                           )}
                           
                           <div className="border-t mt-2 pt-1 flex justify-between">
-                            <span className="font-medium">Total (adjusted for property):</span>
+                            <span className="font-medium">
+                              Total ({form.getValues('yardType') === 'frontyard' ? 'Front Yard Only' : 
+                                     form.getValues('yardType') === 'backyard' ? 'Back Yard Only' : 
+                                     'Front & Back Yard'}):
+                            </span>
                             <span className="font-medium">${form.getValues('price')} CAD</span>
                           </div>
                         </div>
