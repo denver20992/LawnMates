@@ -73,6 +73,7 @@ export default function PropertyForm({ onSuccess, onSubmit }: PropertyFormProps)
   const propertyMutation = useMutation({
     mutationFn: async (values: FormValues) => {
       const { saveAsFavorite, isRecurring, recurrenceInterval, ...propertyData } = values;
+      console.log("Creating property with data:", propertyData);
       const response = await apiRequest('POST', '/api/properties', propertyData);
       return response.json();
     },

@@ -393,10 +393,21 @@ const JobPostForm: React.FC<JobPostFormProps> = ({ onSuccess }) => {
                               if (isChecked) {
                                 // Select all quick service package services
                                 form.setValue('selectedServices', QUICK_SERVICE_PACKAGE.services);
+                              } else {
+                                // If unchecking, clear services that belong to the quick service package
+                                const currentServices = form.getValues('selectedServices');
+                                const nonPackageServices = currentServices.filter(
+                                  service => !QUICK_SERVICE_PACKAGE.services.includes(service)
+                                );
+                                form.setValue('selectedServices', nonPackageServices);
                               }
                               
                               // Update price calculation
-                              const newServices = isChecked ? QUICK_SERVICE_PACKAGE.services : form.getValues('selectedServices');
+                              const newServices = isChecked ? 
+                                QUICK_SERVICE_PACKAGE.services : 
+                                form.getValues('selectedServices').filter(
+                                  service => !QUICK_SERVICE_PACKAGE.services.includes(service)
+                                );
                               if (useExistingProperty) {
                                 if (selectedPropertyId) {
                                   const newPrice = calculateEstimatedPrice(

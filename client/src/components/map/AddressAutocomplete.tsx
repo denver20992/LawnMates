@@ -105,6 +105,16 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     setIsOpen(false);
   };
 
+  // Auto-show dropdown when user starts typing
+  useEffect(() => {
+    if (value.length >= 3) {
+      setIsOpen(true);
+      fetchAddressSuggestions(value);
+    } else {
+      setSuggestions([]);
+    }
+  }, [value]);
+
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
@@ -115,7 +125,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
             value={value}
             onChange={handleInputChange}
             className={cn("pl-9", className)}
-            onClick={() => value.length >= 3 && setIsOpen(true)}
+            onFocus={() => value.length >= 3 && setIsOpen(true)}
           />
         </div>
       </PopoverTrigger>
