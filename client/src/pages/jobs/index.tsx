@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 import { useAuth } from '@/hooks/useAuth';
 import { useJobs } from '@/hooks/useJobs';
+import { useJobCancelDialog } from '@/hooks/useJobCancelDialog';
+import { JobCancelDialog } from '@/components/jobs/JobCancelDialog';
 import AppHeader from '@/components/layout/AppHeader';
 import MobileMenu from '@/components/layout/MobileMenu';
 import DashboardTabs from '@/components/layout/DashboardTabs';
@@ -16,6 +18,7 @@ const JobsPage: React.FC = () => {
   const { user, isAuthenticated, isLoading } = useAuth();
   const [, setLocation] = useLocation();
   const { jobs, activeJobs, myJobs, loadMyJobs, loadJobs, loading, cancelJob } = useJobs();
+  const { isDialogOpen, jobToCancel, openCancelDialog, closeCancelDialog } = useJobCancelDialog();
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [activeTab, setActiveTab] = useState<string>("available");
   const [counterparties, setCounterparties] = useState<Record<number, { id: number; username: string; avatar?: string; fullName?: string }>>({});
