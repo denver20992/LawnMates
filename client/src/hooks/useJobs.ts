@@ -165,7 +165,7 @@ export const useJobs = () => {
   }, [completeJobMutation]);
   
   const cancelJob = useCallback(async (jobId: number) => {
-    if (window.confirm("Are you sure you want to cancel this job?\n\nThis action cannot be undone and will release any landscaper assigned to the job.\n\nNote: If you've already made a payment, you will need to contact support for a refund.")) {
+    if (confirm("Are you sure you want to cancel this job? This action cannot be undone.")) {
       return cancelJobMutation.mutateAsync(jobId);
     }
     return Promise.reject("Cancelled by user");

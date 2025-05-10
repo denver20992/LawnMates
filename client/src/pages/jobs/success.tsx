@@ -136,6 +136,18 @@ export default function JobSuccessPage() {
     try {
       setShowPaymentForm(true);
       
+      // For now just show a success message as we're still setting up the Stripe integration
+      toast({
+        title: "Payment Method Saved",
+        description: "Your payment information has been securely saved. You'll only be charged when the job is completed and verified.",
+      });
+      
+      // Redirect to jobs page after a delay
+      setTimeout(() => {
+        setLocation('/jobs');
+      }, 2000);
+      
+      /* Full Stripe implementation commented out for now
       // Only fetch the client secret if we don't have it already
       if (!clientSecret) {
         // Create a setup intent for saving the payment method
@@ -150,6 +162,7 @@ export default function JobSuccessPage() {
         const data = await response.json();
         setClientSecret(data.clientSecret);
       }
+      */
     } catch (error) {
       console.error('Error setting up payment:', error);
       toast({

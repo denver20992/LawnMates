@@ -99,19 +99,17 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
       clearTimeout(debounceTimeout.current);
     }
     
-    // Close dropdown while typing to prevent cursor jumping
-    if (query.length >= 3) {
-      setIsOpen(false);
-    }
-    
     // Set a new timeout to debounce the API call
     debounceTimeout.current = setTimeout(() => {
       if (query.length >= 3) {
-        // Fetch suggestions in the background without opening dropdown
+        // Fetch suggestions
         fetchAddressSuggestions(query);
         
-        // Don't automatically open the dropdown as this causes cursor jumping
-        // The user will click the dropdown button when they're ready to select
+        // Open the dropdown after suggestions are fetched
+        // Only if the input still has focus
+        if (document.activeElement === inputRef.current) {
+          setIsOpen(true);
+        }
       } else {
         setSuggestions([]);
         setIsOpen(false);
@@ -162,16 +160,17 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
             placeholder={placeholder}
             value={value}
             onChange={handleInputChange}
-            className={cn("pl-9 flex-grow", className)}
+            className={cn("pl-9 flex-grow pr-8", className)}
             onFocus={handleInputFocus}
           />
-          {value.length >= 3 && (
+          {value.length >= 3 && suggestions.length > 0 && (
             <Button 
               type="button" 
-              variant="outline" 
+              variant="ghost" 
               size="sm" 
-              className="ml-2 px-2"
+              className="absolute right-1 top-1/2 transform -translate-y-1/2 px-2"
               onClick={handleOpenDropdown}
+              title="Show address suggestions"
             >
               {isOpen ? "↑" : "↓"}
             </Button>
